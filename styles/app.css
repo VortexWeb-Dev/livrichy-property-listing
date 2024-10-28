@@ -1,0 +1,27 @@
+.custom-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 767.98px) {
+    .custom-card {
+        padding: 1rem;
+    }
+}
+
+.table-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 767.98px) {
+    .table-card {
+        padding: 1rem;
+    }
+}
