@@ -64,9 +64,9 @@ function generatePfXml($properties)
         addCDataElement($propertyNode, 'property_type', $property['ufCrm13PropertyType'] ?? '');
 
         addCDataElement($propertyNode, 'geopoints', $property['ufCrm13Geopoints'] ?? '');
-        addCDataElement($propertyNode, 'city', $property['ufCrm13PfCity'] ?? '');
-        addCDataElement($propertyNode, 'community', $property['ufCrm13PfCommunity'] ?? '');
-        addCDataElement($propertyNode, 'sub_community', $property['ufCrm13PfSubCommunity'] ?? '');
+        addCDataElement($propertyNode, 'city', $property['ufCrm13City'] ?? '');
+        addCDataElement($propertyNode, 'community', $property['ufCrm13Community'] ?? '');
+        addCDataElement($propertyNode, 'sub_community', $property['ufCrm13SubCommunity'] ?? '');
         addCDataElement($propertyNode, 'title_en', $property['ufCrm13TitleEn'] ?? '');
         addCDataElement($propertyNode, 'description_en', $property['ufCrm13DescriptionEn'] ?? '');
         addCDataElement($propertyNode, 'size', $property['ufCrm13Size'] ?? '');
@@ -82,7 +82,7 @@ function generatePfXml($properties)
 
         $photoNode = $propertyNode->addChild('photo');
 
-        foreach ($property['ufCrm13Photos'] as $photo) {
+        foreach ($property['ufCrm13PhotoLinks'] as $photo) {
             $urlNode = addCDataElement($photoNode, 'url', $photo);
             $urlNode->addAttribute('last_update', date('Y-m-d H:i:s'));
             $urlNode->addAttribute('watermark', 'Yes');
@@ -113,9 +113,9 @@ function generateDubizzleXml($properties)
         addCDataElement($propertyNode, 'Price', $property['ufCrm13Price'] ?? '');
         addCDataElement($propertyNode, 'Property_purpose', $property['ufCrm13OfferingType'] ?? '');
         addCDataElement($propertyNode, 'Property_Type', $property['ufCrm13PropertyType'] ?? '');
-        addCDataElement($propertyNode, 'City', $property['ufCrm13PfCity'] ?? '');
-        addCDataElement($propertyNode, 'Locality', $property['ufCrm13PfCommunity'] ?? '');
-        addCDataElement($propertyNode, 'Sub_Locality', $property['ufCrm13PfSubCommunity'] ?? '');
+        addCDataElement($propertyNode, 'City', $property['ufCrm13City'] ?? '');
+        addCDataElement($propertyNode, 'Locality', $property['ufCrm13Community'] ?? '');
+        addCDataElement($propertyNode, 'Sub_Locality', $property['ufCrm13SubCommunity'] ?? '');
         addCDataElement($propertyNode, 'Property_Title', $property['ufCrm13TitleEn'] ?? '');
         addCDataElement($propertyNode, 'Property_Description', $property['ufCrm13DescriptionEn'] ?? '');
         addCDataElement($propertyNode, 'Property_Size', $property['ufCrm13Size'] ?? '');
@@ -138,7 +138,7 @@ function generateDubizzleXml($properties)
 
         // Images
         $imagesNode = $propertyNode->addChild('Images');
-        foreach ($property['ufCrm13Photos'] ?? [] as $image) {
+        foreach ($property['ufCrm13PhotoLinks'] ?? [] as $image) {
             $imageNode = $imagesNode->addChild('Image', $image);
             $imageNode->addAttribute('last_update', date('Y-m-d H:i:s'));
         }

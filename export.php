@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             addCDataElement($agentNode, 'photo', $property['ufCrm13AgentPhoto'] ?? '');
 
             $photoNode = $propertyNode->addChild('photo');
-            foreach ($property['ufCrm13Photos'] as $photo) {
+            foreach ($property['ufCrm13PhotoLinks'] as $photo) {
 
                 $urlNode = addCDataElement($photoNode, 'url', $photo);
                 $urlNode->addAttribute('last_update', date('Y-m-d H:i:s'));

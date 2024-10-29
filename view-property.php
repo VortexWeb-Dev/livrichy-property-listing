@@ -237,7 +237,7 @@ $property = $response['result']['item'] ?? null;
                     <div class="row mb-3">
                         <div class="col">
                             <p class="text-muted">
-                                <i class="fas fa-map-marker-alt"></i> <?php echo $property['ufCrm13PfCity'] . ' - ' . $property['ufCrm13PfCommunity'] . ' - ' . $property['ufCrm13PfSubCommunity'] . ' - ' . $property['ufCrm13PfTower'] ?>
+                                <i class="fas fa-map-marker-alt"></i> <?php echo $property['ufCrm13City'] . ' - ' . $property['ufCrm13Community'] . ' - ' . $property['ufCrm13SubCommunity'] . ' - ' . $property['ufCrm13Tower'] ?>
                             </p>
                         </div>
                     </div>
@@ -312,25 +312,25 @@ $property = $response['result']['item'] ?? null;
 
                     <!-- Image gallery -->
                     <!-- <div class="row mt-3 w-100 listing-images">
-                        <?php for ($i = 0; $i < count($property['ufCrm13Photos']); $i++) { ?>
+                        <?php for ($i = 0; $i < count($property['ufCrm13PhotoLinks']); $i++) { ?>
                             <div class="col-6 col-md-3 mb-3">
-                                <img src="<?= htmlspecialchars($property['ufCrm13Photos'][$i]) ?>" alt="Image <?= $i + 1 ?>" class="img-fluid rounded">
+                                <img src="<?= htmlspecialchars($property['ufCrm13PhotoLinks'][$i]) ?>" alt="Image <?= $i + 1 ?>" class="img-fluid rounded">
                             </div>
                         <?php } ?>
                     </div> -->
 
                     <!-- Image Preview -->
                     <div class="gallery-preview mb-4">
-                        <img src="<?= htmlspecialchars($property['ufCrm13Photos'][0]) ?>" alt="Preview" id="previewImage">
+                        <img src="<?= htmlspecialchars($property['ufCrm13PhotoLinks'][0]) ?>" alt="Preview" id="previewImage">
                     </div>
 
                     <!-- Thumbnails Carousel -->
                     <div class="carousel-container">
                         <div class="carousel">
                             <!-- Carousel items will be dynamically added here -->
-                            <?php for ($i = 0; $i < count($property['ufCrm13Photos']); $i++) { ?>
+                            <?php for ($i = 0; $i < count($property['ufCrm13PhotoLinks']); $i++) { ?>
                                 <div class="carousel-item">
-                                    <img src="<?= htmlspecialchars($property['ufCrm13Photos'][$i]) ?>" alt="image - .<?= $i + 1 ?>" data-src="<?= htmlspecialchars($property['ufCrm13Photos'][$i]) ?>" class="thumbnail">
+                                    <img src="<?= htmlspecialchars($property['ufCrm13PhotoLinks'][$i]) ?>" alt="image - .<?= $i + 1 ?>" data-src="<?= htmlspecialchars($property['ufCrm13PhotoLinks'][$i]) ?>" class="thumbnail">
                                 </div>
                             <?php } ?>
                         </div>

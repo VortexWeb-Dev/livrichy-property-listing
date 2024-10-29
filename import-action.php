@@ -34,9 +34,9 @@ function sendPropertiesToBitrix($properties)
                 'ufCrm13PropertyType' => $property['property_type'],
                 'ufCrm13Price' => $property['price'],
                 'ufCrm13RentalPeriod' => $property['rental_period'],
-                'ufCrm13PfCity' => $property['city'],
-                'ufCrm13PfCommunity' => $property['community'],
-                'ufCrm13PfSubCommunity' => $property['sub_community'],
+                'ufCrm13City' => $property['city'],
+                'ufCrm13Community' => $property['community'],
+                'ufCrm13SubCommunity' => $property['sub_community'],
                 'ufCrm13TitleEn' => $property['title_en'],
                 'ufCrm13DescriptionEn' => $property['description_en'],
                 'ufCrm13Amenities' => $property['amenities'],
@@ -49,7 +49,7 @@ function sendPropertiesToBitrix($properties)
                 'ufCrm13AgentPhone' => $property['agent_phone'],
                 'ufCrm13AgentPhoto' => $agent['PERSONAL_PHOTO'] ?? '',
                 'ufCrm13Parking' => $property['parking'],
-                'ufCrm13Photos' => $property['photos'],
+                'ufCrm13PhotoLinks' => $property['photos'],
                 'ufCrm13Geopoints' => $property['geopoints'],
             ]
         ]);

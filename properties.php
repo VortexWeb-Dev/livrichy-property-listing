@@ -21,10 +21,10 @@ function fetchProperties($filter = null)
 	// 	$filterConditions['ufCrm13RefId'] = $filter['refId'];
 	// }
 	if (!empty($filter['community'])) {
-		$filterConditions['ufCrm13PfCommunity'] = $filter['community'];
+		$filterConditions['ufCrm13Community'] = $filter['community'];
 	}
 	if (!empty($filter['subCommunity'])) {
-		$filterConditions['ufCrm13PfSubCommunity'] = $filter['subCommunity'];
+		$filterConditions['ufCrm13SubCommunity'] = $filter['subCommunity'];
 	}
 	if (!empty($filter['building'])) {
 		$filterConditions['ufCrm13PfBuilding'] = $filter['building'];
@@ -249,7 +249,7 @@ function fetchPropertyDetails($id)
 											</td>
 											<td style="padding: 10px 20px; min-width: 200px;">
 												<div class="d-flex align-items-center">
-													<img src="<?= htmlspecialchars($property['ufCrm13Photos'][0] ?? $property['ufCrm13_1726230114498'][0]['urlMachine']) ?>"
+													<img src="<?= htmlspecialchars($property['ufCrm13PhotoLinks'][0] ?? $property['ufCrm13_1726230114498'][0]['urlMachine']) ?>"
 														class="me-3"
 														style="width: 60px; height: 60px; object-fit: cover;"
 														alt="Property Image">
@@ -283,7 +283,7 @@ function fetchPropertyDetails($id)
 												</small>
 											</td>
 											<td class="text-truncate" style="padding: 10px 20px;">
-												<span style="color:#334155; font-weight: 600; font-size:smaller"><?= htmlspecialchars($property['ufCrm13PfCity']) ?> - <?= htmlspecialchars($property['ufCrm13PfCommunity']) ?> - <?= htmlspecialchars($property['ufCrm13PfSubCommunity']) ?></span>
+												<span style="color:#334155; font-weight: 600; font-size:smaller"><?= htmlspecialchars($property['ufCrm13City']) ?> - <?= htmlspecialchars($property['ufCrm13Community']) ?> - <?= htmlspecialchars($property['ufCrm13SubCommunity']) ?></span>
 											</td>
 											<td style="padding: 10px 20px;">
 												<span style="color:#334155; font-weight: 600; font-size:smaller"><?= htmlspecialchars($property['ufCrm13AgentName']) ?></span>

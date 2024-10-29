@@ -861,7 +861,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                          
                             <div id="photoPreview" class="text-center mb-3" style="display:none;">
-                                <img id="selectedPhoto" src="<?= $property['ufCrm13PhotosFiles'][0]['urlMachine'] ?>" class="img-fluid rounded" style="max-height: 300px;" alt="Selected Photo" />
+                                <img id="selectedPhoto" src="<?= $property['ufCrm13PhotoLinks'][0] ?>" class="img-fluid rounded" style="max-height: 300px;" alt="Selected Photo" />
                             </div>
 
                             <p class="text-muted">Maximum allowed file size: 2MB</p>

@@ -686,7 +686,7 @@ $property = $response['result']['item'] ?? null;
                                 </div>
                                 <div class="mb-3">
                                     <label for="propertyCity" class="form-label">City</label>
-                                    <input type="text" value="<?= $property['ufCrm13PfCity'] ?>" name="propertyCity" id="propertyCity" class="form-control">
+                                    <input type="text" value="<?= $property['ufCrm13City'] ?>" name="propertyCity" id="propertyCity" class="form-control">
                                     <!-- <select id="propertyCity" name="propertyCity" class="form-select">
 								<option value="">Please select</option>
 								<option value="1">City 1</option>
@@ -694,7 +694,7 @@ $property = $response['result']['item'] ?? null;
                                 </div>
                                 <div class="mb-3">
                                     <label for="propertyCommunity" class="form-label">Community</label>
-                                    <input type="text" value="<?= $property['ufCrm13PfCommunity'] ?>" name="propertyCommunity" id="propertyCommunity" class="form-control">
+                                    <input type="text" value="<?= $property['ufCrm13Community'] ?>" name="propertyCommunity" id="propertyCommunity" class="form-control">
                                     <!-- <select id="propertyCommunity" name="propertyCommunity" class="form-select">
 								<option value="">Please select</option>
 								<option value="1">Community 1</option>
@@ -702,7 +702,7 @@ $property = $response['result']['item'] ?? null;
                                 </div>
                                 <div class="mb-3">
                                     <label for="propertySubCommunity" class="form-label">Sub Community</label>
-                                    <input type="text" value="<?= $property['ufCrm13PfSubCommunity'] ?>" name="propertySubCommunity" id="propertySubCommunity" class="form-control">
+                                    <input type="text" value="<?= $property['ufCrm13SubCommunity'] ?>" name="propertySubCommunity" id="propertySubCommunity" class="form-control">
                                     <!-- <select id="propertySubCommunity" name="propertySubCommunity" class="form-select">
 								<option value="">Please select</option>
 								<option value="1">Sub Community 1</option>
@@ -710,7 +710,7 @@ $property = $response['result']['item'] ?? null;
                                 </div>
                                 <div class="mb-3">
                                     <label for="propertyTower" class="form-label">Tower/ Build</label>
-                                    <input type="text" value="<?= $property['ufCrm13PfTower'] ?>" name="propertyCity" id="propertyCity" class="form-control">
+                                    <input type="text" value="<?= $property['ufCrm13Tower'] ?>" name="propertyCity" id="propertyCity" class="form-control">
                                     <!-- <select id="propertyTower" name="propertyTower" class="form-select">
 								<option value="">Please select</option>
 								<option value="1">Tower/ Build 1</option>

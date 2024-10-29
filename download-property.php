@@ -51,16 +51,16 @@ $pdf->Cell(40, 10, 'Description: ');
 $pdf->MultiCell(0, 10, $property['ufCrm13DescriptionEn'] ?? 'N/A');
 
 $pdf->Cell(40, 10, 'City: ');
-$pdf->Cell(0, 10, $property['ufCrm13PfCity'] ?? 'N/A', 0, 1);
+$pdf->Cell(0, 10, $property['ufCrm13City'] ?? 'N/A', 0, 1);
 
 $pdf->Cell(40, 10, 'Community: ');
-$pdf->Cell(0, 10, $property['ufCrm13PfCommunity'] ?? 'N/A', 0, 1);
+$pdf->Cell(0, 10, $property['ufCrm13Community'] ?? 'N/A', 0, 1);
 
 $pdf->Cell(40, 10, 'Sub Community: ');
-$pdf->Cell(0, 10, $property['ufCrm13PfSubCommunity'] ?? 'N/A', 0, 1);
+$pdf->Cell(0, 10, $property['ufCrm13SubCommunity'] ?? 'N/A', 0, 1);
 
 $pdf->Cell(40, 10, 'Tower/Building: ');
-$pdf->Cell(0, 10, $property['ufCrm13PfTower'] ?? 'N/A', 0, 1);
+$pdf->Cell(0, 10, $property['ufCrm13Tower'] ?? 'N/A', 0, 1);
 
 $pdf->Cell(40, 10, 'Bedrooms: ');
 $pdf->Cell(0, 10, $property['ufCrm13Bedroom'] ?? 'N/A', 0, 1);
