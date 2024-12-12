@@ -63,14 +63,18 @@
         document.getElementById("photos").addEventListener("change", function(event) {
             const files = Array.from(event.target.files);
             selectedFiles = [];
-            files.forEach(file => {
-                if (!selectedFiles.some(f => f.name === file.name)) {
+
+            files.forEach((file) => {
+                if (file.size >= 10 * 1024 * 1024) {
+                    alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
+                } else if (!selectedFiles.some((f) => f.name === file.name)) {
                     selectedFiles.push(file);
                 }
             });
 
             updatePhotoPreview();
         });
+
 
         function updatePhotoPreview() {
             const promises = selectedFiles.map((file) => {

@@ -404,14 +404,18 @@
             document.getElementById(container.type).addEventListener('change', function(event) {
                 const files = Array.from(event.target.files);
                 container.selectedFiles = [];
+
                 files.forEach((file) => {
-                    if (!container.selectedFiles.some((f) => f.name === file.name)) {
+                    if (file.size >= 10 * 1024 * 1024) {
+                        alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
+                    } else if (!container.selectedFiles.some((f) => f.name === file.name)) {
                         container.selectedFiles.push(file);
                     }
                 });
 
                 updatePhotoPreview();
             });
+
             console.log('first');
 
             // Initialize preview with existing links
