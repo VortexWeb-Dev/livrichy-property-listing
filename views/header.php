@@ -16,7 +16,8 @@
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- swapy cdn -->
-    <script src="https://unpkg.com/swapy/dist/swapy.min.js"></script>
+    <!-- <script src="https://unpkg.com/swapy/dist/swapy.min.js"></script> -->
+    <script src="./node_modules/swapy/dist/swapy.min.js"></script>
     <link rel="stylesheet" href="assets/css/shuffle.css">
 </head>
 

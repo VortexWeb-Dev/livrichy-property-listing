@@ -10,6 +10,7 @@
     "apexcharts": "^4.1.0",
     "dropzone": "^6.0.0-beta.2",
     "lodash": "^4.17.21",
-    "preline": "^2.6.0"
+    "preline": "^2.6.0",
+    "swapy": "^1.0.0"
   }
 }
