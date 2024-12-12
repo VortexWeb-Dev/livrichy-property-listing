@@ -279,7 +279,7 @@
 
                 swapy.onSwapEnd((event) => {
                     const updatedImageLinks = [];
-                    event.data.map.forEach((item) => {
+                    event.slotItemMap.asMap.forEach((item) => {
                         const element = document.querySelector(`[data-swapy-item="${item}"]`);
                         updatedImageLinks.push(element.querySelector('img').src);
                     });

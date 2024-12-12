@@ -44,10 +44,11 @@
 
 
             swapy.onSwapEnd((event) => {
+                console.log('Swap end event:', event.slotItemMap.asMap);
 
                 imageLinks = [];
 
-                event.data.map.forEach((item, index) => {
+                event.slotItemMap.asMap.forEach((item, index) => {
                     let element = document.querySelector(`[data-swapy-item="${item}"]`);
                     imageLinks.push(element.querySelector('img').src);
                 });
@@ -138,15 +139,15 @@
             previewContainer.appendChild(row);
             addSwapy();
 
-
-
+            console.log("imageLinks-function", imageLinks);
+            console.log("selectedFiles-function", selectedFiles);
 
             updateSelectedImagesInput();
         }
 
         function updateSelectedImagesInput() {
             selectedImagesInput.value = JSON.stringify(imageLinks);
-
+            console.log("selectedImagesInput.value", selectedImagesInput.value);
         }
     });
 </script>
