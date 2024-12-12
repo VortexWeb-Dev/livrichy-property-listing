@@ -38,59 +38,21 @@
         </ul>
       </div>
 
-
+      <!-- Filter Modal Button -->
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-        Filters
+        <i class="fas fa-filter me-2"></i>Filters
       </button>
+
+      <a href="?page=properties" id="clearFiltersBtn" class="btn btn-secondary py-1.5 px-4 rounded-md d-none"><i class="fas fa-eraser me-2"></i> Clear Filters</a>
 
     </div>
   </div>
 
-  <script>
-    const savedFilter = localStorage.getItem('listingFilter') || 'ALL';
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-      if (item.innerText === document.querySelector('.btn').innerText) {
-        item.classList.add('active');
-      }
-    });
-
-    function filterProperties(filterKey) {
-      localStorage.setItem('listingFilter', filterKey);
-
-      const filterLabels = {
-        'ALL': 'All Listings',
-        'DRAFT': 'Draft',
-        'LIVE': 'Live',
-        'PENDING': 'Pending',
-        'ARCHIVED': 'Archived',
-        'DUPLICATE': 'Duplicate',
-      };
-
-      document.querySelector('.btn.btn-filter').innerText = filterLabels[filterKey] || 'Select Filter';
-
-      document.querySelectorAll('.dropdown-item.filter-item').forEach(item => {
-        if (item.innerText === filterLabels[filterKey]) {
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active');
-        }
-      });
-
-      if (filterKey === 'ALL') {
-        fetchProperties(currentPage);
-        return;
-      }
-
-      fetchProperties(currentPage, {
-        'ufCrm13Status': filterKey
-      });
-
-    }
-  </script>
-
   <div class="flex flex-wrap justify-end items-center gap-2">
+    <!-- Create Listing Button -->
+    <a href="?page=add-property" class="btn btn-primary py-1.5 px-4 rounded-md"><i class="fas fa-plus me-2"></i>Create Listing</a>
+
     <!-- XML Publish Dropdown -->
-    <a href="?page=add-property" class="btn btn-primary py-2 px-4 rounded-md">Create Listing</a>
     <div class="dropdown me-2">
       <button
         class="btn btn-outline-primary dropdown-toggle w-100"
@@ -109,10 +71,9 @@
       </ul>
     </div>
 
-
     <!-- Bulk Actions Dropdown -->
     <div class="relative">
-      <button class="btn btn-secondary py-2 px-4 rounded-md bg-secondary text-white dropdown-toggle"
+      <button class="btn btn-secondary py-1.5 px-4 rounded-md bg-secondary text-white dropdown-toggle"
         type="button"
         id="bulkActionsDropdown"
         data-bs-toggle="dropdown"
@@ -157,6 +118,48 @@
       </ul>
     </div>
 
-
   </div>
 </div>
+
+<script>
+  const savedFilter = localStorage.getItem('listingFilter') || 'ALL';
+  document.querySelectorAll('.dropdown-item').forEach(item => {
+    if (item.innerText === document.querySelector('.btn').innerText) {
+      item.classList.add('active');
+    }
+  });
+
+  function filterProperties(filterKey) {
+    localStorage.setItem('listingFilter', filterKey);
+
+    const filterLabels = {
+      'ALL': 'All Listings',
+      'DRAFT': 'Draft',
+      'LIVE': 'Live',
+      'PENDING': 'Pending',
+      'ARCHIVED': 'Archived',
+      'DUPLICATE': 'Duplicate',
+    };
+
+    document.querySelector('.btn.btn-filter').innerText = filterLabels[filterKey] || 'Select Filter';
+
+    document.querySelectorAll('.dropdown-item.filter-item').forEach(item => {
+      if (item.innerText === filterLabels[filterKey]) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    if (filterKey === 'ALL') {
+      fetchProperties(currentPage);
+      return;
+    }
+
+    fetchProperties(currentPage, {
+      'ufCrm13Status': filterKey
+    });
+
+    document.querySelector('#clearFiltersBtn').classList.remove('d-none');
+  }
+</script>

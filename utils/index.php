@@ -206,7 +206,7 @@ function formatDate($date)
 
 function formatField($field, $value, $type = 'string')
 {
-    if (empty($value)) {
+    if (empty($value) && $value != 0) {
         return '';
     }
 
@@ -342,25 +342,31 @@ function generatePfXml($properties)
 
         $xml .= formatField('reference_number', $property['ufCrm13ReferenceNumber']);
         $xml .= formatField('permit_number', getPermitNumber($property));
+
         $xml .= formatField('dtcm_permit', $property['ufCrm13DtcmPermitNumber']);
         $xml .= formatField('offering_type', $property['ufCrm13OfferingType']);
         $xml .= formatField('property_type', $property['ufCrm13PropertyType']);
         $xml .= formatPriceOnApplication($property);
         $xml .= formatRentalPrice($property);
+
         $xml .= formatField('service_charge', $property['ufCrm13ServiceCharge']);
         $xml .= formatField('cheques', $property['ufCrm13NoOfCheques']);
         $xml .= formatField('city', $property['ufCrm13City']);
         $xml .= formatField('community', $property['ufCrm13Community']);
         $xml .= formatField('sub_community', $property['ufCrm13SubCommunity']);
         $xml .= formatField('property_name', $property['ufCrm13Tower']);
+
         $xml .= formatField('title_en', $property['ufCrm13TitleEn']);
         $xml .= formatField('title_ar', $property['ufCrm13TitleAr']);
         $xml .= formatField('description_en', $property['ufCrm13DescriptionEn']);
         $xml .= formatField('description_ar', $property['ufCrm13DescriptionAr']);
+        
         $xml .= formatField('plot_size', $property['ufCrm13TotalPlotSize']);
         $xml .= formatField('size', $property['ufCrm13Size']);
+        // $xml .= formatField('bedroom', $property['ufCrm13Bedroom']);
         $xml .= formatBedroom($property);
         $xml .= formatBathroom($property);
+
         $xml .= formatAgent($property);
         $xml .= formatField('build_year', $property['ufCrm13BuildYear']);
         $xml .= formatField('parking', $property['ufCrm13Parking']);

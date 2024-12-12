@@ -191,7 +191,7 @@
         const entriesArray = Array.from(formData.entries());
 
         for (const [key, value] of entriesArray) {
-            if (value != null && value != "" && value != "0" && value != "1") {
+            if (value != null && value != "") {
                 params.append(key, value);
             }
         }
@@ -214,6 +214,7 @@
             'bedrooms': 'ufCrm13Bedroom',
             'bathrooms': 'ufCrm13Bathroom',
             'price': 'ufCrm13Price',
+            'portal': 'portal'
         }
 
         let filterParams = {};
@@ -224,21 +225,28 @@
             }
         }
 
-        if (params['portal']) {
-            if (params['portal'] == 'PF') {
-                filterParams['ufCrm13PfEnable'] = "Y"
-            } else if (params['portal'] == 'BAYUT') {
-                filterParams['ufCrm13BayutEnable'] = "Y"
-            } else if (params['portal'] == 'DUBIZZLE') {
-                filterParams['ufCrm13DubizzleEnable'] = "Y"
-            } else if (params['portal'] == 'WEBSITE') {
-                filterParams['ufCrm13WebsiteEnable'] = "Y"
+        if (filterParams['portal']) {
+            if (filterParams['portal'] == 'PF') {
+                filterParams['ufCrm13PfEnable'] = 1
+            } else if (filterParams['portal'] == 'BAYUT') {
+                filterParams['ufCrm13BayutEnable'] = 1
+            } else if (filterParams['portal'] == 'DUBIZZLE') {
+                filterParams['ufCrm13DubizzleEnable'] = 1
+            } else if (filterParams['portal'] == 'WEBSITE') {
+                filterParams['ufCrm13WebsiteEnable'] = 1
             }
+            delete filterParams['portal'];
         }
+
+        // console.log("entriesArray", entriesArray);
+        // console.log("Params", params);
+        // console.log("filterParams", filterParams);
 
         fetchProperties(currentPage, filterParams);
         document.getElementById('filterForm').reset();
         document.querySelector('button[data-bs-dismiss="modal"]').click();
+
+        document.querySelector('#clearFiltersBtn').classList.remove('d-none');
     }
 
     document.addEventListener('DOMContentLoaded', function() {
