@@ -6,6 +6,7 @@
 <script src="./node_modules/lodash/lodash.min.js"></script>
 <script src="./node_modules/apexcharts/dist/apexcharts.min.js"></script>
 <script src="./node_modules/preline/dist/helper-apexcharts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fabric@latest/dist/index.min.js"></script>
 <script src="assets/js/script.js"></script>
 
 <script>
@@ -286,15 +287,16 @@
 
                 ctx.drawImage(imageElement, 0, 0, width, height);
 
-                const watermarkWidth = watermarkImage.width;
-                const watermarkHeight = watermarkImage.height;
+                const scaleFactor = 3;
+                const watermarkWidth = watermarkImage.width * scaleFactor;
+                const watermarkHeight = watermarkImage.height * scaleFactor;
 
                 const xPosition = (width - watermarkWidth) / 2;
                 const yPosition = (height - watermarkHeight) / 2;
 
                 ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
 
-                const watermarkedImage = canvas.toDataURL();
+                const watermarkedImage = canvas.toDataURL('image/jpeg', 0.8);
                 resolve(watermarkedImage);
             };
 
@@ -384,8 +386,9 @@
                     imageElement.onload = async () => {
                         try {
                             // Add watermark to the image
-                            // const watermarkedDataUrl = await addWatermark(imageElement, watermarkPath);
-                            const watermarkedDataUrl = await addWatermarkText(imageElement, 'LIVRICHY');
+                            const watermarkedDataUrl = await addWatermark(imageElement, watermarkPath);
+                            // const watermarkedDataUrl = await addWatermarkText(imageElement, 'LIVRICHY');
+                            // const watermarkedDataUrl = await addWatermarkWithFabric(imageElement, watermarkPath);
 
                             // Convert the data URL to a Blob
                             const watermarkedBlob = dataURLToBlob(watermarkedDataUrl);
