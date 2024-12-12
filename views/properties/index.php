@@ -179,7 +179,11 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
                         <div class="flex justify-start gap-1">
                             <span class="text-sm text-muted me-1" title="Bathrooms"><i class="fa-solid fa-bath me-1"></i>${property.ufCrm13Bathroom || 'N/A'}</span>
-                            <span class="text-sm text-muted" title="Bedrooms"><i class="fa-solid fa-bed me-1"></i>${property.ufCrm13Bedroom || 'N/A'}</span>
+                            <span class="text-sm text-muted" title="Bedrooms">
+                                <i class="fa-solid fa-bed me-1"></i>
+                                ${property.ufCrm13Bedroom === 0 ? 'Studio' : property.ufCrm13Bedroom === 11 ? '10+' : property.ufCrm13Bedroom || 'N/A'}
+                            </span>
+
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
