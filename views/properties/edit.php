@@ -247,16 +247,16 @@
                 selectedInput: document.getElementById('selectedImages'),
                 existingInput: document.getElementById('existingPhotos'),
             },
-            {
-                type: "floorplan",
-                newLinks: [],
-                selectedFiles: [],
-                existingLinks: property['ufCrm13FloorPlan'] ? [property['ufCrm13FloorPlan']] : [],
-                newPreviewContainer: document.getElementById('newFloorplanPreviewContainer'),
-                existingPreviewContainer: document.getElementById('existingFloorplanPreviewContainer'),
-                selectedInput: document.getElementById('selectedFloorplan'),
-                existingInput: document.getElementById('existingFloorplan'),
-            },
+            // {
+            //     type: "floorplan",
+            //     newLinks: [],
+            //     selectedFiles: [],
+            //     existingLinks: property['ufCrm13FloorPlan'] ? [property['ufCrm13FloorPlan']] : [],
+            //     newPreviewContainer: document.getElementById('newFloorplanPreviewContainer'),
+            //     existingPreviewContainer: document.getElementById('existingFloorplanPreviewContainer'),
+            //     selectedInput: document.getElementById('selectedFloorplan'),
+            //     existingInput: document.getElementById('existingFloorplan'),
+            // },
         ];
 
         containers.forEach((container) => {
@@ -266,6 +266,8 @@
         function initializeContainer(container) {
             // Add Swapy only if slots exist
             function addSwapy(previewContainer) {
+                console.log('swappy');
+
                 const slots = previewContainer.querySelectorAll('[data-swapy-slot]');
                 if (slots.length === 0) {
                     console.warn(`No slots found in preview container:`, previewContainer);
@@ -278,18 +280,22 @@
                 });
 
                 swapy.onSwapEnd((event) => {
-                    const updatedImageLinks = [];
-                    event.slotItemMap.asMap.forEach((item) => {
-                        const element = document.querySelector(`[data-swapy-item="${item}"]`);
-                        updatedImageLinks.push(element.querySelector('img').src);
-                    });
+                    if (event.hasChanged) {
+                        console.log('Swap end event:', event);
 
-                    if (previewContainer === container.newPreviewContainer) {
-                        container.newLinks = updatedImageLinks;
-                        previewImages(container.newLinks, container.newPreviewContainer);
-                    } else {
-                        container.existingLinks = updatedImageLinks;
-                        previewImages(container.existingLinks, container.existingPreviewContainer);
+                        const updatedImageLinks = [];
+                        event.slotItemMap.asMap.forEach((item) => {
+                            const element = document.querySelector(`[data-swapy-item="${item}"]`);
+                            updatedImageLinks.push(element.querySelector('img').src);
+                        });
+
+                        if (previewContainer === container.newPreviewContainer) {
+                            container.newLinks = updatedImageLinks;
+                            previewImages(container.newLinks, container.newPreviewContainer);
+                        } else {
+                            container.existingLinks = updatedImageLinks;
+                            previewImages(container.existingLinks, container.existingPreviewContainer);
+                        }
                     }
                 });
             }
@@ -314,6 +320,8 @@
 
             // Render images into the preview container
             function previewImages(imageLinks, previewContainer) {
+                console.log('previewImages');
+
                 previewContainer.innerHTML = '';
 
                 if (imageLinks.length === 0) {
@@ -360,7 +368,12 @@
                         "m-1"
                     );
                     removeBtn.style.zIndex = "1";
-                    removeBtn.onclick = function() {
+
+                    removeBtn.addEventListener('click', function(event) {
+                        // event.preventDefault();
+                        event.stopImmediatePropagation();
+                        console.log("removeBtn.onclick", i);
+
                         if (previewContainer === container.newPreviewContainer) {
                             container.newLinks.splice(i, 1);
                             previewImages(container.newLinks, container.newPreviewContainer);
@@ -368,7 +381,7 @@
                             container.existingLinks.splice(i, 1);
                             previewImages(container.existingLinks, container.existingPreviewContainer);
                         }
-                    };
+                    });
 
                     item.appendChild(removeBtn);
                     row.appendChild(slot);
@@ -381,9 +394,10 @@
 
             // Update hidden input values for the selected and existing images
             function updateSelectedImagesInput() {
+                console.log("updateSelectedImagesInput");
+
                 container.selectedInput.value = JSON.stringify(container.newLinks);
                 container.existingInput.value = JSON.stringify(container.existingLinks);
-
             }
 
             // Handle file selection
@@ -398,6 +412,7 @@
 
                 updatePhotoPreview();
             });
+            console.log('first');
 
             // Initialize preview with existing links
             previewImages(container.existingLinks, container.existingPreviewContainer);
