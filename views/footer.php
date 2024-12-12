@@ -304,6 +304,34 @@
         });
     }
 
+    // Function to add watermark text to the image
+    function addWatermarkText(imageElement, watermarkText) {
+        return new Promise((resolve, reject) => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const width = imageElement.width;
+            const height = imageElement.height;
+
+            canvas.width = width;
+            canvas.height = height;
+
+            ctx.drawImage(imageElement, 0, 0, width, height);
+
+            // Set the watermark text properties
+            ctx.font = '360px Arial'; // You can adjust the font size here
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'; // White color with 50% transparency
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // Add the watermark text to the image (centered)
+            ctx.fillText(watermarkText, width / 2, height / 2);
+
+            // Convert the image to JPEG with reduced quality (optional)
+            const watermarkedImage = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality as needed
+            resolve(watermarkedImage);
+        });
+    }
+
     // Function to upload a file
     function uploadFile(file, isDocument = false) {
         const formData = new FormData();
@@ -356,7 +384,8 @@
                     imageElement.onload = async () => {
                         try {
                             // Add watermark to the image
-                            const watermarkedDataUrl = await addWatermark(imageElement, watermarkPath);
+                            // const watermarkedDataUrl = await addWatermark(imageElement, watermarkPath);
+                            const watermarkedDataUrl = await addWatermarkText(imageElement, 'LIVRICHY');
 
                             // Convert the data URL to a Blob
                             const watermarkedBlob = dataURLToBlob(watermarkedDataUrl);
