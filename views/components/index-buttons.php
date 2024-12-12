@@ -2,7 +2,7 @@
   <div class="mb-3 mb-lg-0 flex gap-2">
     <div class="flex gap-2 items-center">
       <!-- Filter Dropdown -->
-      <div class="relative me-2">
+      <div class="dropdown">
         <?php
         $filterLabels = [
           'ALL' => 'All Listings',
@@ -15,24 +15,34 @@
         $currentFilter = $filter ?? 'ALL'; // Default to 'ALL' if no filter is set
         $currentFilterLabel = $filterLabels[$currentFilter] ?? 'Select Filter';
         ?>
-        <button class="btn btn-filter btn-outline-primary dropdown-toggle w-full py-2 px-4 rounded-md border border-primary text-primary"
+        <button
+          class="btn btn-filter btn-outline-primary dropdown-toggle w-100"
           type="button"
-          id="listingFiltersDropdown"
+          id="filterDropdown"
           data-bs-toggle="dropdown"
-          aria-expanded="false">
+          aria-expanded="false"
+          style="background-color: white; color: var(--bs-primary); border-color: var(--bs-primary);">
           <?= $currentFilterLabel ?>
         </button>
-        <ul class="dropdown-menu absolute w-full mt-2 border border-gray-300 bg-white shadow-md" aria-labelledby="listingFiltersDropdown">
+        <ul class="dropdown-menu w-100" aria-labelledby="filterDropdown">
           <?php foreach ($filterLabels as $key => $label): ?>
-            <li><button class="dropdown-item filter-item" onclick="filterProperties('<?= $key ?>')"><?= $label ?></button></li>
+            <li>
+              <button
+                class="dropdown-item"
+                type="button"
+                onclick="filterProperties('<?= $key ?>')">
+                <?= $label ?>
+              </button>
+            </li>
           <?php endforeach; ?>
         </ul>
       </div>
 
+
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
         Filters
       </button>
-      
+
     </div>
   </div>
 
@@ -81,21 +91,24 @@
   <div class="flex flex-wrap justify-end items-center gap-2">
     <!-- XML Publish Dropdown -->
     <a href="?page=add-property" class="btn btn-primary py-2 px-4 rounded-md">Create Listing</a>
-    <div class="relative me-2">
-      <button class="btn btn-outline-primary dropdown-toggle w-full py-2 px-4 rounded-md border border-primary text-primary"
+    <div class="dropdown me-2">
+      <button
+        class="btn btn-outline-primary dropdown-toggle w-100"
         type="button"
         id="xmlPublishDropdown"
         data-bs-toggle="dropdown"
-        aria-expanded="false">
+        aria-expanded="false"
+        style="background-color: white; color: var(--bs-primary); border-color: var(--bs-primary);">
         XML Publish
       </button>
-      <ul class="dropdown-menu absolute w-full mt-2 border border-gray-300 bg-white shadow-md" aria-labelledby="xmlPublishDropdown">
+      <ul class="dropdown-menu w-100 mt-2 border border-gray-300 bg-white shadow" aria-labelledby="xmlPublishDropdown">
         <li><a class="dropdown-item" href="pf-xml.php">PF</a></li>
         <li><a class="dropdown-item" href="bayut-xml.php">Bayut</a></li>
         <li><a class="dropdown-item" href="dubizzle-xml.php">Dubizzle</a></li>
         <li><a class="dropdown-item" href="website-xml.php">Website</a></li>
       </ul>
     </div>
+
 
     <!-- Bulk Actions Dropdown -->
     <div class="relative">
