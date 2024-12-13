@@ -19,7 +19,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Actions</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Reference</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase min-w-[250px]">Property Details</th>
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase min-w-[300px]">Property Details</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Unit Type</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Size</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Price</th>
@@ -56,7 +56,7 @@
         const baseUrl = 'https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4';
         const entityTypeId = 1046;
         const fields = [
-            'id', 'ufCrm13ReferenceNumber', 'ufCrm13OfferingType', 'ufCrm13PropertyType', 'ufCrm13Price', 'ufCrm13TitleEn', 'ufCrm13DescriptionEn', 'ufCrm13Size', 'ufCrm13Bedroom', 'ufCrm13Bathroom', 'ufCrm13PhotoLinks', 'ufCrm13AgentName', 'ufCrm13City', 'ufCrm13Community', 'ufCrm13SubCommunity', 'ufCrm13Tower', 'ufCrm13PfEnable', 'ufCrm13BayutEnable', 'ufCrm13DubizzleEnable', 'ufCrm13WebsiteEnable', 'ufCrm13ListingOwner', 'ufCrm13Status'
+            'id', 'ufCrm13ReferenceNumber', 'ufCrm13OfferingType', 'ufCrm13PropertyType', 'ufCrm13Price', 'ufCrm13TitleEn', 'ufCrm13DescriptionEn', 'ufCrm13Size', 'ufCrm13Bedroom', 'ufCrm13Bathroom', 'ufCrm13PhotoLinks', 'ufCrm13AgentName', 'ufCrm13City', 'ufCrm13Community', 'ufCrm13SubCommunity', 'ufCrm13Tower', 'ufCrm13PfEnable', 'ufCrm13BayutEnable', 'ufCrm13DubizzleEnable', 'ufCrm13WebsiteEnable', 'ufCrm13ListingOwner', 'ufCrm13Status', 'ufCrm13RentalPeriod'
         ];
         const orderBy = {
             id: 'desc'
@@ -187,10 +187,17 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        ${property.ufCrm13Size + ' sqft' || 'N/A'}
+                        <p>${property.ufCrm13Size + ' sqft' || ''}</p>
+                        <p>${sqftToSqm(property.ufCrm13Size) + ' sqm' || ''}</p>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        ${formatPrice(property.ufCrm13Price) || 'N/A'}
+                        ${
+                            property.ufCrm13Price 
+                                ? `${formatPrice(property.ufCrm13Price)}${property.ufCrm13OfferingType === 'RR' || property.ufCrm13OfferingType === 'CR' 
+                                    ? `/${property.ufCrm13RentalPeriod === 'Y' ? 'Year' : property.ufCrm13RentalPeriod === 'M' ? 'Month' : property.ufCrm13RentalPeriod === 'W' ? 'Week' : property.ufCrm13RentalPeriod === 'D' ? 'Day' : ''} - Rent`
+                                    : (property.ufCrm13OfferingType === 'CS' || property.ufCrm13OfferingType === 'RS' ? ' - Sale' : '')}`
+                                : ''
+                        }
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
                         ${getStatusBadge(property.ufCrm13Status)}
@@ -202,12 +209,12 @@
                             property.ufCrm13SubCommunity,
                             property.ufCrm13Tower
                         ]
-                        .filter(Boolean) // Removes any empty or undefined values
-                        .join(' - ') || 'N/A'}
+                        .filter(Boolean)
+                        .join(' - ') || ''}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        <p class="">${property.ufCrm13AgentName || 'N/A'}</p> 
-                        <p class="">${property.ufCrm13ListingOwner || 'N/A'}</p> 
+                        <p class="">${property.ufCrm13AgentName || ''}</p> 
+                        <p class="">${property.ufCrm13ListingOwner || ''}</p> 
                     </td>
                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
                         <div class="flex gap-1">
