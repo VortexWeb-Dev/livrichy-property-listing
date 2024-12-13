@@ -24,6 +24,8 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $uploadResponse = $cloudinary->uploadApi()->upload($file['tmp_name'], [
             'folder' => 'livrichy-uploads',
             'resource_type' => $isDocument ? 'raw' : 'image',
+            // 'async' => true,
+            'chunk_size' => 5000000,
         ]);
 
         echo json_encode(['url' => $uploadResponse['secure_url']]);
