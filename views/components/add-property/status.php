@@ -3,13 +3,13 @@
 
     <div class="my-4 flex flex-col gap-3">
         <!-- Publish Option -->
-        <div class="border border-gray-300 p-4 rounded-md cursor-pointer transition-colors hover:bg-blue-50 flex gap-2 items-center"
+        <!-- <div class="border border-gray-300 p-4 rounded-md cursor-pointer transition-colors hover:bg-blue-50 flex gap-2 items-center"
             data-status-value="PUBLISHED" id="publish-option">
             <input type="radio" name="status" value="PUBLISHED" id="publish" class="peer ">
             <label for="publish" class="text-md text-gray-500 peer-checked:text-blue-600 peer-checked:border-transparent transition-all w-full flex items-center justify-between">
                 Publish
             </label>
-        </div>
+        </div> -->
 
         <!-- Unpublish Option -->
         <div class="border border-gray-300 p-4 rounded-md cursor-pointer transition-colors hover:bg-blue-50 flex gap-2 items-center"
