@@ -24,6 +24,7 @@
             </div>
         </div>
     </label>
+    <p class="text-left text-xs text-red-500 font-semibold mt-2 hidden" id="photosSizeError"></p>
 </div>
 
 <input type="hidden" id="selectedImages" name="selectedImages" />

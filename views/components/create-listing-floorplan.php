@@ -24,6 +24,7 @@
             </div>
         </div>
     </label>
+    <p class="text-left text-xs text-red-500 font-semibold mt-2 hidden" id="floorplanSizeError"></p>
 </div>
 <div id="floorplanPreviewContainer" class="floorplanPreviewContainer"></div>
 <input type="hidden" id="selectedFloorplan" name="selectedFloorplan" />
@@ -66,9 +67,12 @@
 
             files.forEach((file) => {
                 if (file.size >= 10 * 1024 * 1024) {
-                    alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
+                    // alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
+                    document.getElementById("floorplanSizeError").classList.remove('hidden');
+                    document.getElementById("floorplanSizeError").textContent = `The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`;
                 } else if (!selectedFiles.some((f) => f.name === file.name)) {
                     selectedFiles.push(file);
+                    document.getElementById("floorplanSizeError").classList.add('hidden');
                 }
             });
 

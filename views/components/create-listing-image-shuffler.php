@@ -24,6 +24,7 @@
             </div>
         </div>
     </label>
+    <p class="text-left text-xs text-red-500 font-semibold mt-2 hidden" id="photosSizeError"></p>
 </div>
 <div id="photoPreviewContainer" class="photoPreviewContainer"></div>
 <input type="hidden" id="selectedImages" name="selectedImages" />
@@ -66,9 +67,12 @@
 
             files.forEach((file) => {
                 if (file.size >= 10 * 1024 * 1024) {
-                    alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
+                    // alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
+                    document.getElementById("photosSizeError").classList.remove('hidden');
+                    document.getElementById("photosSizeError").textContent = `The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`;
                 } else if (!selectedFiles.some((f) => f.name === file.name)) {
                     selectedFiles.push(file);
+                    document.getElementById("photosSizeError").classList.add('hidden');
                 }
             });
 

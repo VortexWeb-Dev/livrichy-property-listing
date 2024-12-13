@@ -287,7 +287,7 @@
 
                 ctx.drawImage(imageElement, 0, 0, width, height);
 
-                const scaleFactor = 3;
+                const scaleFactor = 1.5;
                 const watermarkWidth = watermarkImage.width * scaleFactor;
                 const watermarkHeight = watermarkImage.height * scaleFactor;
 
@@ -622,6 +622,7 @@
         }
     }
 
+    // Function to check if any property is selected
     function isPropertySelected() {
         var checkboxes = document.querySelectorAll('input[name="property_ids[]"]:checked');
         var propertyIds = Array.from(checkboxes).map(checkbox => checkbox.value);
@@ -629,6 +630,7 @@
         return propertyIds && propertyIds.length > 0;
     }
 
+    // Function to select and add properties to agent transfer form
     function selectAndAddPropertiesToAgentTransfer() {
         var checkboxes = document.querySelectorAll('input[name="property_ids[]"]:checked');
         var propertyIds = Array.from(checkboxes).map(checkbox => checkbox.value);
@@ -643,6 +645,7 @@
         agentModal.show();
     }
 
+    // Function to select and add properties to owner transfer form
     function selectAndAddPropertiesToOwnerTransfer() {
         var checkboxes = document.querySelectorAll('input[name="property_ids[]"]:checked');
         var propertyIds = Array.from(checkboxes).map(checkbox => checkbox.value);
@@ -656,6 +659,12 @@
 
         const ownerModal = new bootstrap.Modal(document.getElementById('transferOwnerModal'));
         ownerModal.show();
+    }
+
+    // Function to calculate square meters
+    function sqftToSqm(sqft) {
+        const sqm = sqft * 0.092903;
+        return parseFloat(sqm.toFixed(2));
     }
 </script>
 
