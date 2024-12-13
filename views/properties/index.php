@@ -1,6 +1,6 @@
 <?php include 'views/components/index-buttons.php'; ?>
 
-<div class="container mx-auto mb-8px-4">
+<div class="w-4/5 mx-auto mb-8 px-4">
     <!-- Loading -->
     <?php include_once('views/components/loading.php'); ?>
 
@@ -11,22 +11,22 @@
                     <table class="min-w-full divide-y divide-gray-200 table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col" class="ps-6 py-3 text-start">
+                                <th scope="col" class="px-4 py-3 text-start">
                                     <label for="hs-at-with-checkboxes-main" class="flex">
                                         <input id="select-all" onclick="toggleCheckboxes(this)" type="checkbox" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" id="hs-at-with-checkboxes-main">
                                         <span class="sr-only">Checkbox</span>
                                     </label>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Actions</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Reference</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase min-w-[300px]">Property Details</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Unit Type</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Size</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Price</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Unit Status</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Location</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Listing Agent and Owner</th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase min-w-[250px]">Published Portals</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Reference</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase max-w-[200px]">Property Details</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Unit Type</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Size</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Price</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Unit Status</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Location</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Listing Agent and Owner</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase min-w-[200px]">Published Portals</th>
                             </tr>
                         </thead>
                         <tbody id="property-list" class="divide-y divide-gray-200"></tbody>
@@ -120,7 +120,7 @@
                 .map(
                     (property) => `
                 <tr>
-                    <td class="size-px whitespace-nowrap">
+                    <td class="size-sm whitespace-nowrap">
                         <div class="ps-6 py-3">
                             <label for="hs-at-with-checkboxes-1" class="flex">
                             <input type="checkbox" name="property_ids[]" value="${property.id}" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" id="hs-at-with-checkboxes-1">
@@ -128,7 +128,7 @@
                             </label>
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         <div class="dropdown">
                             <button class="btn btn-sm btn-outline-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -166,31 +166,29 @@
 
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${property.ufCrm13ReferenceNumber || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800 text-wrap">${property.ufCrm13ReferenceNumber || 'N/A'}</td>
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         <div class="flex">
-                            <img class="w-24 h-24 rounded mr-4" src="${property.ufCrm13PhotoLinks[0] || 'https://via.placeholder.com/150'}" alt="${property.ufCrm13TitleEn || 'N/A'}">
+                            <img class="w-20 h-20 rounded object-cover mr-4" src="${property.ufCrm13PhotoLinks[0] || 'https://via.placeholder.com/150'}" alt="${property.ufCrm13TitleEn || 'N/A'}">
                             <div class="text-sm">
                                 <p class="text-gray-800 font-semibold">${property.ufCrm13TitleEn || 'N/A'}</p>
-                                <p class="text-gray-400 text-wrap">${property.ufCrm13DescriptionEn.slice(0, 50) + '...' || 'N/A'}</p>
+                                <p class="text-gray-400 text-wrap max-w-full truncate">${property.ufCrm13DescriptionEn.slice(0, 60) + '...' || 'N/A'}</p>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        <div class="flex justify-start gap-1">
-                            <span class="text-sm text-muted me-1" title="Bathrooms"><i class="fa-solid fa-bath me-1"></i>${property.ufCrm13Bathroom || 'N/A'}</span>
-                            <span class="text-sm text-muted" title="Bedrooms">
-                                <i class="fa-solid fa-bed me-1"></i>
-                                ${property.ufCrm13Bedroom === 0 ? 'Studio' : property.ufCrm13Bedroom === 11 ? '10+' : property.ufCrm13Bedroom || 'N/A'}
-                            </span>
-
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
+                        <div class="flex flex-col items-start gap-1">
+                            <span class="text-sm text-muted" title="Bathrooms"><i class="fa-solid fa-bath mr-1"></i>${property.ufCrm13Bathroom || 'N/A'}</span>
+                            <span class="text-sm text-muted" title="Bedrooms"><i class="fa-solid fa-bed mr-1"></i>${property.ufCrm13Bedroom === 0 ? 'Studio' : property.ufCrm13Bedroom === 11 ? '10+' : property.ufCrm13Bedroom || 'N/A'}</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        <p>${property.ufCrm13Size + ' sqft' || ''}</p>
-                        <p>${sqftToSqm(property.ufCrm13Size) + ' sqm' || ''}</p>
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
+                        <div class="flex flex-col items-start gap-1">
+                            <span class="text-sm text-muted" title="Bathrooms"><i class="fa-solid fa-ruler-combined mr-1"></i>${property.ufCrm13Size + ' sqft' || 'N/A'}</span>
+                            <span class="text-sm text-muted" title="Bedrooms"><i class="fa-solid fa-ruler-horizontal mr-1"></i>${sqftToSqm(property.ufCrm13Size) + ' sqm' || 'N/A'}</span>
+                        </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         ${
                             property.ufCrm13Price 
                                 ? `${formatPrice(property.ufCrm13Price)}${property.ufCrm13OfferingType === 'RR' || property.ufCrm13OfferingType === 'CR' 
@@ -199,24 +197,32 @@
                                 : ''
                         }
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         ${getStatusBadge(property.ufCrm13Status)}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                        ${[
-                            property.ufCrm13City,
-                            property.ufCrm13Community,
-                            property.ufCrm13SubCommunity,
-                            property.ufCrm13Tower
-                        ]
-                        .filter(Boolean)
-                        .join(' - ') || ''}
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
+                        <p>
+                            ${[
+                                property.ufCrm13City,
+                                property.ufCrm13Community,
+                            ]
+                            .filter(Boolean)
+                            .join(' - ') || ''}
+                        </p>
+                        <p>
+                            ${[
+                                property.ufCrm13SubCommunity,
+                                property.ufCrm13Tower
+                            ]
+                            .filter(Boolean)
+                            .join(' - ') || ''}
+                        </p>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         <p class="">${property.ufCrm13AgentName || ''}</p> 
                         <p class="">${property.ufCrm13ListingOwner || ''}</p> 
                     </td>
-                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                   <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         <div class="flex gap-1">
                             ${property.ufCrm13PfEnable === "Y" ? '<img class="w-8 h-8 rounded-full object-cover" src="assets/images/pf.png" alt="Property Finder" title="Property Finder">' : ''}
                             ${property.ufCrm13BayutEnable === "Y" ? '<img class="w-8 h-8 rounded-full object-cover" src="assets/images/bayut.png" alt="Bayut" title="Bayut">' : ''}
@@ -274,17 +280,17 @@
     function getStatusBadge(status) {
         switch (status) {
             case 'PUBLISHED':
-                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-50 text-green-800">Published</span>';
+                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-2 border rounded-full text-xs font-medium bg-green-50 text-green-800">Published</span>';
             case 'UNPUBLISHED':
-                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-50 text-red-800">Unpublished</span>';
+                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-2 border rounded-full text-xs font-medium bg-red-50 text-red-800">Unpublished</span>';
             case 'LIVE':
-                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-50 text-blue-800">Live</span>';
+                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-2 border rounded-full text-xs font-medium bg-blue-50 text-blue-800">Live</span>';
             case 'DRAFT':
-                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-50 text-gray-800">Draft</span>';
+                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-2 border rounded-full text-xs font-medium bg-gray-50 text-gray-800">Draft</span>';
             case 'ARCHIVED':
-                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-50 text-gray-800">Archived</span>';
+                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-2 border rounded-full text-xs font-medium bg-gray-50 text-gray-800">Archived</span>';
             default:
-                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-50 text-gray-800">' + status + '</span>';
+                return '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-2 border rounded-full text-xs font-medium bg-gray-50 text-gray-800">' + status + '</span>';
         }
     }
 

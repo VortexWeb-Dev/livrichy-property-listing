@@ -1,4 +1,4 @@
-<div class="container mx-auto py-8 px-4">
+<div class="w-4/5 mx-auto py-8">
     <h1 class="text-3xl font-semibold text-gray-800">Reports</h1>
 
     <div class="container mx-auto flex justify-center gap-6 mt-6">
@@ -144,6 +144,14 @@
                 }
             }
         });
+
+        if(residentialSale === 0 && residentialRent === 0 && residentialPropertyFinder === 0 && residentialBayut === 0 && residentialDubizzle === 0 && residentialWebsite === 0) {
+            document.getElementById('hs-doughnut-chart').innerHTML = '<p class="text-sm text-center text-gray-600">No data found</p>';
+        }
+
+        if(commercialSale === 0 && commercialRent === 0 && commercialPropertyFinder === 0 && commercialBayut === 0 && commercialDubizzle === 0 && commercialWebsite === 0) {
+            document.getElementById('hs-doughnut-chart-2').innerHTML = '<p class="text-sm text-center text-gray-600">No data found</p>';
+        }
 
         document.getElementById('residential-sale').textContent = residentialSale;
         document.getElementById('residential-rent').textContent = residentialRent;

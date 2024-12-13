@@ -1,4 +1,4 @@
-<div class="container my-4 flex justify-between">
+<div class="w-4/5 mx-auto my-4 flex justify-between">
   <div class="mb-3 mb-lg-0 flex gap-2">
     <div class="flex gap-2 items-center">
       <!-- Filter Dropdown -->

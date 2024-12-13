@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="w-4/5 mx-auto py-8">
     <div class="flex justify-between items-center mb-6">
         <form class="w-full space-y-4" id="editPropertyForm" onsubmit="handleEditProperty(event)">
             <!-- Management -->

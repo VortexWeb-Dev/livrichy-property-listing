@@ -1,4 +1,4 @@
-<div class="container mx-auto py-8 px-4">
+<div class="w-4/5 mx-auto py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-semibold text-gray-800">Bayut Locations</h1>
         <button type="button" onclick="toggleModal(true)" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-500 hover:border-blue-600 hover:text-blue-600 focus:outline-none focus:border-blue-600 focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none">

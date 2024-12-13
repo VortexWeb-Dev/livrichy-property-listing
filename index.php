@@ -1,11 +1,10 @@
 <?php
 require_once __DIR__ . '/crest/settings.php';
-
 require_once __DIR__ . '/controllers/SpaController.php';
-
 // require_once __DIR__ . '/utils/index.php';
 
 include_once __DIR__ . '/views/header.php';
+
 include 'views/components/toast.php';
 include 'views/components/topbar.php';
 
@@ -32,4 +31,4 @@ if (!array_key_exists($page, $pages)) {
     exit;
 }
 
-include 'views/footer.php';
+include_once __DIR__ . '/views/footer.php';
