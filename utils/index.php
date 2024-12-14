@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . "/../crest/crest.php");
+
 
 function buildApiUrl($baseUrl, $entityTypeId, $fields, $start = 0)
 {
@@ -511,4 +513,22 @@ function uploadFile($file, $isDocument = false)
         echo "Error uploading image: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         return false;
     }
+}
+
+function fetchCurrentUser()
+{
+    $response = CRest::call("user.current");
+    return $response['result'];
+}
+
+function isAdmin($userId)
+{
+    $admins = [
+        1455, // Jackline Kariuki
+        1043, // Kevin Singh
+        414, // Akmal Sharopov
+        1509, // VortexWeb
+    ];
+
+    return in_array($userId, $admins);
 }
