@@ -1,9 +1,13 @@
 <?php
 require_once __DIR__ . '/crest/settings.php';
 require_once __DIR__ . '/controllers/SpaController.php';
-// require_once __DIR__ . '/utils/index.php';
+require_once __DIR__ . '/utils/index.php';
 
 include_once __DIR__ . '/views/header.php';
+
+$currentUser = fetchCurrentUser();
+$currentUserId = $currentUser['ID'];
+$isAdmin = isAdmin($currentUserId);
 
 include 'views/components/toast.php';
 include 'views/components/topbar.php';

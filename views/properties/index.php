@@ -42,8 +42,12 @@
     <!-- Modals -->
     <?php include 'views/modals/filter.php'; ?>
     <?php include 'views/modals/refresh-listing.php'; ?>
-    <?php include 'views/modals/transfer-to-agent.php'; ?>
-    <?php include 'views/modals/transfer-to-owner.php'; ?>
+    <?php
+    if ($isAdmin) {
+        include 'views/modals/transfer-to-agent.php';
+        include 'views/modals/transfer-to-owner.php';
+    }
+    ?>
 </div>
 
 
@@ -51,6 +55,8 @@
     let currentPage = 1;
     const pageSize = 50;
     let totalPages = 0;
+
+    const isAdmin = <?php echo json_encode($isAdmin); ?>;
 
     async function fetchProperties(page = 1, filters = null) {
         const baseUrl = 'https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4';
@@ -139,14 +145,11 @@
                                 <li><button class="dropdown-item" onclick="handleAction('downloadPDF', ${property.id})"><i class="fa-solid fa-download me-2"></i>Download PDF</button></li>
                                 <li><button class="dropdown-item" onclick="handleAction('duplicate', ${property.id})"><i class="fa-solid fa-copy me-2"></i>Duplicate Listing</button></li>
                                 <li>
-                                    <a class="dropdown-item" href="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#referenceModal"
-                                    data-property-id="${property.id}"
-                                    data-reference="${property.ufCrm13ReferenceNumber}">
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#referenceModal" data-property-id="${property.id}" data-reference="${property.ufCrm13ReferenceNumber}">
                                         <i class="fa-solid fa-sync me-2"></i>Refresh Listing
                                     </a>
                                 </li>
+                                ${isAdmin ? `
                                 <li><hr class="dropdown-divider"></li>
                                 <li><button class="dropdown-item" onclick="handleAction('publish', ${property.id})"><i class="fa-solid fa-bullhorn me-2"></i>Publish to all</button></li>
                                 <li><button class="dropdown-item" onclick="handleAction('publish', ${property.id}, 'pf')"><i class="fa-solid fa-search me-2"></i>Publish to PF</button></li>
@@ -159,11 +162,11 @@
                                 <li><button class="dropdown-item" onclick="handleAction('unpublish', ${property.id}, 'bayut')"><i class="fa-solid fa-building me-2"></i>Unpublish from Bayut</button></li>
                                 <li><button class="dropdown-item" onclick="handleAction('unpublish', ${property.id}, 'dubizzle')"><i class="fa-solid fa-home me-2"></i>Unpublish from Dubizzle</button></li>
                                 <li><button class="dropdown-item" onclick="handleAction('unpublish', ${property.id}, 'website')"><i class="fa-solid fa-globe me-2"></i>Unpublish from Website</button></li>
+                                ` : ''}
                                 <li><hr class="dropdown-divider"></li>
                                 <li><button class="dropdown-item text-danger" onclick="handleAction('archive', ${property.id})"><i class="fa-solid fa-archive me-2"></i>Archive</button></li>
                                 <li><button class="dropdown-item text-danger" onclick="handleAction('delete', ${property.id})"><i class="fa-solid fa-trash me-2"></i>Delete</button></li>
                             </ul>
-
                         </div>
                     </td>
                     <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800 text-wrap">${property.ufCrm13ReferenceNumber || 'N/A'}</td>
