@@ -7,6 +7,7 @@
         $filterLabels = [
           'ALL' => 'All Listings',
           'DRAFT' => 'Draft',
+          'PUBLISHED' => 'Published',
           'LIVE' => 'Live',
           'PENDING' => 'Pending',
           'ARCHIVED' => 'Archived',
@@ -138,6 +139,7 @@
     const filterLabels = {
       'ALL': 'All Listings',
       'DRAFT': 'Draft',
+      'PUBLISHED': 'Published',
       'LIVE': 'Live',
       'PENDING': 'Pending',
       'ARCHIVED': 'Archived',
