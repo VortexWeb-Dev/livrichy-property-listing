@@ -67,7 +67,7 @@
             // Minimum 8 images
             if (files.length < 8) {
                 document.getElementById("photosMessage").classList.remove('hidden');
-                document.getElementById("photosMessage").textContent = `Please select at least 8 images.`;
+                document.getElementById("photosMessage").textContent = `Please select at least 8 images. You have selected ${files.length}.`;
                 return;
             }
             selectedFiles = [];
