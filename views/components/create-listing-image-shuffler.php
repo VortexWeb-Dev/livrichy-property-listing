@@ -24,7 +24,7 @@
             </div>
         </div>
     </label>
-    <p class="text-left text-xs text-red-500 font-semibold mt-2 hidden" id="photosSizeError"></p>
+    <p class="text-left text-xs text-red-500 font-semibold mt-2 hidden" id="photosMessage"></p>
 </div>
 <div id="photoPreviewContainer" class="photoPreviewContainer"></div>
 <input type="hidden" id="selectedImages" name="selectedImages" />
@@ -63,19 +63,31 @@
 
         document.getElementById("photos").addEventListener("change", function(event) {
             const files = Array.from(event.target.files);
+
+            // Minimum 8 images
+            if (files.length < 8) {
+                document.getElementById("photosMessage").classList.remove('hidden');
+                document.getElementById("photosMessage").textContent = `Please select at least 8 images.`;
+                return;
+            }
             selectedFiles = [];
 
             files.forEach((file) => {
                 if (file.size >= 10 * 1024 * 1024) {
                     // alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
-                    document.getElementById("photosSizeError").classList.remove('hidden');
-                    document.getElementById("photosSizeError").textContent = `The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`;
+                    document.getElementById("photosMessage").classList.remove('hidden');
+                    document.getElementById("photosMessage").textContent = `The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`;
                 } else if (!selectedFiles.some((f) => f.name === file.name)) {
                     selectedFiles.push(file);
-                    document.getElementById("photosSizeError").classList.add('hidden');
+                    document.getElementById("photosMessage").classList.add('hidden');
                 }
             });
 
+            // Show loading images message
+            document.getElementById("photosMessage").classList.remove('hidden');
+            document.getElementById("photosMessage").classList.remove('text-red-500');
+            document.getElementById("photosMessage").classList.add('text-blue-500');
+            document.getElementById("photosMessage").textContent = `Loading images...`;
             updatePhotoPreview();
         });
 
@@ -95,6 +107,7 @@
             Promise.all(promises).then(() => {
                 previewImages(imageLinks);
             });
+
         }
 
         function previewImages(imageLinks) {
@@ -149,6 +162,9 @@
 
             console.log("imageLinks-function", imageLinks);
             console.log("selectedFiles-function", selectedFiles);
+
+            // Reset message
+            document.getElementById("photosMessage").classList.add('hidden');
 
             updateSelectedImagesInput();
         }
