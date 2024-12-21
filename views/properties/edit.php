@@ -408,11 +408,11 @@
                 files.forEach((file) => {
                     if (file.size >= 10 * 1024 * 1024) {
                         // alert(`The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`);
-                        document.getElementById(`${container.type}SizeError`).classList.remove('hidden');
-                        document.getElementById(`${constainer.type}SizeError`).textContent = `The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`;
+                        document.getElementById(`${container.type}Message`).classList.remove('hidden');
+                        document.getElementById(`${constainer.type}Message`).textContent = `The file "${file.name}" is too large (10MB or greater). Please select a smaller file.`;
                     } else if (!container.selectedFiles.some((f) => f.name === file.name)) {
                         container.selectedFiles.push(file);
-                        document.getElementById(`${container.type}SizeError`).classList.add('hidden');
+                        document.getElementById(`${container.type}Message`).classList.add('hidden');
                     }
                 });
 
