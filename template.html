@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body style="width: 210mm; height: 297mm; margin: 0; padding: 0; font-size: 10px; overflow: hidden;">
+    <div style="max-width: 200mm; font-size: 10px; line-height: 1.2;">
+        <div style="position: relative; background-color: #F59E0B;">
+            <img src="{{mainImage}}" alt="Villa" style="width: 100%; height: 80mm; object-fit: cover;" />
+            <div style="position: absolute; top: 0; left: 0; padding: 5px; background-color: #F59E0B; color: white;">
+                <h1 style="margin: 0; font-size: 14px; font-weight: bold;">LIVRICHY REAL ESTATE</h1>
+            </div>
+        </div>
+        <div style="padding: 10px;">
+            <h2 style="margin: 0; font-size: 16px; font-weight: bold; color: #F59E0B; text-transform: uppercase;">
+                '{{title}}'
+            </h2>
+            <p style="margin: 5px 0; font-size: 12px; color: #4B5563;">
+                Offered at
+                <span style="font-weight: bold; color: #F59E0B;">{{priceText}}</span>
+            </p>
+        </div>
+        <div style="padding: 0 10px;">
+            <p style="margin-top: 5px; font-size: 12px; color: #4B5563;" id="description">
+                {{description}}
+            </p>
+        </div>
+        <div style="padding: 10px;">
+            <h3 style="margin: 0; font-size: 14px; font-weight: bold; color: #1F2937;">Our Facilities</h3>
+            <ul style="margin: 5px 0; padding-left: 20px; color: #4B5563; font-size: 10px; list-style-type: disc;">
+                <li>{{propertyType}}</li>
+                <li>{{size}} sqft / {{sizeSqm}} sqm</li>
+                <li>{{bathrooms}} Bathrooms</li>
+                <li>{{bedrooms}} Bedrooms</li>
+            </ul>
+        </div>
+        <div style="display: flex; gap: 5px; padding: 0 10px;">
+            <img src="{{image1}}" alt="Interior 1" style="width: 32%; height: 30mm; object-fit: cover; border-radius: 4px;" id="image1" />
+            <img src="{{image2}}" alt="Interior 2" style="width: 32%; height: 30mm; object-fit: cover; border-radius: 4px;" id="image2" />
+            <img src="{{image3}}" alt="Interior 3" style="width: 32%; height: 30mm; object-fit: cover; border-radius: 4px;" id="image3" />
+        </div>
+        <div style="background-color: #E5E7EB; padding: 10px; margin-top: 5mm; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="margin: 0; font-size: 14px; font-weight: bold; color: #1F2937;">Contact Us</h3>
+                <p style="margin: 5px 0 0; font-size: 12px; font-weight: bold; color: #F59E0B;">+971 52 110 0555</p>
+                <p style="margin: 0; font-size: 10px; color: #4B5563;">Quick Respond</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <img src="{{agentPhoto}}" alt="Sachin Das" style="width: 20mm; height: 20mm; border-radius: 50%; object-fit: cover;" id="agentImage" />
+                <div style="margin-left: 10px;">
+                    <p style="margin: 0; font-size: 10px; font-weight: bold; color: #1F2937;" id="agentName">{{agentName}}</p>
+                    <p style="margin: 0; font-size: 10px; color: #4B5563;" id="agentPhone">{{agentPhone}}</p>
+                    <p style="margin: 0; font-size: 10px; color: #4B5563;" id="agentEmail">{{agentEmail}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
