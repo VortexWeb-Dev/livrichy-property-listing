@@ -11,6 +11,8 @@
             <?php include_once('views/components/add-property/pricing.php'); ?>
             <!-- Title and Description -->
             <?php include_once('views/components/add-property/title.php'); ?>
+            <!-- Amenities -->
+            <?php include_once('views/components/add-property/amenities.php'); ?>
             <!-- Location -->
             <?php include_once('views/components/add-property/location.php'); ?>
             <!-- Photos and Videos -->
@@ -170,11 +172,21 @@
             fields["ufCrm13AgentLicense"] = agent.ufCrm14AgentLicense;
         }
 
+        // Notes
         const notesString = data.notes;
         if (notesString) {
             const notesArray = JSON.parse(notesString);
             if (notesArray) {
                 fields["ufCrm13Notes"] = notesArray;
+            }
+        }
+
+        // Amenities
+        const amenitiesString = data.amenities;
+        if (amenitiesString) {
+            const amenitiesArray = JSON.parse(amenitiesString);
+            if (amenitiesArray) {
+                fields["ufCrm13Amenities"] = amenitiesArray;
             }
         }
 
