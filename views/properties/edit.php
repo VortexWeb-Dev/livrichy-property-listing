@@ -11,6 +11,8 @@
             <?php include_once('views/components/add-property/pricing.php'); ?>
             <!-- Title and Description -->
             <?php include_once('views/components/add-property/title.php'); ?>
+            <!-- Amenities -->
+            <?php include_once('views/components/add-property/amenities.php'); ?>
             <!-- Location -->
             <?php include_once('views/components/add-property/location.php'); ?>
             <!-- Photos and Videos -->
@@ -183,6 +185,12 @@
         if (notesString) {
             const notesArray = JSON.parse(notesString);
             fields["ufCrm13Notes"] = notesArray;
+        }
+
+        const amenitiesString = data.amenities;
+        if (amenitiesString) {
+            const amenitiesArray = JSON.parse(amenitiesString);
+            fields["ufCrm13Amenities"] = amenitiesArray;
         }
 
         const photos = document.getElementById('selectedImages').value;
@@ -418,8 +426,6 @@
 
                 updatePhotoPreview();
             });
-
-            console.log('first');
 
             // Initialize preview with existing links
             previewImages(container.existingLinks, container.existingPreviewContainer);

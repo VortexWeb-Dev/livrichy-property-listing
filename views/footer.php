@@ -605,6 +605,342 @@
         return photoPaths;
     }
 
+    function getAmenityName(amenityId) {
+        const amenities = [{
+                id: 'GV',
+                label: 'Golf view'
+            },
+            {
+                id: 'CW',
+                label: 'City view'
+            },
+            {
+                id: 'NO',
+                label: 'North orientation'
+            },
+            {
+                id: 'SO',
+                label: 'South orientation'
+            },
+            {
+                id: 'EO',
+                label: 'East orientation'
+            },
+            {
+                id: 'WO',
+                label: 'West orientation'
+            },
+            {
+                id: 'NS',
+                label: 'Near school'
+            },
+            {
+                id: 'HO',
+                label: 'Near hospital'
+            },
+            {
+                id: 'TR',
+                label: 'Terrace'
+            },
+            {
+                id: 'NM',
+                label: 'Near mosque'
+            },
+            {
+                id: 'SM',
+                label: 'Near supermarket'
+            },
+            {
+                id: 'ML',
+                label: 'Near mall'
+            },
+            {
+                id: 'PT',
+                label: 'Near public transportation'
+            },
+            {
+                id: 'MO',
+                label: 'Near metro'
+            },
+            {
+                id: 'VT',
+                label: 'Near veterinary'
+            },
+            {
+                id: 'BC',
+                label: 'Beach access'
+            },
+            {
+                id: 'PK',
+                label: 'Public parks'
+            },
+            {
+                id: 'RT',
+                label: 'Near restaurants'
+            },
+            {
+                id: 'NG',
+                label: 'Near Golf'
+            },
+            {
+                id: 'AP',
+                label: 'Near airport'
+            },
+            {
+                id: 'CS',
+                label: 'Concierge Service'
+            },
+            {
+                id: 'SS',
+                label: 'Spa'
+            },
+            {
+                id: 'SY',
+                label: 'Shared Gym'
+            },
+            {
+                id: 'MS',
+                label: 'Maid Service'
+            },
+            {
+                id: 'WC',
+                label: 'Walk-in Closet'
+            },
+            {
+                id: 'HT',
+                label: 'Heating'
+            },
+            {
+                id: 'GF',
+                label: 'Ground floor'
+            },
+            {
+                id: 'SV',
+                label: 'Server room'
+            },
+            {
+                id: 'DN',
+                label: 'Pantry'
+            },
+            {
+                id: 'RA',
+                label: 'Reception area'
+            },
+            {
+                id: 'VP',
+                label: 'Visitors parking'
+            },
+            {
+                id: 'OP',
+                label: 'Office partitions'
+            },
+            {
+                id: 'SH',
+                label: 'Core and Shell'
+            },
+            {
+                id: 'CD',
+                label: 'Children daycare'
+            },
+            {
+                id: 'CL',
+                label: 'Cleaning services'
+            },
+            {
+                id: 'NH',
+                label: 'Near Hotel'
+            },
+            {
+                id: 'CR',
+                label: 'Conference room'
+            },
+            {
+                id: 'BL',
+                label: 'View of Landmark'
+            },
+            {
+                id: 'PR',
+                label: 'Children Play Area'
+            },
+            {
+                id: 'BH',
+                label: 'Beach Access'
+            }
+        ];
+
+        return amenities.find(amenity => amenity.id === amenityId)?.label || amenityId;
+    }
+
+    function getAmenityId(amenityName) {
+        console.log(amenityName);
+
+        const amenities = [{
+                id: 'GV',
+                label: 'Golf view'
+            },
+            {
+                id: 'CW',
+                label: 'City view'
+            },
+            {
+                id: 'NO',
+                label: 'North orientation'
+            },
+            {
+                id: 'SO',
+                label: 'South orientation'
+            },
+            {
+                id: 'EO',
+                label: 'East orientation'
+            },
+            {
+                id: 'WO',
+                label: 'West orientation'
+            },
+            {
+                id: 'NS',
+                label: 'Near school'
+            },
+            {
+                id: 'HO',
+                label: 'Near hospital'
+            },
+            {
+                id: 'TR',
+                label: 'Terrace'
+            },
+            {
+                id: 'NM',
+                label: 'Near mosque'
+            },
+            {
+                id: 'SM',
+                label: 'Near supermarket'
+            },
+            {
+                id: 'ML',
+                label: 'Near mall'
+            },
+            {
+                id: 'PT',
+                label: 'Near public transportation'
+            },
+            {
+                id: 'MO',
+                label: 'Near metro'
+            },
+            {
+                id: 'VT',
+                label: 'Near veterinary'
+            },
+            {
+                id: 'BC',
+                label: 'Beach access'
+            },
+            {
+                id: 'PK',
+                label: 'Public parks'
+            },
+            {
+                id: 'RT',
+                label: 'Near restaurants'
+            },
+            {
+                id: 'NG',
+                label: 'Near Golf'
+            },
+            {
+                id: 'AP',
+                label: 'Near airport'
+            },
+            {
+                id: 'CS',
+                label: 'Concierge Service'
+            },
+            {
+                id: 'SS',
+                label: 'Spa'
+            },
+            {
+                id: 'SY',
+                label: 'Shared Gym'
+            },
+            {
+                id: 'MS',
+                label: 'Maid Service'
+            },
+            {
+                id: 'WC',
+                label: 'Walk-in Closet'
+            },
+            {
+                id: 'HT',
+                label: 'Heating'
+            },
+            {
+                id: 'GF',
+                label: 'Ground floor'
+            },
+            {
+                id: 'SV',
+                label: 'Server room'
+            },
+            {
+                id: 'DN',
+                label: 'Pantry'
+            },
+            {
+                id: 'RA',
+                label: 'Reception area'
+            },
+            {
+                id: 'VP',
+                label: 'Visitors parking'
+            },
+            {
+                id: 'OP',
+                label: 'Office partitions'
+            },
+            {
+                id: 'SH',
+                label: 'Core and Shell'
+            },
+            {
+                id: 'CD',
+                label: 'Children daycare'
+            },
+            {
+                id: 'CL',
+                label: 'Cleaning services'
+            },
+            {
+                id: 'NH',
+                label: 'Near Hotel'
+            },
+            {
+                id: 'CR',
+                label: 'Conference room'
+            },
+            {
+                id: 'BL',
+                label: 'View of Landmark'
+            },
+            {
+                id: 'PR',
+                label: 'Children Play Area'
+            },
+            {
+                id: 'BH',
+                label: 'Beach Access'
+            }
+        ];
+
+        console.log(amenities.find(amenity => amenity.label === amenityName)?.id || amenityName)
+
+        return amenities.find(amenity => amenity.label === amenityName)?.id || amenityName;
+    }
+
     // Function to convert data URL to Blob
     function dataURLToBlob(dataURL) {
         const byteString = atob(dataURL.split(',')[1]);
@@ -776,6 +1112,7 @@
             ensureOptionExistsAndSelect('listing_owner', property.ufCrm13ListingOwner, property.ufCrm13ListingOwner);
             ensureOptionExistsAndSelect('developer', property.ufCrm13Developers, property.ufCrm13Developers);
 
+            // Notes
             function addExistingNote(note) {
                 const li = document.createElement("li");
                 li.classList.add("text-gray-700", "p-2", "flex", "justify-between", "items-center", "mb-2", "bg-gray-100", "rounded-md");
@@ -794,6 +1131,34 @@
                     addExistingNote(note);
                 });
             }
+
+            // Amenities
+            function addExistingAmenity(amenity) {
+                if (!selectedAmenities.some(a => a.id === amenity)) {
+                    selectedAmenities.push({
+                        id: amenity,
+                        label: getAmenityName(amenity)
+                    });
+                }
+
+                const li = document.createElement("li");
+                li.classList.add("text-gray-700", "p-2", "flex", "justify-between", "items-center", "mb-2", "bg-gray-100", "rounded-md");
+
+                li.innerHTML = `
+                    ${getAmenityName(amenity)} 
+                    <button type="button" class="text-red-500 hover:text-red-700" onclick="removeAmenity('${amenity}')">×</button>
+                `;
+
+                document.getElementById("selectedAmenities").appendChild(li);
+                updateAmenitiesInput();
+            }
+
+            if (property.ufCrm13Amenities && property.ufCrm13Amenities.length > 0) {
+                property.ufCrm13Amenities.forEach(amenity => {
+                    addExistingAmenity(amenity);
+                });
+            }
+
 
             return property;
 

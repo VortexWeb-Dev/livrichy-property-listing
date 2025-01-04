@@ -183,7 +183,7 @@
         }
     ];
 
-    const selectedAmenities = [];
+    let selectedAmenities = [];
 
     function renderAmenities() {
         const availableAmenitiesContainer = document.getElementById("availableAmenities");
@@ -248,18 +248,32 @@
         });
     }
 
-    function removeAmenity(id) {
-        const index = selectedAmenities.findIndex(a => a.id === id);
-        if (index > -1) {
-            selectedAmenities.splice(index, 1);
-            updateSelectedAmenities();
-            updateAmenitiesInput();
+    function removeAmenity(amenityId) {
+        selectedAmenities = selectedAmenities.filter(a => a.id !== amenityId);
+
+        const amenitiesList = document.getElementById("selectedAmenities");
+        const itemToRemove = Array.from(amenitiesList.children).find(li =>
+            li.textContent.trim().includes(getAmenityName(amenityId))
+        );
+
+        if (itemToRemove) {
+            itemToRemove.remove();
         }
+
+        updateAmenitiesInput();
     }
 
+
     function updateAmenitiesInput() {
-        const amenitiesInput = document.getElementById("amenitiesInput");
-        amenitiesInput.value = JSON.stringify(selectedAmenities.map(a => a.id));
+        let selectedAmenities = [];
+        const amenitiesList = document.getElementById("selectedAmenities").children;
+
+        for (let i = 0; i < amenitiesList.length; i++) {
+            selectedAmenities.push(getAmenityId(amenitiesList[i].textContent.trim().replace("×", "").trim()));
+        }
+
+        document.getElementById("amenitiesInput").value = JSON.stringify(selectedAmenities);
+
     }
 
     renderAmenities();
