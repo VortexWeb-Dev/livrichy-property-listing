@@ -261,12 +261,12 @@ function formatFurnished($property)
     $furnished = $property['ufCrm13Furnished'] ?? '';
     if ($furnished) {
         switch ($furnished) {
-            case 'Furnished':
+            case 'furnished':
                 return formatField('furnished', 'Yes');
-            case 'Unfurnished':
+            case 'unfurnished':
                 return formatField('furnished', 'No');
             case 'Partly Furnished':
-                return formatField('furnished', 'Partly');
+                return formatField('semi-furnished', 'Partly');
             default:
                 return '';
         }
@@ -362,7 +362,7 @@ function generatePfXml($properties)
         $xml .= formatField('title_ar', $property['ufCrm13TitleAr']);
         $xml .= formatField('description_en', $property['ufCrm13DescriptionEn']);
         $xml .= formatField('description_ar', $property['ufCrm13DescriptionAr']);
-        
+
         $xml .= formatField('plot_size', $property['ufCrm13TotalPlotSize']);
         $xml .= formatField('size', $property['ufCrm13Size']);
         // $xml .= formatField('bedroom', $property['ufCrm13Bedroom']);
