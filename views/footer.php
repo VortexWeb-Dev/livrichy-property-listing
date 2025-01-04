@@ -17,6 +17,17 @@
         document.getElementById('dubizzle_enable').checked = isChecked;
     });
 
+    // Format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        };
+        return date.toLocaleDateString('en-US', options);
+    }
+
     // Update character count
     function updateCharCount(countElement, length, maxLength) {
         titleCount = document.getElementById(countElement);
@@ -184,11 +195,11 @@
                         const getPropertyUrl = `${baseUrl}/crm.item.get?entityTypeId=1046&id=${propertyId}`;
                         const propertyResponse = await fetch(getPropertyUrl);
                         const propertyData = await propertyResponse.json();
-                        
+
                         if (propertyData.result && propertyData.result.item) {
                             const property = propertyData.result.item;
                             console.log('Property data for deletion:', property);
-                            
+
                             // Delete images from S3
                             if (property.ufCrm13PhotoLinks && Array.isArray(property.ufCrm13PhotoLinks)) {
                                 console.log('Found photo links:', property.ufCrm13PhotoLinks);
@@ -214,7 +225,7 @@
                                     }
                                 }
                             }
-                            
+
                             // Delete floorplan from S3 if exists
                             if (property.ufCrm13FloorPlan) {
                                 try {
@@ -237,7 +248,7 @@
                                     console.error(`Error deleting S3 floorplan: ${property.ufCrm13FloorPlan}`, error);
                                 }
                             }
-                            
+
                             // Delete documents from S3
                             if (property.ufCrm13Documents && Array.isArray(property.ufCrm13Documents)) {
                                 console.log('Found documents:', property.ufCrm13Documents);
@@ -264,7 +275,7 @@
                                 }
                             }
                         }
-                        
+
                         // Now delete the property from CRM
                         apiUrl = `${baseUrl}/crm.item.delete?entityTypeId=1046&id=${propertyId}`;
                     } catch (error) {

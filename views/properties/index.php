@@ -27,6 +27,7 @@
                                 <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Location</th>
                                 <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Listing Agent and Owner</th>
                                 <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase min-w-[200px]">Published Portals</th>
+                                <th scope="col" class="px-3 py-3 text-start text-xs font-medium text-gray-500 uppercase">Created On</th>
                             </tr>
                         </thead>
                         <tbody id="property-list" class="divide-y divide-gray-200"></tbody>
@@ -62,7 +63,7 @@
         const baseUrl = 'https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4';
         const entityTypeId = 1046;
         const fields = [
-            'id', 'ufCrm13ReferenceNumber', 'ufCrm13OfferingType', 'ufCrm13PropertyType', 'ufCrm13Price', 'ufCrm13TitleEn', 'ufCrm13DescriptionEn', 'ufCrm13Size', 'ufCrm13Bedroom', 'ufCrm13Bathroom', 'ufCrm13PhotoLinks', 'ufCrm13AgentName', 'ufCrm13City', 'ufCrm13Community', 'ufCrm13SubCommunity', 'ufCrm13Tower', 'ufCrm13PfEnable', 'ufCrm13BayutEnable', 'ufCrm13DubizzleEnable', 'ufCrm13WebsiteEnable', 'ufCrm13ListingOwner', 'ufCrm13Status', 'ufCrm13RentalPeriod'
+            'id', 'ufCrm13ReferenceNumber', 'ufCrm13OfferingType', 'ufCrm13PropertyType', 'ufCrm13Price', 'ufCrm13TitleEn', 'ufCrm13DescriptionEn', 'ufCrm13Size', 'ufCrm13Bedroom', 'ufCrm13Bathroom', 'ufCrm13PhotoLinks', 'ufCrm13AgentName', 'ufCrm13City', 'ufCrm13Community', 'ufCrm13SubCommunity', 'ufCrm13Tower', 'ufCrm13PfEnable', 'ufCrm13BayutEnable', 'ufCrm13DubizzleEnable', 'ufCrm13WebsiteEnable', 'ufCrm13ListingOwner', 'ufCrm13Status', 'ufCrm13RentalPeriod', 'createdTime'
         ];
         const orderBy = {
             id: 'desc'
@@ -232,6 +233,9 @@
                             ${property.ufCrm13DubizzleEnable === "Y" ? '<img class="w-8 h-8 rounded-full object-cover" src="assets/images/dubizzle.png" alt="Dubizzle" title="Dubizzle">' : ''}
                             ${property.ufCrm13WebsiteEnable === "Y" ? '<img class="w-8 h-8 rounded-full object-cover" src="assets/images/company-logo.png" alt="Livrichy" title="Livrichy">' : ''}
                         </div>
+                    </td>
+                    <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
+                        <p class="">${formatDate(property.createdTime) || ''}</p> 
                     </td>
 
                 </tr>`
