@@ -1,3 +1,12 @@
+<?php
+require_once('./utils/index.php');
+$current_user = fetchCurrentUser();
+
+$agent_name = $current_user['NAME'] . ' ' . $current_user['LAST_NAME'];
+$agent_phone = $current_user['PERSONAL_MOBILE'];
+$agent_photo = $current_user['PERSONAL_PHOTO'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -444,24 +453,24 @@
           property.ufCrm13Size
         );
         document.getElementById("agentName").textContent =
-          property.ufCrm13AgentName;
+          <?php echo json_encode($agent_name) ?>;
         document.getElementById("agentPhone").textContent =
-          property.ufCrm13AgentPhone;
+          <?php echo json_encode($agent_phone) ?>;
 
         document.getElementById("priceText").textContent =
           getPriceText(property);
 
         document.getElementById("agentPhoto").src =
-          property.ufCrm13AgentPhoto;
+          <?php echo json_encode($agent_photo) ?>;
 
         document.getElementById("mainImage").src =
-          property.ufCrm13PhotoLinks[0];
+          property.ufCrm13PhotoLinks[0] || "https://via.placeholder.com/150";
         document.getElementById("image1").src =
-          property.ufCrm13PhotoLinks[1];
+          property.ufCrm13PhotoLinks[1] || "https://via.placeholder.com/150";
         document.getElementById("image2").src =
-          property.ufCrm13PhotoLinks[2];
+          property.ufCrm13PhotoLinks[2] || "https://via.placeholder.com/150";
         document.getElementById("image3").src =
-          property.ufCrm13PhotoLinks[3];
+          property.ufCrm13PhotoLinks[3] || "https://via.placeholder.com/150";
 
         await generatePDF();
 
