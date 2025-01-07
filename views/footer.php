@@ -1092,6 +1092,9 @@
                 case 'DRAFT':
                     document.getElementById('draft').checked = true;
                     break;
+                case 'ARCHIVED':
+                    document.getElementById('archive').checked = true;
+                    break;
                 case 'POCKET':
                     document.getElementById('pocket').checked = true;
                     break;

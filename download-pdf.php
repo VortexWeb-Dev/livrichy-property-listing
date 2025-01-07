@@ -455,7 +455,7 @@
           property.ufCrm13AgentPhoto;
 
         document.getElementById("mainImage").src =
-          property.ufCrm13PhotoLinks[0];
+          property.ufCrm13PhotoLinks[0] + "?cache-bust=12345";
         document.getElementById("image1").src =
           property.ufCrm13PhotoLinks[1];
         document.getElementById("image2").src =
