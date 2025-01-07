@@ -532,3 +532,14 @@ function isAdmin($userId)
 
     return in_array($userId, $admins);
 }
+
+
+function generateWebsiteJson($properties)
+{
+    $json = json_encode([
+        'properties' => $properties,
+        'total' => count($properties)
+    ]);
+
+    return $json;
+}
