@@ -464,13 +464,13 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
           <?php echo json_encode($agent_photo) ?>;
 
         document.getElementById("mainImage").src =
-          property.ufCrm13PhotoLinks[0] || "https://via.placeholder.com/150";
+          property.ufCrm13PhotoLinks[0] + "?cache-bust=12345";
         document.getElementById("image1").src =
-          property.ufCrm13PhotoLinks[1] || "https://via.placeholder.com/150";
+          property.ufCrm13PhotoLinks[1];
         document.getElementById("image2").src =
-          property.ufCrm13PhotoLinks[2] || "https://via.placeholder.com/150";
+          property.ufCrm13PhotoLinks[2];
         document.getElementById("image3").src =
-          property.ufCrm13PhotoLinks[3] || "https://via.placeholder.com/150";
+          property.ufCrm13PhotoLinks[3];
 
         await generatePDF();
 
