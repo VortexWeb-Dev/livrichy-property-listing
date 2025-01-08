@@ -461,16 +461,16 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
           getPriceText(property);
 
         document.getElementById("agentPhoto").src =
-          <?php echo json_encode($agent_photo) ?>;
+          <?php echo json_encode($agent_photo) . "?cache-bust=12345" ?>;
 
         document.getElementById("mainImage").src =
           property.ufCrm13PhotoLinks[0] + "?cache-bust=12345";
         document.getElementById("image1").src =
-          property.ufCrm13PhotoLinks[1];
+          property.ufCrm13PhotoLinks[1] + "?cache-bust=12345";
         document.getElementById("image2").src =
-          property.ufCrm13PhotoLinks[2];
+          property.ufCrm13PhotoLinks[2] + "?cache-bust=12345";
         document.getElementById("image3").src =
-          property.ufCrm13PhotoLinks[3];
+          property.ufCrm13PhotoLinks[3] + "?cache-bust=12345";
 
         await generatePDF();
 
