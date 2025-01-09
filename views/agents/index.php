@@ -89,7 +89,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 flex items-center space-x-2">
                         <img 
                             class="w-10 h-10 object-cover rounded-full" 
-                            src="${agent.ufCrm14AgentPhoto || 'https://youtupia.com/thinkrealty/images/agent-placeholder.webp'}" 
+                            src="${agent.ufCrm14AgentPhoto || './assets/images/agent-placeholder.webp'}" 
                             alt="${agent.ufCrm14AgentName || 'Agent'}" />
                         <span>${agent.ufCrm14AgentName || 'Agent'}</span>
                     </td>
