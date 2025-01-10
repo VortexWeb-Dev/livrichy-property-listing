@@ -366,8 +366,7 @@
     }
 
     function getOwner(ownerName) {
-      const owners = [
-        {
+      const owners = [{
           name: "Bagira Jakipbekova",
           phone: "+971566713723",
           photo: "./assets/images/agent-placeholder.webp",
@@ -515,7 +514,7 @@
 
       document.getElementById("title").textContent = property.ufCrm13TitleEn;
       document.getElementById("description").textContent =
-        property.ufCrm13BrochureDescription ||
+        property.ufCrm13BrochureDescription && property.ufCrm13BrochureDescription !== "null" ? property.ufCrm13BrochureDescription :
         property.ufCrm13DescriptionEn.slice(0, 200);
       document.getElementById("propertyType").textContent = getPropertyType(
         property.ufCrm13PropertyType
@@ -565,7 +564,7 @@
 
       await generatePDF();
 
-      window.location.href = "index.php";
+      // window.location.href = "index.php";
     });
   </script>
 </body>
