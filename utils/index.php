@@ -234,13 +234,13 @@ function formatRentalPrice($property)
 
     switch ($property['ufCrm13RentalPeriod']) {
         case 'Y':
-            return formatField('price', $property['ufCrm13YearlyPrice'] ?? $property['ufCrm13Price'], 'yearly');
+            return formatField('price', $property['ufCrm13Price'], 'yearly');
         case 'M':
-            return formatField('price', $property['ufCrm13MonthlyPrice'] ?? $property['ufCrm13Price'], 'monthly');
+            return formatField('price', $property['ufCrm13Price'], 'monthly');
         case 'W':
-            return formatField('price', $property['ufCrm13WeeklyPrice'] ?? $property['ufCrm13Price'], 'weekly');
+            return formatField('price', $property['ufCrm13Price'], 'weekly');
         case 'D':
-            return formatField('price', $property['ufCrm13DailyPrice'] ?? $property['ufCrm13Price'], 'daily');
+            return formatField('price', $property['ufCrm13Price'], 'daily');
         default:
             return formatField('price', $property['ufCrm13Price']);
     }
@@ -439,13 +439,13 @@ function generateBayutXml($properties)
 
         $xml .= '<Price><![CDATA[' . ($property['ufCrm13Price'] ?? '') . ']]></Price>';
 
-        if ($property['ufCrm13RentalPeriod'] == 'Y' && isset($property['ufCrm13YearlyPrice'])) {
+        if ($property['ufCrm13RentalPeriod'] == 'Y') {
             $xml .= '<Rent_Frequency>Yearly</Rent_Frequency>';
-        } elseif ($property['ufCrm13RentalPeriod'] == 'M' && isset($property['ufCrm13MonthlyPrice'])) {
+        } elseif ($property['ufCrm13RentalPeriod'] == 'M') {
             $xml .= '<Rent_Frequency>Monthly</Rent_Frequency>';
-        } elseif ($property['ufCrm13RentalPeriod'] == 'W' && isset($property['ufCrm13WeeklyPrice'])) {
+        } elseif ($property['ufCrm13RentalPeriod'] == 'W') {
             $xml .= '<Rent_Frequency>Weekly</Rent_Frequency>';
-        } elseif ($property['ufCrm13RentalPeriod'] == 'D' && isset($property['ufCrm13DailyPrice'])) {
+        } elseif ($property['ufCrm13RentalPeriod'] == 'D') {
             $xml .= '<Rent_Frequency>Daily</Rent_Frequency>';
         }
 
