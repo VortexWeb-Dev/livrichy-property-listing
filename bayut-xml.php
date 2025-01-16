@@ -64,7 +64,8 @@ $fields = [
     'ufCrm13DubizzleEnable',
     'ufCrm13SaleType',
     'ufCrm13WebsiteEnable',
-    'updatedTime'
+    'updatedTime',
+    'ufCrm13Amenities'
 ];
 
 $properties = fetchAllProperties($baseUrl, $entityTypeId, $fields, 'bayut');

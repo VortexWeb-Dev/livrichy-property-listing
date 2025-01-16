@@ -478,11 +478,8 @@ function generateBayutXml($properties)
 
         $xml .= '<Features>';
         foreach ($property['ufCrm13Amenities'] as $amenity) {
-            $amenityList = explode(',', $amenity);
-            foreach ($amenityList as $code) {
-                $fullName = getFullAmenityName(trim($code));
-                $xml .= '<Feature><![CDATA[' . $fullName . ']]></Feature>';
-            }
+            $fullName = getFullAmenityName(trim($amenity));
+            $xml .= '<Feature><![CDATA[' . $fullName . ']]></Feature>';
         }
         $xml .= '</Features>';
 
