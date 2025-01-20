@@ -353,7 +353,7 @@
 
       const rentalKey = rentalPeriodMapping[property["ufCrm13RentalPeriod"]];
       const rentalPrice =
-        rentalKey && property[`ufCrm13${rentalKey}`] !== null ?
+        rentalKey && property[`ufCrm13${rentalKey}`] !== null && property[`ufCrm13${rentalKey}`] !== 0 ?
         property[`ufCrm13${rentalKey}`] :
         property["ufCrm13Price"];
 
