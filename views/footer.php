@@ -1081,22 +1081,22 @@
 
             switch (property.ufCrm13Status) {
                 case 'PUBLISHED':
-                    document.getElementById('publish').checked = true;
+                    if (document.getElementById('publish')) document.getElementById('publish').checked = true;
                     break;
                 case 'UNPUBLISHED':
-                    document.getElementById('unpublish').checked = true;
+                    if (document.getElementById('unpublish')) document.getElementById('unpublish').checked = true;
                     break;
                 case 'LIVE':
-                    document.getElementById('live').checked = true;
+                    if (document.getElementById('live')) document.getElementById('live').checked = true;
                     break;
                 case 'DRAFT':
-                    document.getElementById('draft').checked = true;
+                    if (document.getElementById('draft')) document.getElementById('draft').checked = true;
                     break;
                 case 'ARCHIVED':
-                    document.getElementById('archive').checked = true;
+                    if (document.getElementById('archive')) document.getElementById('archive').checked = true;
                     break;
                 case 'POCKET':
-                    document.getElementById('pocket').checked = true;
+                    if (document.getElementById('pocket')) getElementById('pocket').checked = true;
                     break;
             }
 
