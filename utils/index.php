@@ -525,8 +525,8 @@ function isAdmin($userId)
     $admins = [
         1455, // Jackline Kariuki
         1043, // Kevin Singh
-        414, // Akmal Sharopov
-        2659, // Diana Lukashevich
+        154, // Eduard Shtern
+        1799, // Nida Ayshathun
         1509, // VortexWeb
     ];
 
