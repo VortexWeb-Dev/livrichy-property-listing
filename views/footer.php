@@ -10,11 +10,20 @@
 <script src="assets/js/script.js"></script>
 
 <script>
+    const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
+    const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
+
     let historyActionMapping = {
         845: 'Created',
         846: 'Updated',
-        847: 'Deleted'
+        847: 'Deleted',
+        877: 'Published',
+        878: 'Unpublished',
+        879: 'Archived',
+        880: 'Transferred Agent',
+        881: 'Transferred Owner',
     }
+
     // Toggle Bayut and Dubizzle
     document.getElementById('toggle_bayut_dubizzle') && document.getElementById('toggle_bayut_dubizzle').addEventListener('change', function() {
         const isChecked = this.checked;
@@ -196,7 +205,7 @@
                         const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
                         const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
 
-                        addHistory(845, 1046, newPropertyId, "Property", changedById, changedByName);
+                        addHistory(845, 1046, newPropertyId, "Property", changedById, changedByName, 'Duplicated from ' + propertyId);
                     }
                 } catch (error) {
                     console.error('Error duplicating property:', error);
@@ -205,25 +214,34 @@
 
             case 'publish':
                 apiUrl = `${baseUrl}/crm.item.update?entityTypeId=1046&id=${propertyId}&fields[ufCrm13Status]=PUBLISHED`;
+                let publishNote = ''
                 if (platform) {
                     apiUrl += `&fields[ufCrm13${platform.charAt(0).toUpperCase() + platform.slice(1)}Enable]=Y`;
+                    publishNote = `Published on ${platform}`
                 } else {
                     apiUrl += `&fields[ufCrm13PfEnable]=Y&fields[ufCrm13BayutEnable]=Y&fields[ufCrm13DubizzleEnable]=Y&fields[ufCrm13WebsiteEnable]=Y&fields[ufCrm13Status]=PUBLISHED`;
+                    publishNote = 'Published on all platforms'
                 }
+                addHistory(877, 1046, propertyId, "Property", changedById, changedByName, publishNote);
                 break;
 
             case 'unpublish':
                 apiUrl = `${baseUrl}/crm.item.update?entityTypeId=1046&id=${propertyId}`;
+                let unpublishNote = ''
                 if (platform) {
                     apiUrl += `&fields[ufCrm13${platform.charAt(0).toUpperCase() + platform.slice(1)}Enable]=N`;
+                    unpublishNote = `Unpublished from ${platform}`
                 } else {
                     apiUrl += `&fields[ufCrm13PfEnable]=N&fields[ufCrm13BayutEnable]=N&fields[ufCrm13DubizzleEnable]=N&fields[ufCrm13WebsiteEnable]=N&fields[ufCrm13Status]=UNPUBLISHED`;
+                    unpublishNote = 'Unpublished from all platforms'
                 }
+                addHistory(878, 1046, propertyId, "Property", changedById, changedByName, unpublishNote);
                 break;
 
             case 'archive':
                 if (confirm('Are you sure you want to archive this property?')) {
                     apiUrl = `${baseUrl}/crm.item.update?entityTypeId=1046&id=${propertyId}&fields[ufCrm13Status]=ARCHIVED`;
+                    addHistory(879, 1046, propertyId, "Property", changedById, changedByName);
                 } else {
                     reloadRequired = false;
                 }
@@ -378,9 +396,6 @@
 
                 // If action is delete, first get all property details to find image URLs
                 if (action === 'delete') {
-                    const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
-                    const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
-
                     for (const propertyId of propertyIds) {
                         try {
                             // Get property details to find image URLs
@@ -447,7 +462,7 @@
                                 }
 
                                 // Add to history
-                                addHistory(847, 1046, property.id, 'Property', changedById, changedByName);
+                                addHistory(847, 1046, property.id, 'Property', changedById, changedByName, 'Deleted using bulk action');
                             }
                         } catch (error) {
                             console.error(`Error getting property details for deletion: ${propertyId}`, error);
@@ -460,20 +475,32 @@
 
                     if (action === 'publish') {
                         url += '&fields[ufCrm13Status]=PUBLISHED';
+                        let publishNote = ''
 
                         if (platformFieldMapping[platform]) {
                             url += `&fields[${platformFieldMapping[platform]}]=Y`;
+                            publishNote = `Published on ${platform}`
+
                         } else {
                             url += `&fields[ufCrm13PfEnable]=Y&fields[ufCrm13BayutEnable]=Y&fields[ufCrm13DubizzleEnable]=Y&fields[ufCrm13WebsiteEnable]=Y`;
+                            publishNote = 'Published on all platforms'
                         }
+
+                        addHistory(877, 1046, propertyId, "Property", changedById, changedByName, publishNote);
                     } else if (action === 'unpublish') {
+                        let unpublishNote = ''
                         if (platformFieldMapping[platform]) {
                             url += `&fields[${platformFieldMapping[platform]}]=N`;
+                            unpublishNote = `Unpublished from ${platform}`
                         } else {
                             url += `&fields[ufCrm13PfEnable]=N&fields[ufCrm13BayutEnable]=N&fields[ufCrm13DubizzleEnable]=N&fields[ufCrm13WebsiteEnable]=N&fields[ufCrm13Status]=UNPUBLISHED`;
+                            unpublishNote = 'Unpublished from all platforms'
                         }
+
+                        addHistory(878, 1046, propertyId, "Property", changedById, changedByName, unpublishNote);
                     } else if (action === 'archive') {
                         url += '&fields[ufCrm13Status]=ARCHIVED';
+                        addHistory(879, 1046, propertyId, "Property", changedById, changedByName, 'Archived using bulk action');
                     }
 
                     return fetch(url, {
@@ -1272,12 +1299,21 @@
     }
 
     // Function to add history
-    async function addHistory(action, entityId, itemId, entityName, changedById, changedByName) {
+    async function addHistory(action, entityId, itemId, entityName, changedById, changedByName, note = null) {
         const apiUrl = `https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4/crm.item.add`;
 
-        const validActions = [845, 846, 847];
+        const validActions = [
+            845, // Create
+            846, // Update
+            847, // Delete
+            877, // Publish
+            878, // Unpublish
+            879, // Archive
+            880, // Transfer Agent
+            881, // Transfer Owner
+        ];
         if (!validActions.includes(action)) {
-            console.error("Invalid action type. Must be 845, 846, or 847");
+            console.error("Invalid action type. Must be 845, 846, 847, 877, 878, 879, 880, or 881");
             return;
         }
 
@@ -1292,6 +1328,10 @@
                 ufCrm27ChangedByName: changedByName,
             },
         };
+
+        if (note) {
+            payload.fields.ufCrm27Note = note;
+        }
 
         try {
             const response = await fetch(apiUrl, {

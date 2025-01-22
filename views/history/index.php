@@ -20,6 +20,7 @@
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Action</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Changed By ID</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Changed By Name</th>
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Note</th>
                                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Date & Time</th>                                
                             </tr>
                         </thead>
@@ -43,7 +44,7 @@
     async function fetchRecords(page = 1) {
         const baseUrl = 'https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4';
         const entityTypeId = 1108;
-        const apiUrl = `${baseUrl}/crm.item.list?entityTypeId=${entityTypeId}&order[id]=desc&select[0]=id&select[1]=ufCrm27Entity&select[2]=ufCrm27Item&select[3]=ufCrm27EntityName&select[4]=ufCrm27Action&select[5]=ufCrm27ChangedBy&select[6]=ufCrm27ChangedByName&select[7]=createdTime&start=${(page - 1) * pageSize}`;
+        const apiUrl = `${baseUrl}/crm.item.list?entityTypeId=${entityTypeId}&order[id]=desc&select[0]=id&select[1]=ufCrm27Entity&select[2]=ufCrm27Item&select[3]=ufCrm27EntityName&select[4]=ufCrm27Action&select[5]=ufCrm27ChangedBy&select[6]=ufCrm27ChangedByName&select[7]=createdTime&select[8]=ufCrm27Note&start=${(page - 1) * pageSize}`;
 
         const loading = document.getElementById('loading');
         const recordTable = document.getElementById('record-table');
@@ -88,6 +89,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${historyActionMapping[record.ufCrm27Action] || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27ChangedBy || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27ChangedByName || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-800">${record.ufCrm27Note || ''}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${formatDateTime(record.createdTime) || 'N/A'}</td>
                 </tr>`
                 )

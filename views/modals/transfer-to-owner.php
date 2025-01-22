@@ -90,6 +90,7 @@
 
         for (const id of propertyIds) {
             await updateItem(1046, fields, Number(id));
+            await addHistory(881, 1046, id, "Property", changedById, changedByName, `Transferred to ${formData.get('listing_owner')}`);
         }
 
         window.location.href = '?page=properties';
