@@ -84,10 +84,10 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.id}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27Entity || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27Item || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><a href="https://crm.livrichy.com/crm/type/${record.ufCrm27Entity}/details/${record.ufCrm27Item}/" target="_blank">${record.ufCrm27Item || 'N/A'}</a></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27EntityName || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${historyActionMapping[record.ufCrm27Action] || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27ChangedBy || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><a href="https://crm.livrichy.com/company/personal/user/${record.ufCrm27ChangedBy}/" target="_blank">${record.ufCrm27ChangedBy || 'N/A'}</a></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${record.ufCrm27ChangedByName || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-800">${record.ufCrm27Note || ''}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${formatDateTime(record.createdTime) || 'N/A'}</td>
