@@ -5,8 +5,24 @@
 
         <form id="addBayutLocationForm" onsubmit="handleAddLocation(event)">
             <div class="mb-4">
+                <label for="city" class="block text-sm font-semibold text-gray-800">City <span class="text-danger">*</span></label>
+                <input oninput="updateLocation()" type="text" id="city" name="city" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="City">
+            </div>
+            <div class="mb-4">
+                <label for="community" class="block text-sm font-semibold text-gray-800">Community</label>
+                <input oninput="updateLocation()" type="text" id="community" name="community" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Community">
+            </div>
+            <div class="mb-4">
+                <label for="subCommunity" class="block text-sm font-semibold text-gray-800">Sub Community</label>
+                <input oninput="updateLocation()" type="text" id="subCommunity" name="subCommunity" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Sub Community">
+            </div>
+            <div class="mb-4">
+                <label for="building" class="block text-sm font-semibold text-gray-800">Building/Tower</label>
+                <input oninput="updateLocation()" type="text" id="building" name="building" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Building/Tower">
+            </div>
+            <div class="mb-4">
                 <label for="location" class="block text-sm font-semibold text-gray-800">Location</label>
-                <input type="text" id="location" name="location" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="City - Community - Sub Community - Building/Tower">
+                <input type="text" id="location" name="location" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed focus:outline-none" placeholder="City - Community - Sub Community - Building/Tower" readonly>
             </div>
 
             <div class="flex justify-end space-x-2">
@@ -27,6 +43,18 @@
 </div>
 
 <script>
+    function updateLocation() {
+        const city = document.getElementById("city").value.trim();
+        const community = document.getElementById("community").value.trim();
+        const subCommunity = document.getElementById("subCommunity").value.trim();
+        const building = document.getElementById("building").value.trim();
+
+        const locationInput = document.getElementById("location");
+        const parts = [city, community, subCommunity, building].filter(part => part);
+
+        locationInput.value = parts.join(" - ");
+    }
+
     async function addItem(entityTypeId, fields) {
         try {
             const response = await fetch(`https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4/crm.item.add?entityTypeId=${entityTypeId}`, {
@@ -68,10 +96,10 @@
             return;
         }
 
-        data.city = locationParts[0].trim();
-        data.community = locationParts[1].trim();
-        data.subCommunity = locationParts[2]?.trim();
-        data.building = locationParts[3]?.trim();
+        data.city = data.city.trim();
+        data.community = data.community.trim();
+        data.subCommunity = data.subCommunity.trim();
+        data.building = data.building.trim();
 
         const fields = {
             "ufCrm16Location": data.location,
