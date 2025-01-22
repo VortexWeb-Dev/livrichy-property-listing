@@ -68,12 +68,16 @@
             });
 
             if (response.ok) {
-                window.location.href = 'index.php?page=properties';
+                const data = await response.json();
+                return data;
             } else {
-                console.error('Failed to add item');
+                const errorDetails = await response.text();
+                console.error(`Failed to update item. Status: ${response.status}, Details: ${errorDetails}`);
+                return null;
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error while updating item:', error);
+            return null;
         }
     }
 
@@ -237,9 +241,21 @@
             fields["ufCrm13FloorPlan"] = null;
         }
 
+        const result = await updateItem(1046, fields, <?php echo $_GET['id']; ?>);
 
+        // Add to history
+        if (result?.result?.item) {
+            const updatedItem = result.result.item;
 
-        updateItem(1046, fields, <?php echo $_GET['id']; ?>);
+            const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
+            const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
+
+            addHistory(846, 1046, updatedItem.id, "Property", changedById, changedByName);
+
+            window.location.href = 'index.php?page=properties';
+        } else {
+            console.error("Failed to retrieve item. Invalid response structure:", result);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', async () => {

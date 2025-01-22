@@ -10,6 +10,11 @@
 <script src="assets/js/script.js"></script>
 
 <script>
+    let historyActionMapping = {
+        845: 'Created',
+        846: 'Updated',
+        847: 'Deleted'
+    }
     // Toggle Bayut and Dubizzle
     document.getElementById('toggle_bayut_dubizzle') && document.getElementById('toggle_bayut_dubizzle').addEventListener('change', function() {
         const isChecked = this.checked;
@@ -26,6 +31,27 @@
             year: 'numeric'
         };
         return date.toLocaleDateString('en-US', options);
+    }
+
+    // Format date and time
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        const dateOptions = {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        };
+        const timeOptions = {
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true,
+        };
+
+        const formattedDate = date.toLocaleDateString('en-US', dateOptions);
+        const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+
+        return `${formattedDate}, ${formattedTime}`;
     }
 
     // Update character count
@@ -158,9 +184,20 @@
                     addUrl += `&fields[ufCrm13ReferenceNumber]=${encodeURIComponent(property.ufCrm13ReferenceNumber) + '-duplicate'}`;
                     addUrl += `&fields[ufCrm13Status]=DRAFT`;
 
-                    await fetch(addUrl, {
+                    const result = await fetch(addUrl, {
                         method: 'GET'
                     });
+
+                    if (result.ok) {
+                        const response = await result.json();
+                        const newPropertyId = response.result.item.id;
+
+                        // Add to history
+                        const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
+                        const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
+
+                        addHistory(845, 1046, newPropertyId, "Property", changedById, changedByName);
+                    }
                 } catch (error) {
                     console.error('Error duplicating property:', error);
                 }
@@ -278,6 +315,12 @@
                                     }
                                 }
                             }
+
+                            // Add to history
+                            const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
+                            const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
+
+                            addHistory(847, 1046, property.id, 'Property', changedById, changedByName);
                         }
 
                         // Now delete the property from CRM
@@ -335,6 +378,9 @@
 
                 // If action is delete, first get all property details to find image URLs
                 if (action === 'delete') {
+                    const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
+                    const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
+
                     for (const propertyId of propertyIds) {
                         try {
                             // Get property details to find image URLs
@@ -399,6 +445,9 @@
                                         }
                                     }
                                 }
+
+                                // Add to history
+                                addHistory(847, 1046, property.id, 'Property', changedById, changedByName);
                             }
                         } catch (error) {
                             console.error(`Error getting property details for deletion: ${propertyId}`, error);
@@ -609,6 +658,7 @@
         return photoPaths;
     }
 
+    // Function to get the name of an amenity
     function getAmenityName(amenityId) {
         const amenities = [{
                 id: 'GV',
@@ -775,6 +825,7 @@
         return amenities.find(amenity => amenity.id === amenityId)?.label || amenityId;
     }
 
+    // Function to get the ID of an amenity
     function getAmenityId(amenityName) {
         console.log(amenityName);
 
@@ -1218,6 +1269,50 @@
     function sqftToSqm(sqft) {
         const sqm = sqft * 0.092903;
         return parseFloat(sqm.toFixed(2));
+    }
+
+    // Function to add history
+    async function addHistory(action, entityId, itemId, entityName, changedById, changedByName) {
+        const apiUrl = `https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4/crm.item.add`;
+
+        const validActions = [845, 846, 847];
+        if (!validActions.includes(action)) {
+            console.error("Invalid action type. Must be 845, 846, or 847");
+            return;
+        }
+
+        const payload = {
+            entityTypeId: 1108,
+            fields: {
+                ufCrm27Entity: entityId,
+                ufCrm27Item: itemId,
+                ufCrm27Action: action,
+                ufCrm27EntityName: entityName,
+                ufCrm27ChangedBy: changedById,
+                ufCrm27ChangedByName: changedByName,
+            },
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
+            if (data.result) {
+                console.log("History added successfully:", data);
+            } else {
+                console.error("Failed to add history:", data.error);
+            }
+        } catch (error) {
+
+            console.error("Error while adding history:", error);
+        }
     }
 </script>
 

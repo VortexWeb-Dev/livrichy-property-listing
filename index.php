@@ -20,6 +20,7 @@ $pages = [
 
     'agents' => 'views/agents/index.php',
     'developers' => 'views/developers/index.php',
+    'history' => 'views/history/index.php',
     'pf-locations' => 'views/pf-locations/index.php',
     'bayut-locations' => 'views/bayut-locations/index.php',
     'settings' => 'views/settings/index.php',

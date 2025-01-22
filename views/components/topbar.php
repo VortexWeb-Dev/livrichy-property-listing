@@ -23,6 +23,7 @@ if (isset($_GET['page'])) {
                 <li><a class="dropdown-item <?= $page == 'pf-locations' ? 'active' : '' ?>" href="?page=pf-locations"><i class="fa fa-map me-2"></i> PF Locations</a></li>
                 <li><a class="dropdown-item <?= $page == 'bayut-locations' ? 'active' : '' ?>" href="?page=bayut-locations"><i class="fa fa-map-pin me-2"></i> Bayut Locations</a></li>
                 <li><a class="dropdown-item <?= $page == 'developers' ? 'active' : '' ?>" href="?page=developers"><i class="fa fa-helmet-safety me-2"></i> Developers</a></li>
+                <li><a class="dropdown-item <?= $page == 'history' ? 'active' : '' ?>" href="?page=history"><i class="fa fa-history me-2"></i> History</a></li>
                 <li><a class="dropdown-item <?= $page == 'reports' ? 'active' : '' ?>" href="?page=reports"><i class="fa fa-chart-line me-2"></i> Reports</a></li>
                 <!-- <li><a class="dropdown-item <?= $page == 'settings' ? 'active' : '' ?>" href="?page=settings"><i class="fa fa-cog me-2"></i> Settings</a></li> -->
                 <li>

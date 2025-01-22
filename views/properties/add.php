@@ -54,7 +54,7 @@
             document.querySelector('label[for="rental_period"]').innerHTML = 'Rental Period (if rental)';
         }
     })
-    
+
     async function addItem(entityTypeId, fields) {
         try {
             const response = await fetch(`https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4/crm.item.add?entityTypeId=${entityTypeId}`, {
@@ -63,17 +63,21 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    fields,
+                    fields
                 }),
             });
 
             if (response.ok) {
-                window.location.href = 'index.php?page=properties';
+                const data = await response.json();
+                return data;
             } else {
-                console.error('Failed to add item');
+                const errorDetails = await response.text();
+                console.error(`Failed to add item. Status: ${response.status}, Details: ${errorDetails}`);
+                return null;
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error while adding item:', error);
+            return null;
         }
     }
 
@@ -237,6 +241,20 @@
         // }
 
         // Add to CRM
-        addItem(1046, fields, '?page=properties');
+        const result = await addItem(1046, fields, '?page=properties');
+
+        // Add to history
+        if (result?.result?.item) {
+            const newItem = result.result.item;
+
+            const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
+            const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
+
+            addHistory(845, 1046, newItem.id, "Property", changedById, changedByName);
+
+            window.location.href = 'index.php?page=properties';
+        } else {
+            console.error("Failed to retrieve item. Invalid response structure:", result);
+        }
     }
 </script>
