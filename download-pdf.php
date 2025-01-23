@@ -435,6 +435,11 @@
           name: "Simina",
           phone: "+971568429443",
           photo: "./assets/images/agent-placeholder.webp",
+        },
+        {
+          name: "Sayali Khatavkar",
+          phone: "+971589988954",
+          photo: "./assets/images/agent-placeholder.webp",
         }
       ];
 
