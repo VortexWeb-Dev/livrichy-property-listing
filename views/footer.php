@@ -1,7 +1,7 @@
 <!-- Copyright -->
 <div class="text-center text-gray-500 p-2 bg-white/70">
     ©<?php echo date('Y'); ?> by
-    <a class="text-reset fw-bold" href="https://vortexweb.cloud/" target="_blank">Vortex</a>
+    <a class="text-reset fw-bold" href="https://vortexweb.cloud/" target="_blank">VortexWeb</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
