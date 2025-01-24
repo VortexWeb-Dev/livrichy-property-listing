@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/../crest/crest.php");
+require_once(__DIR__ . "/../crest/crestcurrent.php");
 
 
 function buildApiUrl($baseUrl, $entityTypeId, $fields, $start = 0)
@@ -516,7 +517,7 @@ function uploadFile($file, $isDocument = false)
 
 function fetchCurrentUser()
 {
-    $response = CRest::call("user.current");
+    $response = CRestCurrent::call("user.current");
     return $response['result'];
 }
 
