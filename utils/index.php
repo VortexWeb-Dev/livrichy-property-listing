@@ -223,7 +223,7 @@ function formatField($field, $value, $type = 'string')
 
 function formatPriceOnApplication($property)
 {
-    $priceOnApplication = ($property['ufCrm13HidePrice'] === 'Y') ? 'No' : 'Yes';
+    $priceOnApplication = ($property['ufCrm13HidePrice'] === 'Y') ? 'Yes' : 'No';
     return formatField('price_on_application', $priceOnApplication);
 }
 
