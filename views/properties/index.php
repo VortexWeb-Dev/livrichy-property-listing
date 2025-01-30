@@ -57,7 +57,7 @@
     const pageSize = 50;
     let totalPages = 0;
 
-    const isAdmin = <?php echo json_encode($isAdmin); ?>;
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
     async function fetchProperties(page = 1, filters = null) {
         const baseUrl = 'https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4';

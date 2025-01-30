@@ -16,6 +16,15 @@
 <script src="assets/js/script.js"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+        if (!isAdmin) {
+            document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
+        }
+    });
+
+
     const changedById = <?php echo json_encode((int)$currentUser['ID'] ?? ''); ?>;
     const changedByName = <?php echo json_encode(trim(($currentUser['NAME'] ?? '') . ' ' . ($currentUser['LAST_NAME'] ?? ''))); ?>;
 
