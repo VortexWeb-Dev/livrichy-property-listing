@@ -13,18 +13,18 @@ include 'views/components/toast.php';
 include 'views/components/topbar.php';
 
 $pages = [
-'properties' => 'views/properties/index.php',
-'add-property' => 'views/properties/add.php',
-'edit-property' => 'views/properties/edit.php',
-'view-property' => 'views/properties/view.php',
+    'properties' => 'views/properties/index.php',
+    'add-property' => 'views/properties/add.php',
+    'edit-property' => 'views/properties/edit.php',
+    'view-property' => 'views/properties/view.php',
 
-'agents' => 'views/agents/index.php',
-'developers' => 'views/developers/index.php',
-'history' => 'views/history/index.php',
-'pf-locations' => 'views/pf-locations/index.php',
-'bayut-locations' => 'views/bayut-locations/index.php',
-'settings' => 'views/settings/index.php',
-'reports' => 'views/reports/index.php',
+    'agents' => 'views/agents/index.php',
+    'developers' => 'views/developers/index.php',
+    'history' => 'views/history/index.php',
+    'pf-locations' => 'views/pf-locations/index.php',
+    'bayut-locations' => 'views/bayut-locations/index.php',
+    'settings' => 'views/settings/index.php',
+    'reports' => 'views/reports/index.php',
 ];
 
 $page = isset($_GET['page']) && array_key_exists($_GET['page'], $pages) ? $_GET['page'] : 'properties';
@@ -32,13 +32,15 @@ $page = isset($_GET['page']) && array_key_exists($_GET['page'], $pages) ? $_GET[
 require $pages[$page];
 
 if (!array_key_exists($page, $pages)) {
-header("Location: index.php?page=properties';");
-exit;
+    header("Location: index.php?page=properties';");
+    exit;
 }
 ?>
 
 <script>
-localStorage.setItem('isAdmin', <?php echo json_encode($isAdmin); ?>);
+    if (localStorage.getItem('isAdmin') === null) {
+        localStorage.setItem('isAdmin', <?php echo json_encode($isAdmin); ?>);
+    }
 </script>
 
 <?php
