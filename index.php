@@ -9,7 +9,7 @@ $currentUser = fetchCurrentUser();
 $currentUserId = $currentUser['ID'];
 $isAdmin = isAdmin($currentUserId);
 
-echo '<script>console.log(Welcome, ' . json_encode($currentUser['NAME']) . ')</script>';
+echo '<script>console.log("Welcome, " + ' . json_encode($currentUser['NAME']) . ')</script>';
 
 include 'views/components/toast.php';
 include 'views/components/topbar.php';
