@@ -9,6 +9,8 @@ $currentUser = fetchCurrentUser();
 $currentUserId = $currentUser['ID'];
 $isAdmin = isAdmin($currentUserId);
 
+echo '<script>console.log(Welcome, ' . json_encode($currentUser['NAME']) . ')</script>';
+
 include 'views/components/toast.php';
 include 'views/components/topbar.php';
 
@@ -38,9 +40,7 @@ if (!array_key_exists($page, $pages)) {
 ?>
 
 <script>
-    if (localStorage.getItem('isAdmin') === null) {
-        localStorage.setItem('isAdmin', <?php echo json_encode($isAdmin); ?>);
-    }
+    localStorage.setItem('isAdmin', <?php echo json_encode($isAdmin); ?>);
 </script>
 
 <?php

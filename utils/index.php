@@ -530,10 +530,11 @@ function isAdmin($userId)
         1043, // Kevin Singh
         154, // Eduard Shtern
         1799, // Nida Ayshathun
-        1509, // VortexWeb
+        1509, // VortexWeb,
+        1510, // VortexWeb Services
     ];
 
-    return $response['result'] || in_array($userId, $admins);
+    return in_array($userId, $admins);
 }
 
 
