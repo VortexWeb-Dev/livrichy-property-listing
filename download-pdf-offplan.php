@@ -224,10 +224,10 @@
 <body>
     <div class="container wrapper">
         <div class="image-grid">
-            <img src="https://placehold.co/800/600" alt="Trinity Exterior" class="main-image">
+            <img src="" alt="Trinity Exterior" class="main-image" crossorigin="anonymous">
             <div class="side-images">
-                <img src="https://placehold.co/400/240" alt="Interior View 1" class="side-image side-image-1">
-                <img src="https://placehold.co/400/240" alt="Interior View 2" class="side-image side-image-2">
+                <img src="" alt="Interior View 1" class="side-image side-image-1" crossorigin="anonymous">
+                <img src="" alt="Interior View 2" class="side-image side-image-2" crossorigin="anonymous">
             </div>
         </div>
 
@@ -296,7 +296,7 @@
                 </div>
             </div>
 
-            <img src="./assets/images/logo-dark.svg" alt="Livrichy Real Estate Logo" class="logo">
+            <img src="./assets/images/logo-dark.svg" alt="Livrichy Real Estate Logo" class="logo" crossorigin="anonymous">
         </div>
     </div>
 
