@@ -166,6 +166,10 @@
                 window.location.href = `download-pdf-agent.php?id=${propertyId}`;
                 reloadRequired = false;
                 break;
+            case 'downloadPDFOffplan':
+                window.location.href = `download-pdf-offplan.php?id=${propertyId}`;
+                reloadRequired = false;
+                break;
 
             case 'duplicate':
                 try {
