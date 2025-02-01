@@ -649,9 +649,9 @@
                 amenitiesList.appendChild(li);
             })
 
-            //await generatePDF();
+            await generatePDF();
 
-            //window.location.href = "index.php";
+            window.location.href = "index.php";
         });
     </script>
 </body>
