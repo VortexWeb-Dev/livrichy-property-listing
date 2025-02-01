@@ -372,7 +372,7 @@
                             </div>
                         </div>
                         <div class="agent-photo">
-                            <img src="" class="agent-image" alt="Agent photo">
+                            <img src="" class="agent-image" alt="Agent photo" crossorigin="anonymous">
                         </div>
                     </div>
                 </div>
