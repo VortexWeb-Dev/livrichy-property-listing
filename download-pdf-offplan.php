@@ -32,7 +32,7 @@
         }
 
         .content-section {
-            padding: 30px;
+            padding: 20px;
         }
 
         .image-grid {
@@ -61,7 +61,7 @@
         }
 
         .property-title {
-            font-size: 48px;
+            font-size: 38px;
             font-weight: 700;
             margin-bottom: 5px;
         }
@@ -216,6 +216,63 @@
             width: 20px;
             height: 20px;
         }
+
+        .agent-card {
+            width: 400px;
+            height: 200px;
+            background-color: #C5AC6226;
+            border-radius: 2px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .agent-info {
+            flex: 1;
+        }
+
+        .agent-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: #18181A;
+        }
+
+        .agent-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #18181A;
+        }
+
+        .agent-contact {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .agent-phone {
+            color: #18181A;
+            font-weight: 600;
+        }
+
+        .agent-photo {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            border-radius: 4px;
+            align-self: center;
+        }
+
+        .agent-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -294,9 +351,33 @@
                         <div class="price-aed">AED 1.100.000</div>
                     </div>
                 </div>
+
             </div>
 
-            <img src="./assets/images/logo-dark.svg" alt="Livrichy Real Estate Logo" class="logo" crossorigin="anonymous">
+            <div class="content-grid">
+                <div class="left-content">
+                    <img src="./assets/images/logo-dark.svg" alt="Livrichy Real Estate Logo" class="logo" crossorigin="anonymous">
+                </div>
+                <div class="right-content">
+                    <div class="agent-card">
+                        <div class="agent-info">
+                            <div class="agent-label">
+                                <img src="./assets/images/agent.svg" alt="agent-icon" crossorigin="anonymous">
+                                Agent
+                            </div>
+                            <div class="agent-name">SAMUEL SARPONG</div>
+                            <div class="agent-contact">
+                                <span class="agent-phone">+971 52 110 0555</span><br>
+                                <span class="agent-email">samuel.s@livrichy.com</span>
+                            </div>
+                        </div>
+                        <div class="agent-photo">
+                            <img src="" class="agent-image" alt="Agent photo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -542,12 +623,18 @@
             document.querySelector(".bedrooms").textContent = property.ufCrm13Bedroom == 0 ? "Studio" : property.ufCrm13Bedroom + " Bedrooms";
             document.querySelector(".type").textContent = getPropertyType(property.ufCrm13PropertyType);
 
+            document.querySelector(".agent-name").textContent = property.ufCrm13AgentName;
+            document.querySelector(".agent-email").textContent = property.ufCrm13AgentEmail;
+            document.querySelector(".agent-phone").textContent = property.ufCrm13AgentPhone;
+
             document.querySelector(".main-image").src =
                 property.ufCrm13PhotoLinks[0] + "?cache-bust=" + new Date().getTime();
             document.querySelector(".side-image-1").src =
                 property.ufCrm13PhotoLinks[1] + "?cache-bust=" + new Date().getTime();
             document.querySelector(".side-image-2").src =
                 property.ufCrm13PhotoLinks[2] + "?cache-bust=" + new Date().getTime();
+
+            document.querySelector(".agent-image").src = property.ufCrm13AgentPhoto + "?cache-bust=" + new Date().getTime();
 
             const amenitiesList = document.querySelector(".amenities-list");
             if (property.ufCrm13Amenities.length === 0) {
@@ -562,9 +649,9 @@
                 amenitiesList.appendChild(li);
             })
 
-            await generatePDF();
+            //await generatePDF();
 
-            window.location.href = "index.php";
+            //window.location.href = "index.php";
         });
     </script>
 </body>
