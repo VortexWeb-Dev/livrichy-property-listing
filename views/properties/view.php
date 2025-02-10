@@ -43,11 +43,14 @@
     </div>
 
     <div class="flex-1 bg-white shadow-md rounded-lg p-6">
-        <div id="property-images" class="grid grid-cols-4 gap-4 overflow-y-auto">
-
-        </div>
+        <h3 class="font-semibold text-gray-700 mb-4">Property Images</h3>
+        <div id="property-images" class="grid grid-cols-4 gap-4 overflow-y-auto"></div>
     </div>
 
+    <div class="flex-1 bg-white shadow-md rounded-lg p-6 mt-6">
+        <h3 class="font-semibold text-gray-700 mb-4">Property Documents</h3>
+        <div id="property-documents" class="space-y-2"></div>
+    </div>
 
 </div>
 
@@ -84,7 +87,6 @@
                     W: 'Week',
                     D: 'Day',
                 };
-
                 const rentalPeriod = rentalPeriodMapping[property.ufCrm13RentalPrice] || property.ufCrm13RentalPeriod;
                 priceText += `/ ${rentalPeriod}`;
             }
@@ -110,6 +112,28 @@
                 imageElement.classList.add('w-full', 'h-64', 'object-cover');
                 imageContainer.appendChild(imageElement);
             });
+
+            const documents = property.ufCrm13Documents || [];
+            const documentContainer = document.getElementById('property-documents');
+            documents.forEach((doc, index) => {
+                const docWrapper = document.createElement('div');
+                docWrapper.classList.add('flex', 'items-center', 'justify-between', 'bg-gray-100', 'p-2', 'rounded-md');
+
+                const docName = document.createElement('span');
+                docName.textContent = `Document ${index + 1}`;
+                docName.classList.add('text-gray-700');
+
+                const openButton = document.createElement('button');
+                openButton.textContent = 'Open';
+                openButton.classList.add('ml-4', 'px-3', 'py-1', 'bg-blue-500', 'text-white', 'rounded-md', 'hover:bg-blue-600');
+                openButton.onclick = () => window.open(doc, '_blank');
+
+                docWrapper.appendChild(docName);
+                docWrapper.appendChild(openButton);
+                documentContainer.appendChild(docWrapper);
+            });
+
+
         } else {
             console.error('Invalid property data:', data);
             document.getElementById('property-details').textContent = 'Failed to load property details.';

@@ -20,7 +20,7 @@
             <!-- Floor Plan -->
             <?php include_once('views/components/add-property/floorplan.php'); ?>
             <!-- Documents -->
-            <?php // include_once('views/components/add-property/documents.php'); 
+            <?php include_once('views/components/add-property/documents.php'); 
             ?>
             <!-- Notes -->
             <?php include_once('views/components/add-property/notes.php'); ?>
@@ -221,24 +221,24 @@
         }
 
         // Documents
-        // const documents = document.getElementById('documents')?.files;
-        // if (documents) {
-        //     if (documents.length > 0) {
-        //         let documentUrls = [];
+        const documents = document.getElementById('documents')?.files;
+        if (documents) {
+            if (documents.length > 0) {
+                let documentUrls = [];
 
-        //         for (const document of documents) {
-        //             if (document.size > 10485760) {
-        //                 alert('File size must be less than 10MB');
-        //                 return;
-        //             }
-        //             const uploadedDocument = await uploadFile(document);
-        //             documentUrls.push(uploadedDocument);
-        //         }
+                for (const document of documents) {
+                    if (document.size > 10485760) {
+                        alert('File size must be less than 10MB');
+                        return;
+                    }
+                    const uploadedDocument = await uploadFile(document);
+                    documentUrls.push(uploadedDocument);
+                }
 
-        //         fields["ufCrm13Documents"] = documentUrls;
-        //     }
+                fields["ufCrm13Documents"] = documentUrls;
+            }
 
-        // }
+        }
 
         // Add to CRM
         const result = await addItem(1046, fields, '?page=properties');
