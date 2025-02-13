@@ -21,8 +21,8 @@
                 <input oninput="updateLocation()" type="text" id="building" name="building" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Building/Tower">
             </div>
             <div class="mb-4">
-                <label for="location" class="block text-sm font-semibold text-gray-800">Location</label>
-                <input type="text" id="location" name="location" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed focus:outline-none" placeholder="City - Community - Sub Community - Building/Tower" readonly>
+                <label for="location" class="block text-sm font-semibold text-gray-800">Location <span class="text-gray-400 text-xs">(Auto Filled)</span></label>
+                <input type="text" id="location" name="location" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="City - Community - Sub Community - Building/Tower">
             </div>
 
             <div class="flex justify-end space-x-2">
