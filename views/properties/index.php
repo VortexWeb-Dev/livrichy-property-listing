@@ -175,7 +175,7 @@
                     <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800 text-wrap">${property.ufCrm13ReferenceNumber || 'N/A'}</td>
                     <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         <div class="flex">
-                            <img class="w-20 h-20 rounded object-cover mr-4" src="${property.ufCrm13PhotoLinks[0] || 'https://via.placeholder.com/150'}" alt="${property.ufCrm13TitleEn || 'N/A'}">
+                            <img class="w-20 h-20 rounded object-cover mr-4" src="${property.ufCrm13PhotoLinks[0] || 'https://placehold.jp/150x150.png'}" alt="${property.ufCrm13TitleEn || 'N/A'}">
                             <div class="text-sm">
                                 <p class="text-gray-800 font-semibold">${property.ufCrm13TitleEn || 'N/A'}</p>
                                 <p class="text-gray-400 text-wrap max-w-full truncate">${property.ufCrm13DescriptionEn.slice(0, 60) + '...' || 'N/A'}</p>

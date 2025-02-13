@@ -101,7 +101,7 @@
             document.getElementById('agent-name').textContent = property.ufCrm13AgentName || 'N/A';
             document.getElementById('agent-phone').textContent = property.ufCrm13AgentPhone || 'N/A';
             document.getElementById('agent-email').textContent = property.ufCrm13AgentEmail || 'N/A';
-            document.getElementById('main-image').src = property.ufCrm13PhotoLinks[0] || 'https://via.placeholder.com/150';
+            document.getElementById('main-image').src = property.ufCrm13PhotoLinks[0] || 'https://placehold.jp/150x150.png';
 
             const images = property.ufCrm13PhotoLinks || [];
             const imageContainer = document.getElementById('property-images');
