@@ -173,6 +173,7 @@
 
             case 'duplicate':
                 try {
+                    // First request remains GET since it's fetching data
                     const getUrl = `${baseUrl}/crm.item.get?entityTypeId=1046&id=${propertyId}&select[0]=id&select[1]=uf_*`;
                     const response = await fetch(getUrl, {
                         method: 'GET'
@@ -180,40 +181,47 @@
                     const data = await response.json();
                     const property = data.result.item;
 
-                    let addUrl = `${baseUrl}/crm.item.add?entityTypeId=1046`;
+                    // Prepare the fields object for POST request
+                    const fields = {};
+
+                    // Add all relevant fields
                     for (const field in property) {
                         if (
                             field.startsWith('ufCrm13') &&
                             !['ufCrm13ReferenceNumber', 'ufCrm13TitleEn', 'ufCrm13Status', 'ufCrm13PhotoLinks', 'ufCrm13Documents', 'ufCrm13Notes'].includes(field)
                         ) {
-                            addUrl += `&fields[${field}]=${encodeURIComponent(property[field])}`;
+                            fields[field] = property[field];
                         }
                     }
 
+                    // Add arrays if they exist
                     if (property['ufCrm13PhotoLinks']) {
-                        property['ufCrm13PhotoLinks'].forEach((photoLink, index) => {
-                            addUrl += `&fields[ufCrm13PhotoLinks][${index}]=${encodeURIComponent(photoLink)}`;
-                        });
+                        fields['ufCrm13PhotoLinks'] = property['ufCrm13PhotoLinks'];
                     }
 
                     if (property['ufCrm13Documents']) {
-                        property['ufCrm13Documents'].forEach((document, index) => {
-                            addUrl += `&fields[ufCrm13Documents][${index}]=${encodeURIComponent(document)}`;
-                        });
+                        fields['ufCrm13Documents'] = property['ufCrm13Documents'];
                     }
 
                     if (property['ufCrm13Notes']) {
-                        property['ufCrm13Notes'].forEach((note, index) => {
-                            addUrl += `&fields[ufCrm13Notes][${index}]=${encodeURIComponent(note)}`;
-                        });
+                        fields['ufCrm13Notes'] = property['ufCrm13Notes'];
                     }
 
-                    addUrl += `&fields[ufCrm13TitleEn]=${encodeURIComponent(property.ufCrm13TitleEn + ' (Duplicate)')}`;
-                    addUrl += `&fields[ufCrm13ReferenceNumber]=${encodeURIComponent(property.ufCrm13ReferenceNumber) + '-duplicate'}`;
-                    addUrl += `&fields[ufCrm13Status]=DRAFT`;
+                    // Add special fields
+                    fields['ufCrm13TitleEn'] = property.ufCrm13TitleEn + ' (Duplicate)';
+                    fields['ufCrm13ReferenceNumber'] = property.ufCrm13ReferenceNumber + '-duplicate';
+                    fields['ufCrm13Status'] = 'DRAFT';
 
-                    const result = await fetch(addUrl, {
-                        method: 'GET'
+                    // Make POST request
+                    const result = await fetch(`${baseUrl}/crm.item.add`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            entityTypeId: 1046,
+                            fields: fields
+                        })
                     });
 
                     if (result.ok) {
@@ -279,7 +287,9 @@
                             console.log('Property data for deletion:', property);
 
                             // Delete images from S3
-                            if (property.ufCrm13PhotoLinks && Array.isArray(property.ufCrm13PhotoLinks)) {
+                            if (property.ufCrm13PhotoLinks &&
+                                Array.isArray(property.ufCrm13PhotoLinks) &&
+                                !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                 console.log('Found photo links:', property.ufCrm13PhotoLinks);
                                 for (const imageUrl of property.ufCrm13PhotoLinks) {
                                     try {
@@ -305,7 +315,7 @@
                             }
 
                             // Delete floorplan from S3 if exists
-                            if (property.ufCrm13FloorPlan) {
+                            if (property.ufCrm13FloorPlan && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                 try {
                                     console.log('Attempting to delete floorplan:', property.ufCrm13FloorPlan);
                                     const response = await fetch('./delete-s3-object.php', {
@@ -328,7 +338,7 @@
                             }
 
                             // Delete documents from S3
-                            if (property.ufCrm13Documents && Array.isArray(property.ufCrm13Documents)) {
+                            if (property.ufCrm13Documents && Array.isArray(property.ufCrm13Documents) && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                 console.log('Found documents:', property.ufCrm13Documents);
                                 for (const docUrl of property.ufCrm13Documents) {
                                     try {
@@ -426,7 +436,7 @@
                                 const property = propertyData.result.item;
 
                                 // Delete images from S3
-                                if (property.ufCrm13PhotoLinks && Array.isArray(property.ufCrm13PhotoLinks)) {
+                                if (property.ufCrm13PhotoLinks && Array.isArray(property.ufCrm13PhotoLinks) && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                     for (const imageUrl of property.ufCrm13PhotoLinks) {
                                         try {
                                             await fetch('./delete-s3-object.php', {
@@ -445,7 +455,7 @@
                                 }
 
                                 // Delete floorplan from S3 if exists
-                                if (property.ufCrm13FloorPlan) {
+                                if (property.ufCrm13FloorPlan && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                     try {
                                         await fetch('./delete-s3-object.php', {
                                             method: 'POST',
@@ -462,7 +472,7 @@
                                 }
 
                                 // Delete documents from S3
-                                if (property.ufCrm13Documents && Array.isArray(property.ufCrm13Documents)) {
+                                if (property.ufCrm13Documents && Array.isArray(property.ufCrm13Documents) && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                     for (const docUrl of property.ufCrm13Documents) {
                                         try {
                                             await fetch('./delete-s3-object.php', {
