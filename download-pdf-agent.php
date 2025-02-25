@@ -460,8 +460,7 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
       document.getElementById("priceText").textContent =
         getPriceText(property);
 
-      document.getElementById("agentPhoto").src =
-        <?php echo json_encode($agent_photo) . "?cache-bust=12345" ?>;
+      document.getElementById("agentPhoto").src = <?php echo json_encode($agent_photo); ?> + "?cache-bust=12345";
 
       document.getElementById("mainImage").src =
         property.ufCrm13PhotoLinks[0] + "?cache-bust=12345";
