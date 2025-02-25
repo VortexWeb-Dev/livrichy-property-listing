@@ -2,13 +2,15 @@
 require(__DIR__ . '/./vendor/autoload.php');
 
 use Aws\S3\S3Client;
+use Aws\S3\MultipartUploader;
+use Aws\Exception\AwsException;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . '/.');
 $dotenv->load();
 
 $s3 = new S3Client([
-    'region'  => $_ENV['AWS_REGION'], 
+    'region'  => $_ENV['AWS_REGION'],
     'version' => 'latest',
     'credentials' => [
         'key'    => $_ENV['AWS_ACCESS_KEY_ID'],
@@ -21,7 +23,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
     $isDocument = isset($_POST['isDocument']) && $_POST['isDocument'] === 'true';
 
     try {
-        // Log environment variables (excluding sensitive data)
+        // Log file details for debugging
         error_log("AWS Region: " . $_ENV['AWS_REGION']);
         error_log("AWS Bucket: " . $_ENV['AWS_BUCKET_NAME']);
         error_log("File details: " . json_encode([
@@ -29,13 +31,13 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
             'type' => $file['type'],
             'size' => $file['size']
         ]));
-        
+
         $bucketName = $_ENV['AWS_BUCKET_NAME'];
-        
-        // Generate unique filename
+
+        // Generate a unique filename
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         if (empty($extension) && $file['type']) {
-            // If no extension but we have mime type, try to get extension from mime type
+            // Map MIME types to extensions
             $mime_types = [
                 'image/jpeg' => 'jpg',
                 'image/jpg' => 'jpg',
@@ -47,16 +49,31 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
             ];
             $extension = isset($mime_types[$file['type']]) ? $mime_types[$file['type']] : 'unknown';
         }
-        
+
         $uniqueName = uniqid() . '_' . time() . '.' . $extension;
         $key = 'livrichy-uploads/' . $uniqueName;
 
-        $uploadResponse = $s3->putObject([
-            'Bucket' => $bucketName,
-            'Key'    => $key,
-            'SourceFile' => $file['tmp_name'], 
-            'ContentType' => $isDocument ? $file['type'] : 'image/jpeg'
-        ]);
+        // Use Multipart Upload for files larger than 5MB
+        if ($file['size'] > 5 * 1024 * 1024) {
+            error_log("Using Multipart Upload for file: " . $file['name']);
+            $uploader = new MultipartUploader($s3, $file['tmp_name'], [
+                'bucket' => $bucketName,
+                'key'    => $key,
+                // 'acl'    => 'public-read',
+                'contentType' => $isDocument ? $file['type'] : 'image/jpeg'
+            ]);
+
+            $uploadResponse = $uploader->upload();
+        } else {
+            error_log("Using Standard Upload for file: " . $file['name']);
+            $uploadResponse = $s3->putObject([
+                'Bucket' => $bucketName,
+                'Key'    => $key,
+                'SourceFile' => $file['tmp_name'],
+                // 'ACL'    => 'public-read',
+                'ContentType' => $isDocument ? $file['type'] : 'image/jpeg'
+            ]);
+        }
 
         error_log("Upload successful. Object URL: " . $uploadResponse['ObjectURL']);
         echo json_encode([
@@ -64,7 +81,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
             'filename' => $uniqueName,
             'originalname' => $file['name']
         ]);
-    } catch (Aws\Exception\AwsException $e) {
+    } catch (AwsException $e) {
         error_log("AWS Upload Error: " . $e->getMessage());
         error_log("AWS Error Code: " . $e->getAwsErrorCode());
         error_log("AWS Error Type: " . $e->getAwsErrorType());
