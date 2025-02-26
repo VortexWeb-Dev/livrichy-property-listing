@@ -1,10 +1,40 @@
 <?php
-require_once('./utils/index.php');
-$current_user = fetchCurrentUser();
+// Replace static user fetching with owners object
+require_once __DIR__ . '/crest/crest.php';
 
-$agent_name = $current_user['NAME'] . ' ' . $current_user['LAST_NAME'];
-$agent_phone = $current_user['PERSONAL_MOBILE'];
-$agent_photo = $current_user['PERSONAL_PHOTO'];
+$response = CRest::call('user.get', [
+  'filter' => [
+    'ACTIVE' => true
+  ],
+  'order' => [
+    'NAME' => 'ASC'
+  ]
+]);
+
+$owners = $response['result'];
+
+// Default to first agent if none selected
+$selected_user_id = isset($_GET['agent_id']) ? $_GET['agent_id'] : 1;
+$current_user = null;
+
+// Find selected user
+foreach ($owners as $owner) {
+  if ($owner['ID'] == $selected_user_id) {
+    $current_user = $owner;
+    break;
+  }
+}
+
+// Fallback to first user if selected user not found
+if (!$current_user) {
+  $current_user = $owners[0];
+}
+
+$agent_name = trim($current_user['NAME'] . ' ' . $current_user['LAST_NAME']);
+$agent_phone = !empty($current_user['PERSONAL_MOBILE']) ? $current_user['PERSONAL_MOBILE'] : 
+               (!empty($current_user['WORK_PHONE']) ? $current_user['WORK_PHONE'] : 
+               (!empty($current_user['UF_USR_1700727719502']) ? $current_user['UF_USR_1700727719502'] : ''));
+$agent_photo = !empty($current_user['PERSONAL_PHOTO']) ? $current_user['PERSONAL_PHOTO'] : 'https://youtupia.com/thinkrealty/images/agent-placeholder.webp';
 
 ?>
 <!DOCTYPE html>
@@ -153,12 +183,67 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
       display: table;
       clear: both;
     }
+
+    /* Agent selection styles */
+    .agent-selector {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .agent-selector select {
+      padding: 8px;
+      width: 250px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .agent-selector button {
+      padding: 8px 15px;
+      background-color: #b7a05c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .agent-selector button:hover {
+      background-color: #a08d4d;
+    }
+
+    /* Hide selector when printing */
+    @media print {
+      .agent-selector {
+        display: none;
+      }
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
+  <!-- Agent Selector -->
+  <div class="agent-selector" id="agentSelector">
+    <h3>Select Agent</h3>
+    <select id="agentDropdown">
+      <?php foreach ($owners as $owner): ?>
+        <option value="<?php echo $owner['ID']; ?>" <?php echo ($owner['ID'] == $selected_user_id) ? 'selected' : ''; ?>>
+          <?php echo $owner['NAME'] . ' ' . $owner['LAST_NAME']; ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+    <button id="applyAgentBtn">Apply</button>
+    <button id="generatePdfBtn">Generate PDF</button>
+  </div>
+
   <div class="wrapper">
     <div class="main-container">
       <div class="main-image-container">
@@ -254,13 +339,12 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
         <img
           id="agentPhoto"
           crossorigin="anonymous"
-          crossorigin="anonymous"
-          src=""
+          src="<?php echo htmlspecialchars($agent_photo); ?>?cache-bust=12345"
           alt="Agent"
           class="agent-photo" />
         <div class="agent-details">
-          <b id="agentName"></b>
-          <p id="agentPhone"></p>
+          <b id="agentName"><?php echo htmlspecialchars($agent_name); ?></b>
+          <p id="agentPhone"><?php echo htmlspecialchars($agent_phone); ?></p>
         </div>
       </div>
     </div>
@@ -376,6 +460,10 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
     }
 
     async function generatePDF() {
+      // Hide the agent selector before generating PDF
+      const agentSelector = document.getElementById('agentSelector');
+      agentSelector.style.display = 'none';
+
       const {
         jsPDF
       } = window.jspdf;
@@ -383,6 +471,8 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
       const wrapper = document.querySelector(".wrapper");
       if (!wrapper) {
         console.error("Wrapper element not found.");
+        // Show the agent selector again
+        agentSelector.style.display = 'block';
         return;
       }
 
@@ -396,6 +486,9 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
       const canvas = await html2canvas(wrapper, {
         useCORS: true
       });
+
+      // Show the agent selector again
+      agentSelector.style.display = 'block';
 
       // Convert canvas to image data
       const imgData = canvas.toDataURL("image/png");
@@ -422,59 +515,102 @@ $agent_photo = $current_user['PERSONAL_PHOTO'];
 
     document.addEventListener("DOMContentLoaded", async function() {
       const id = new URLSearchParams(window.location.search).get("id");
-      const url =
-        "https://crm.livrichy.com/rest/1509/hb3qi4ma9t11q1c4/crm.item.get?entityTypeId=1046&id=" +
-        id;
-      const response = await fetch(url);
 
-      if (!response.ok) {
-        console.error("Failed to fetch data:", response.status);
+      if (!id) {
+        // Handle case where no property ID is provided
+        document.getElementById("title").textContent = "No property selected";
+        document.getElementById("description").textContent = "Please select a property to view details.";
         return;
       }
 
-      const data = await response.json();
-      const property = data?.result?.item;
+      const url =
+        "https://crm.livrichy.com/rest/1509/hb3qi4ma9t11q1c4/crm.item.get?entityTypeId=1046&id=" +
+        id;
 
-      console.log(property);
+      try {
+        const response = await fetch(url);
 
-      document.getElementById("title").textContent = property.ufCrm13TitleEn;
-      document.getElementById("description").textContent =
-        property.ufCrm13BrochureDescription && property.ufCrm13BrochureDescription !== "null" ? property.ufCrm13BrochureDescription :
-        property.ufCrm13DescriptionEn.slice(0, 200);
-      document.getElementById("propertyType").textContent = getPropertyType(
-        property.ufCrm13PropertyType
-      );
-      document.getElementById("bedrooms").textContent =
-        property.ufCrm13Bedroom;
-      document.getElementById("bathrooms").textContent =
-        property.ufCrm13Bathroom;
-      document.getElementById("size").textContent = property.ufCrm13Size;
-      document.getElementById("sizeSqm").textContent = sizeSqm(
-        property.ufCrm13Size
-      );
-      document.getElementById("agentName").textContent =
-        <?php echo json_encode($agent_name) ?>;
-      document.getElementById("agentPhone").textContent =
-        <?php echo json_encode($agent_phone) ?>;
+        if (!response.ok) {
+          console.error("Failed to fetch data:", response.status);
+          document.getElementById("title").textContent = "Failed to load property";
+          document.getElementById("description").textContent = "Error loading property details. Please try again later.";
+          return;
+        }
 
-      document.getElementById("priceText").textContent =
-        getPriceText(property);
+        const data = await response.json();
+        const property = data?.result?.item;
 
-      document.getElementById("agentPhoto").src = <?php echo json_encode($agent_photo); ?> + "?cache-bust=12345";
+        if (!property) {
+          document.getElementById("title").textContent = "Property not found";
+          document.getElementById("description").textContent = "The requested property could not be found.";
+          return;
+        }
 
-      document.getElementById("mainImage").src =
-        property.ufCrm13PhotoLinks[0] + "?cache-bust=12345";
-      document.getElementById("image1").src =
-        property.ufCrm13PhotoLinks[1] + "?cache-bust=12345";
-      document.getElementById("image2").src =
-        property.ufCrm13PhotoLinks[2] + "?cache-bust=12345";
-      document.getElementById("image3").src =
-        property.ufCrm13PhotoLinks[3] + "?cache-bust=12345";
+        console.log(property);
 
-      await generatePDF();
+        document.getElementById("title").textContent = property.ufCrm13TitleEn;
+        document.getElementById("description").textContent =
+          property.ufCrm13BrochureDescription && property.ufCrm13BrochureDescription !== "null" ? property.ufCrm13BrochureDescription :
+          property.ufCrm13DescriptionEn.slice(0, 200);
+        document.getElementById("propertyType").textContent = getPropertyType(
+          property.ufCrm13PropertyType
+        );
+        document.getElementById("bedrooms").textContent =
+          property.ufCrm13Bedroom;
+        document.getElementById("bathrooms").textContent =
+          property.ufCrm13Bathroom;
+        document.getElementById("size").textContent = property.ufCrm13Size;
+        document.getElementById("sizeSqm").textContent = sizeSqm(
+          property.ufCrm13Size
+        );
 
-      window.location.href = "index.php";
+        document.getElementById("priceText").textContent =
+          getPriceText(property);
+
+        // Set the property images
+        if (property.ufCrm13PhotoLinks && property.ufCrm13PhotoLinks.length > 0) {
+          document.getElementById("mainImage").src =
+            property.ufCrm13PhotoLinks[0] + "?cache-bust=12345";
+
+          if (property.ufCrm13PhotoLinks.length > 1) {
+            document.getElementById("image1").src =
+              property.ufCrm13PhotoLinks[1] + "?cache-bust=12345";
+          }
+
+          if (property.ufCrm13PhotoLinks.length > 2) {
+            document.getElementById("image2").src =
+              property.ufCrm13PhotoLinks[2] + "?cache-bust=12345";
+          }
+
+          if (property.ufCrm13PhotoLinks.length > 3) {
+            document.getElementById("image3").src =
+              property.ufCrm13PhotoLinks[3] + "?cache-bust=12345";
+          }
+        }
+
+        // Don't automatically generate PDF on load anymore
+        // await generatePDF();
+        // window.location.href = "index.php";
+      } catch (error) {
+        console.error("Error fetching property data:", error);
+        document.getElementById("title").textContent = "Error";
+        document.getElementById("description").textContent = "An error occurred while loading property data.";
+      }
     });
+
+    // Add event listeners for the agent selector
+    document.getElementById('applyAgentBtn').addEventListener('click', function() {
+      const selectedAgentId = document.getElementById('agentDropdown').value;
+      const currentUrl = new URL(window.location.href);
+
+      // Update or add the agent_id parameter
+      currentUrl.searchParams.set('agent_id', selectedAgentId);
+
+      // Reload the page with the new agent_id
+      window.location.href = currentUrl.toString();
+    });
+
+    document.getElementById('generatePdfBtn').addEventListener('click', generatePDF);
   </script>
 </body>
 
