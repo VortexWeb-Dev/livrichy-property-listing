@@ -2,16 +2,27 @@
 // Replace static user fetching with owners object
 require_once __DIR__ . '/crest/crest.php';
 
-$response = CRest::call('user.get', [
-  'filter' => [
-    'ACTIVE' => true
-  ],
-  'order' => [
-    'NAME' => 'ASC'
-  ]
-]);
+$owners = [];
+$start = 0;
 
-$owners = $response['result'];
+do {
+  $response = CRest::call('user.get', [
+    'filter' => ['ACTIVE' => true],
+    'start' => $start
+  ]);
+
+  if (!empty($response['result'])) {
+    $owners = array_merge($owners, $response['result']);
+  }
+
+  $start = $response['next'] ?? null;
+} while ($start !== null);
+
+// Manually sort by NAME
+usort($owners, function ($a, $b) {
+  return strcmp($a['NAME'], $b['NAME']);
+});
+
 
 // Default to first agent if none selected
 $selected_user_id = isset($_GET['agent_id']) ? $_GET['agent_id'] : 1;
@@ -31,9 +42,7 @@ if (!$current_user) {
 }
 
 $agent_name = trim($current_user['NAME'] . ' ' . $current_user['LAST_NAME']);
-$agent_phone = !empty($current_user['PERSONAL_MOBILE']) ? $current_user['PERSONAL_MOBILE'] : 
-               (!empty($current_user['WORK_PHONE']) ? $current_user['WORK_PHONE'] : 
-               (!empty($current_user['UF_USR_1700727719502']) ? $current_user['UF_USR_1700727719502'] : ''));
+$agent_phone = !empty($current_user['PERSONAL_MOBILE']) ? $current_user['PERSONAL_MOBILE'] : (!empty($current_user['WORK_PHONE']) ? $current_user['WORK_PHONE'] : (!empty($current_user['UF_USR_1700727719502']) ? $current_user['UF_USR_1700727719502'] : ''));
 $agent_photo = !empty($current_user['PERSONAL_PHOTO']) ? $current_user['PERSONAL_PHOTO'] : 'https://youtupia.com/thinkrealty/images/agent-placeholder.webp';
 
 ?>
