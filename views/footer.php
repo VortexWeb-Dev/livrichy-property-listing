@@ -557,28 +557,32 @@
         return new Promise((resolve, reject) => {
             const watermarkImage = new Image();
             watermarkImage.src = watermarkImagePath;
+            watermarkImage.crossOrigin = "Anonymous"; // Avoid CORS issues
 
             watermarkImage.onload = function() {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const width = imageElement.width;
-                const height = imageElement.height;
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+
+                // Reduce image resolution to 80% of original
+                const scaleFactor = 0.8;
+                const width = imageElement.width * scaleFactor;
+                const height = imageElement.height * scaleFactor;
 
                 canvas.width = width;
                 canvas.height = height;
 
                 ctx.drawImage(imageElement, 0, 0, width, height);
 
+                // Watermark resizing
                 const watermarkAspect = watermarkImage.width / watermarkImage.height;
                 const imageAspect = width / height;
 
                 let watermarkWidth, watermarkHeight;
-
                 if (watermarkAspect > imageAspect) {
-                    watermarkWidth = width * 0.6;
+                    watermarkWidth = width * 0.4;
                     watermarkHeight = watermarkWidth / watermarkAspect;
                 } else {
-                    watermarkHeight = height * 0.6;
+                    watermarkHeight = height * 0.4;
                     watermarkWidth = watermarkHeight * watermarkAspect;
                 }
 
@@ -586,15 +590,18 @@
                 const yPosition = (height - watermarkHeight) / 2;
 
                 ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
-                const watermarkedImage = canvas.toDataURL('image/jpeg', 0.8);
+
+                // Convert to WebP (better compression) with lower quality
+                const watermarkedImage = canvas.toDataURL("image/webp", 0.7);
                 resolve(watermarkedImage);
             };
 
             watermarkImage.onerror = function() {
-                reject('Failed to load watermark image.');
+                reject("Failed to load watermark image.");
             };
         });
     }
+
 
     // Function to add watermark text to the image
     function addWatermarkText(imageElement, watermarkText) {
