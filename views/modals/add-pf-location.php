@@ -6,22 +6,24 @@
         <form id="addPfLocationForm" onsubmit="handleAddLocation(event)">
             <div class="mb-4">
                 <label for="city" class="block text-sm font-semibold text-gray-800">City <span class="text-danger">*</span></label>
-                <input oninput="updateLocation()" type="text" id="city" name="city" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="City">
+                <input type="text" id="city" name="city" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="City">
             </div>
             <div class="mb-4">
                 <label for="community" class="block text-sm font-semibold text-gray-800">Community</label>
-                <input oninput="updateLocation()" type="text" id="community" name="community" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Community">
+                <input type="text" id="community" name="community" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Community">
             </div>
             <div class="mb-4">
                 <label for="subCommunity" class="block text-sm font-semibold text-gray-800">Sub Community</label>
-                <input oninput="updateLocation()" type="text" id="subCommunity" name="subCommunity" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Sub Community">
+                <input type="text" id="subCommunity" name="subCommunity" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Sub Community">
             </div>
             <div class="mb-4">
                 <label for="building" class="block text-sm font-semibold text-gray-800">Building/Tower</label>
-                <input oninput="updateLocation()" type="text" id="building" name="building" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Building/Tower">
+                <input type="text" id="building" name="building" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="Building/Tower">
             </div>
             <div class="mb-4">
-                <label for="location" class="block text-sm font-semibold text-gray-800">Location <span class="text-gray-400 text-xs">(Auto Filled)</span></label>
+                <label for="location" class="block text-sm font-semibold text-gray-800">Location 
+                    <!-- <span class="text-gray-400 text-xs">(Auto Filled)</span> -->
+                </label>
                 <input type="text" id="location" name="location" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-blue-500" placeholder="City - Community - Sub Community - Building/Tower">
             </div>
 
