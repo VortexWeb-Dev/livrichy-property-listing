@@ -60,6 +60,11 @@ function fetchAllProperties($baseUrl, $entityTypeId, $fields, $platform = null)
                         return $property['ufCrm13WebsiteEnable'] === 'Y';
                     });
                     break;
+                case 'active':
+                    $allProperties = array_filter($allProperties, function ($property) {
+                        return $property['ufCrm13Status'] === 'PUBLISHED' || $property['ufCrm13Status'] === 'POCKET';
+                    });
+                    break;
                 default:
                     break;
             }
