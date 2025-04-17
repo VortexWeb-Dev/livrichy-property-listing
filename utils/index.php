@@ -409,7 +409,14 @@ function generateBayutXml($properties)
         $xml .= '<Permit_Number><![CDATA[' . getPermitNumber($property) . ']]></Permit_Number>';
         $xml .= '<Property_Status>live</Property_Status>';
         $xml .= '<Property_purpose><![CDATA[' . getPropertyPurpose($property) . ']]></Property_purpose>';
-        $xml .= '<Property_Type><![CDATA[' . getPropertyType($property) . ']]></Property_Type>';
+        $type = getPropertyType($property);
+        $ref = strtolower($property['ufCrm13ReferenceNumber'] ?? '');
+
+        if ($type === 'Duplex' && strpos($ref, 'villa') !== false) {
+            $type = 'Duplex Villa';
+        }
+
+        $xml .= '<Property_Type><![CDATA[' . $type . ']]></Property_Type>';
         $xml .= '<Property_Size><![CDATA[' . ($property['ufCrm13Size'] ?? '') . ']]></Property_Size>';
         $xml .= '<Property_Size_Unit>SQFT</Property_Size_Unit>';
 
