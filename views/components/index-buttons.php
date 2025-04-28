@@ -44,29 +44,29 @@
         <i class="fas fa-filter me-2"></i>Filters
       </button>
 
-      <a href="?page=properties" id="clearFiltersBtn" class="btn btn-secondary py-1.5 px-4 rounded-md d-none"><i class="fas fa-eraser me-2"></i> Clear Filters</a>
+      <a href="?page=properties" id="clearFiltersBtn" class="btn btn-secondary py-1.5 px-4 rounded-md d-none">
+        <i class="fas fa-eraser me-2"></i> Clear Filters
+      </a>
+
+      <script>
+        document.getElementById('clearFiltersBtn').addEventListener('click', function(e) {
+          // Prevent the default anchor behavior
+          e.preventDefault();
+
+          // Remove specific filters from localStorage
+          localStorage.removeItem('filters');
+
+          // Then redirect manually
+          window.location.href = this.href;
+        });
+      </script>
 
     </div>
   </div>
 
   <div class="flex flex-wrap justify-end items-center gap-2">
     <!-- Create Listing Button -->
-    <a href="?page=properties" id="clearFiltersBtn" class="btn btn-secondary py-1.5 px-4 rounded-md d-none">
-      <i class="fas fa-eraser me-2"></i> Clear Filters
-    </a>
-
-    <script>
-      document.getElementById('clearFiltersBtn').addEventListener('click', function(e) {
-        // Prevent the default anchor behavior
-        e.preventDefault();
-
-        // Remove specific filters from localStorage
-        localStorage.removeItem('filters');
-
-        // Then redirect manually
-        window.location.href = this.href;
-      });
-    </script>
+    <a href="?page=add-property" class="btn btn-primary py-1.5 px-4 rounded-md"><i class="fas fa-plus me-2"></i>Create Listing</a>
 
     <!-- XML Publish Dropdown -->
     <div class="dropdown me-2 admin-only">
