@@ -1145,6 +1145,8 @@
             document.getElementById('description_en').textContent = property.ufCrm13DescriptionEn;
             document.getElementById('title_ar').value = property.ufCrm13TitleAr;
             document.getElementById('description_ar').textContent = property.ufCrm13DescriptionAr;
+            document.getElementById('title_web').value = property.ufCrm13TitleWebsite;
+            document.getElementById('description_web').textContent = property.ufCrm13DescriptionWebsite;
             document.getElementById('brochure_description_1').textContent = property.ufCrm13BrochureDescription;
             document.getElementById('brochure_description_2').textContent = property.ufCrm_13_BROCHUREDESCRIPTION2;
 
@@ -1152,6 +1154,10 @@
             document.getElementById('descriptionEnCount').textContent = document.getElementById('description_en').textContent.length;
             document.getElementById('titleArCount').textContent = document.getElementById('title_ar').value.length;
             document.getElementById('descriptionArCount').textContent = document.getElementById('description_ar').textContent.length;
+            document.getElementById('titleWebCount').textContent = document.getElementById('title_web').value.length;
+            document.getElementById('descriptionWebCount').textContent = document.getElementById('description_web').textContent.length;
+            document.getElementById('titleWebCount').textContent = document.getElementById('title_web').value.length;
+            document.getElementById('descriptionWebCount').textContent = document.getElementById('description_web').textContent.length;
             document.getElementById('brochureDescription1Count').textContent = document.getElementById('brochure_description_1').textContent.length;
             document.getElementById('brochureDescription2Count').textContent = document.getElementById('brochure_description_2').textContent.length;
 

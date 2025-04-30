@@ -32,6 +32,20 @@
 
         <!-- Column 1 -->
         <div>
+            <label for="title_web" class="block text-sm font-medium mb-2">Title (Website)</label>
+            <input type="text" id="title_web" name="title_web" maxlength="50" oninput="updateCharCount('titleWebCount', this.value.length, 50);" lang="en" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+            <small class="text-xs text-gray-500"><span id="titleWebCount">0</span> / 50 characters</small>
+        </div>
+
+        <!-- Column 1 -->
+        <div>
+            <label for="description_web" class="block text-sm font-medium mb-2">Description (Website)</label>
+            <textarea id="description_web" name="description_web" maxlength="1500" oninput="updateCharCount('descriptionWebCount', this.value.length, 1500);" lang="en" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" rows="15"></textarea>
+            <small class="text-xs text-gray-500"><span id="descriptionWebCount">0</span> / 1500 characters</small>
+        </div>
+
+        <!-- Column 1 -->
+        <div>
             <label for="brochure_description_1" class="block text-sm font-medium mb-2">Description for Brochure (1)</label>
             <textarea id="brochure_description_1" name="brochure_description_1" maxlength="200" oninput="updateCharCount('brochureDescription1Count', this.value.length, 200);" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" rows="7"></textarea>
             <small class="text-xs text-gray-500"><span id="brochureDescription1Count">0</span> / 200 characters</small>

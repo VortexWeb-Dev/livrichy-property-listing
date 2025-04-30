@@ -108,6 +108,8 @@
             "ufCrm13DescriptionEn": data.description_en,
             "ufCrm13TitleAr": data.title_ar,
             "ufCrm13DescriptionAr": data.description_ar,
+            "ufCrm13TitleWebsite": data.title_web,
+            "ufCrm13DescriptionWebsite": data.description_web,
             "ufCrm13Size": data.size,
             "ufCrm13Bedroom": data.bedrooms,
             "ufCrm13Bathroom": data.bathrooms,
