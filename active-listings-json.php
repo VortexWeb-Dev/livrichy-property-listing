@@ -61,6 +61,7 @@ $fields = [
     'ufCrm13BayutEnable',
     'ufCrm13DubizzleEnable',
     'ufCrm13WebsiteEnable',
+    'ufCrm13Amenities',
     'updatedTime'
 ];
 
