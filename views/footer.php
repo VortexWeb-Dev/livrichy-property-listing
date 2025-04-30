@@ -338,16 +338,16 @@
                             }
 
                             // Delete marketing from S3 if exists
-                            if (property.ufCrm13MarketingImage && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
+                            if (property.ufCrm13MarketingPicture && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                 try {
-                                    console.log('Attempting to delete marketing:', property.ufCrm13MarketingImage);
+                                    console.log('Attempting to delete marketing:', property.ufCrm13MarketingPicture);
                                     const response = await fetch('./delete-s3-object.php', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json',
                                         },
                                         body: JSON.stringify({
-                                            fileUrl: property.ufCrm13MarketingImage
+                                            fileUrl: property.ufCrm13MarketingPicture
                                         })
                                     });
                                     const result = await response.json();
@@ -356,7 +356,7 @@
                                         console.error(`Failed to delete marketing: ${result.error}`);
                                     }
                                 } catch (error) {
-                                    console.error(`Error deleting S3 marketing: ${property.ufCrm13MarketingImage}`, error);
+                                    console.error(`Error deleting S3 marketing: ${property.ufCrm13MarketingPicture}`, error);
                                 }
                             }
 
@@ -578,20 +578,27 @@
     // Function to add watermark to the image
     function addWatermark(imageElement, watermarkImagePath = null) {
         return new Promise((resolve, reject) => {
+            const width = imageElement.width;
+            const height = imageElement.height;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(imageElement, 0, 0, width, height);
+
+            if (!watermarkImagePath) {
+                // No watermark: return the image as is
+                const result = canvas.toDataURL('image/jpeg', 1);
+                return resolve(result);
+            }
+
+            // Watermark is provided: load and apply it
             const watermarkImage = new Image();
             watermarkImage.src = watermarkImagePath;
 
             watermarkImage.onload = function() {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const width = imageElement.width;
-                const height = imageElement.height;
-
-                canvas.width = width;
-                canvas.height = height;
-
-                ctx.drawImage(imageElement, 0, 0, width, height);
-
                 const watermarkAspect = watermarkImage.width / watermarkImage.height;
                 const imageAspect = width / height;
 
@@ -608,9 +615,8 @@
                 const xPosition = (width - watermarkWidth) / 2;
                 const yPosition = (height - watermarkHeight) / 2;
 
-                if (watermarkImagePath) {
-                    ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
-                }
+                ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
+
                 const watermarkedImage = canvas.toDataURL('image/jpeg', 1);
                 resolve(watermarkedImage);
             };
@@ -700,29 +706,35 @@
                 await new Promise((resolve, reject) => {
                     imageElement.onload = async () => {
                         try {
-                            // Add watermark to the image
-                            const watermarkedDataUrl = await addWatermark(imageElement, watermarkPath);
-                            // const watermarkedDataUrl = await addWatermarkText(imageElement, 'LIVRICHY');
-                            // const watermarkedDataUrl = await addWatermarkWithFabric(imageElement, watermarkPath);
+                            let finalDataUrl;
 
-                            // Convert the data URL to a Blob
-                            const watermarkedBlob = dataURLToBlob(watermarkedDataUrl);
+                            if (watermarkPath) {
+                                finalDataUrl = await addWatermark(imageElement, watermarkPath);
+                            } else {
+                                // If no watermark, just use original image as Data URL
+                                const canvas = document.createElement('canvas');
+                                const ctx = canvas.getContext('2d');
+                                canvas.width = imageElement.width;
+                                canvas.height = imageElement.height;
+                                ctx.drawImage(imageElement, 0, 0);
+                                finalDataUrl = canvas.toDataURL('image/jpeg', 1);
+                            }
 
-                            // Upload the watermarked Blob
-                            const uploadedUrl = await uploadFile(watermarkedBlob);
+                            const finalBlob = dataURLToBlob(finalDataUrl);
+                            const uploadedUrl = await uploadFile(finalBlob);
 
                             if (uploadedUrl) {
-                                photoPaths.push(uploadedUrl); // Add the uploaded URL to the photoPaths array
+                                photoPaths.push(uploadedUrl);
                             } else {
                                 console.error('Error uploading photo from base64 data');
                             }
 
                             resolve();
                         } catch (error) {
-                            console.error('Error processing watermarking or uploading:', error);
+                            console.error('Error processing image:', error);
                             reject(error);
                         } finally {
-                            URL.revokeObjectURL(imageUrl); // Clean up the object URL
+                            URL.revokeObjectURL(imageUrl);
                         }
                     };
 
@@ -738,6 +750,7 @@
 
         return photoPaths;
     }
+
 
     // Function to get the name of an amenity
     function getAmenityName(amenityId) {

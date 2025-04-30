@@ -259,16 +259,16 @@
                 const uploadedMarketings = await processBase64Images(marketingArray, watermarkPath);
 
 
-                fields["ufCrm13MarketingImage"] = uploadedMarketings.length > 0 ?
+                fields["ufCrm13MarketingPicture"] = uploadedMarketings.length > 0 ?
                     uploadedMarketings[0] :
                     existingMarketings[0] || null;
             } else {
 
-                fields["ufCrm13MarketingImage"] = existingMarketings[0] || null;
+                fields["ufCrm13MarketingPicture"] = existingMarketings[0] || null;
             }
         } else {
 
-            fields["ufCrm13MarketingImage"] = null;
+            fields["ufCrm13MarketingPicture"] = null;
         }
 
         const result = await updateItem(1046, fields, <?php echo $_GET['id']; ?>);
@@ -315,7 +315,7 @@
                 type: "marketing",
                 newLinks: [],
                 selectedFiles: [],
-                existingLinks: property['ufCrm13MarketingImages'] ? [property['ufCrm13MarketingImages']] : [],
+                existingLinks: property['ufCrm13MarketingPictures'] ? [property['ufCrm13MarketingPictures']] : [],
                 newPreviewContainer: document.getElementById('newMarketingPreviewContainer'),
                 existingPreviewContainer: document.getElementById('existingMarketingPreviewContainer'),
                 selectedInput: document.getElementById('selectedMarketing'),

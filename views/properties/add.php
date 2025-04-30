@@ -233,7 +233,7 @@
             const uploadedMarketing = await processBase64Images(marketingArray);
 
             if (uploadedMarketing.length > 0) {
-                fields["ufCrm13MarketingImage"] = uploadedMarketing[0];
+                fields["ufCrm13MarketingPicture"] = uploadedMarketing[0];
             }
         }
 
