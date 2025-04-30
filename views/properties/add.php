@@ -17,10 +17,12 @@
             <?php include_once('views/components/add-property/location.php'); ?>
             <!-- Photos and Videos -->
             <?php include_once('views/components/add-property/media.php'); ?>
+            <!-- Marketing Image -->
+            <?php include_once('views/components/add-property/marketing.php'); ?>
             <!-- Floor Plan -->
             <?php include_once('views/components/add-property/floorplan.php'); ?>
             <!-- Documents -->
-            <?php include_once('views/components/add-property/documents.php'); 
+            <?php include_once('views/components/add-property/documents.php');
             ?>
             <!-- Notes -->
             <?php include_once('views/components/add-property/notes.php'); ?>
@@ -219,6 +221,19 @@
 
             if (uploadedFloorplan.length > 0) {
                 fields["ufCrm13FloorPlan"] = uploadedFloorplan[0];
+            }
+        }
+
+        // Marketing
+        const marketing = document.getElementById('selectedMarketing').value;
+        if (marketing) {
+            const fixedMarketing = marketing.replace(/\\'/g, '"');
+            const marketingArray = JSON.parse(fixedMarketing);
+            const watermarkPath = 'assets/images/watermark.png';
+            const uploadedMarketing = await processBase64Images(marketingArray);
+
+            if (uploadedMarketing.length > 0) {
+                fields["ufCrm13MarketingImage"] = uploadedMarketing[0];
             }
         }
 

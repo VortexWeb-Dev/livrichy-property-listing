@@ -17,6 +17,8 @@
             <?php include_once('views/components/add-property/location.php'); ?>
             <!-- Photos and Videos -->
             <?php include_once('views/components/add-property/media.php'); ?>
+            <!-- Marketing Image -->
+            <?php include_once('views/components/add-property/marketing.php'); ?>
             <!-- Floor Plan -->
             <?php include_once('views/components/add-property/floorplan.php'); ?>
             <!-- Documents -->
@@ -243,6 +245,32 @@
             fields["ufCrm13FloorPlan"] = null;
         }
 
+        const marketings = document.getElementById('selectedFloorplan').value;
+        const existingMarketingsString = document.getElementById('existingFloorplan').value;
+
+        if (existingMarketingsString || marketings.length > 0) {
+            const existingMarketings = JSON.parse(existingMarketingsString || "[]");
+
+            if (marketings.length > 0) {
+
+                const fixedMarketings = marketings.replace(/\\'/g, '"');
+                const marketingArray = JSON.parse(fixedMarketings);
+                const watermarkPath = 'assets/images/watermark.png';
+                const uploadedMarketings = await processBase64Images(marketingArray, watermarkPath);
+
+
+                fields["ufCrm13MarketingImage"] = uploadedMarketings.length > 0 ?
+                    uploadedMarketings[0] :
+                    existingMarketings[0] || null;
+            } else {
+
+                fields["ufCrm13MarketingImage"] = existingMarketings[0] || null;
+            }
+        } else {
+
+            fields["ufCrm13MarketingImage"] = null;
+        }
+
         const result = await updateItem(1046, fields, <?php echo $_GET['id']; ?>);
 
         // Add to history
@@ -282,6 +310,16 @@
                 existingPreviewContainer: document.getElementById('existingFloorplanPreviewContainer'),
                 selectedInput: document.getElementById('selectedFloorplan'),
                 existingInput: document.getElementById('existingFloorplan'),
+            },
+            {
+                type: "marketing",
+                newLinks: [],
+                selectedFiles: [],
+                existingLinks: property['ufCrm13MarketingImages'] ? [property['ufCrm13MarketingImages']] : [],
+                newPreviewContainer: document.getElementById('newMarketingPreviewContainer'),
+                existingPreviewContainer: document.getElementById('existingMarketingPreviewContainer'),
+                selectedInput: document.getElementById('selectedMarketing'),
+                existingInput: document.getElementById('existingMarketing'),
             },
         ];
 

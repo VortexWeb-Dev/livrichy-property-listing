@@ -337,6 +337,29 @@
                                 }
                             }
 
+                            // Delete marketing from S3 if exists
+                            if (property.ufCrm13MarketingImage && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
+                                try {
+                                    console.log('Attempting to delete marketing:', property.ufCrm13MarketingImage);
+                                    const response = await fetch('./delete-s3-object.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            fileUrl: property.ufCrm13MarketingImage
+                                        })
+                                    });
+                                    const result = await response.json();
+                                    console.log('Marketing delete response:', result);
+                                    if (!result.success) {
+                                        console.error(`Failed to delete marketing: ${result.error}`);
+                                    }
+                                } catch (error) {
+                                    console.error(`Error deleting S3 marketing: ${property.ufCrm13MarketingImage}`, error);
+                                }
+                            }
+
                             // Delete documents from S3
                             if (property.ufCrm13Documents && Array.isArray(property.ufCrm13Documents) && !property.ufCrm13ReferenceNumber.includes('-duplicate')) {
                                 console.log('Found documents:', property.ufCrm13Documents);
@@ -553,7 +576,7 @@
     }
 
     // Function to add watermark to the image
-    function addWatermark(imageElement, watermarkImagePath) {
+    function addWatermark(imageElement, watermarkImagePath = null) {
         return new Promise((resolve, reject) => {
             const watermarkImage = new Image();
             watermarkImage.src = watermarkImagePath;
@@ -585,7 +608,9 @@
                 const xPosition = (width - watermarkWidth) / 2;
                 const yPosition = (height - watermarkHeight) / 2;
 
-                ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
+                if (watermarkImagePath) {
+                    ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
+                }
                 const watermarkedImage = canvas.toDataURL('image/jpeg', 1);
                 resolve(watermarkedImage);
             };
