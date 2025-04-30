@@ -4,6 +4,22 @@ require __DIR__ . '/controllers/SpaController.php';
 require __DIR__ . '/utils/index.php';
 
 include __DIR__ . '/views/header.php';
+?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtersStr = localStorage.getItem('filters');
+        if (filtersStr) {
+            try {
+                document.querySelector('#clearFiltersBtn').classList.remove('d-none');
+            } catch (e) {
+                // If JSON parsing fails, show the clear button just in case
+                document.querySelector('#clearFiltersBtn').classList.remove('d-none');
+            }
+        }
+    });
+</script>
+
+<?php
 
 $currentUser = fetchCurrentUser();
 $currentUserId = $currentUser['ID'];
