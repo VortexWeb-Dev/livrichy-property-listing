@@ -242,7 +242,7 @@
         // console.log("Params", params);
         // console.log("filterParams", filterParams);
 
-        const existingFilters = JSON.parse(localStorage.getItem('filters')) || {};
+        const existingFilters = JSON.parse(sessionStorage.getItem('filters')) || {};
 
         if (Object.keys(existingFilters).length > 0) {
             for (const [key, value] of Object.entries(existingFilters)) {
@@ -253,7 +253,7 @@
                 }
             }
         }
-        localStorage.setItem('filters', JSON.stringify(filterParams));
+        sessionStorage.setItem('filters', JSON.stringify(filterParams));
 
         fetchProperties(currentPage, filterParams);
         document.getElementById('filterForm').reset();

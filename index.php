@@ -7,7 +7,7 @@ include __DIR__ . '/views/header.php';
 ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const filtersStr = localStorage.getItem('filters');
+        const filtersStr = sessionStorage.getItem('filters');
         if (filtersStr) {
             try {
                 document.querySelector('#clearFiltersBtn').classList.remove('d-none');
