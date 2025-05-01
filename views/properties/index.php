@@ -258,6 +258,23 @@
         }
     }
 
+    // Function to calculate square meters
+    function sqftToSqm(sqft) {
+        const sqm = sqft * 0.092903;
+        return parseFloat(sqm.toFixed(2));
+    }
+
+    // Format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const options = {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        };
+        return date.toLocaleDateString('en-US', options);
+    }
+
     function changePage(direction) {
         if (direction === 'prev' && currentPage > 1) {
             currentPage--;
