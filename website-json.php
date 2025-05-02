@@ -53,6 +53,7 @@ $fields = [
     'ufCrm13AvailableFrom',
     'ufCrm13VideoTourUrl',
     'ufCrm13Developers',
+    'ufCrm13MarketingPicture',
     'ufCrm13ProjectName',
     'ufCrm13ProjectStatus',
     'ufCrm13ListingOwner',
@@ -67,9 +68,100 @@ $fields = [
 
 $properties = fetchAllProperties($baseUrl, $entityTypeId, $fields,);
 
-if (count($properties) > 0) {
-    $json = generateWebsiteJson($properties);
-    echo $json;
+function getAmenityName($shortCode)
+{
+    $amenityMap = [
+        'BA' => 'Balcony',
+        'BP' => 'Basement parking',
+        'BB' => 'BBQ area',
+        'AN' => 'Cable-ready',
+        'BW' => 'Built in wardrobes',
+        'CA' => 'Carpets',
+        'AC' => 'Central air conditioning',
+        'CP' => 'Covered parking',
+        'DR' => 'Drivers room',
+        'FF' => 'Fully fitted kitchen',
+        'GZ' => 'Gazebo',
+        'PY' => 'Private Gym',
+        'PJ' => 'Jacuzzi',
+        'BK' => 'Kitchen Appliances',
+        'MR' => 'Maids Room',
+        'MB' => 'Marble floors',
+        'HF' => 'On high floor',
+        'LF' => 'On low floor',
+        'MF' => 'On mid floor',
+        'PA' => 'Pets allowed',
+        'GA' => 'Private garage',
+        'PG' => 'Garden',
+        'PP' => 'Swimming pool',
+        'SA' => 'Sauna',
+        'SP' => 'Shared swimming pool',
+        'WF' => 'Wood flooring',
+        'SR' => 'Steam room',
+        'ST' => 'Study',
+        'UI' => 'Upgraded interior',
+        'GR' => 'Garden view',
+        'VW' => 'Sea/Water view',
+        'SE' => 'Security',
+        'MT' => 'Maintenance',
+        'IC' => 'Within a Compound',
+        'IS' => 'Indoor swimming pool',
+        'SF' => 'Separate entrance for females',
+        'BT' => 'Basement',
+        'SG' => 'Storage room',
+        'CV' => 'Community view',
+        'GV' => 'Golf view',
+        'CW' => 'City view',
+        'NO' => 'North orientation',
+        'SO' => 'South orientation',
+        'EO' => 'East orientation',
+        'WO' => 'West orientation',
+        'NS' => 'Near school',
+        'HO' => 'Near hospital',
+        'TR' => 'Terrace',
+        'NM' => 'Near mosque',
+        'SM' => 'Near supermarket',
+        'ML' => 'Near mall',
+        'PT' => 'Near public transportation',
+        'MO' => 'Near metro',
+        'VT' => 'Near veterinary',
+        'BC' => 'Beach access',
+        'PK' => 'Public parks',
+        'RT' => 'Near restaurants',
+        'NG' => 'Near Golf',
+        'AP' => 'Near airport',
+        'CS' => 'Concierge Service',
+        'SS' => 'Spa',
+        'SY' => 'Shared Gym',
+        'MS' => 'Maid Service',
+        'WC' => 'Walk-in Closet',
+        'HT' => 'Heating',
+        'GF' => 'Ground floor',
+        'SV' => 'Server room',
+        'DN' => 'Pantry',
+        'RA' => 'Reception area',
+        'VP' => 'Visitors parking',
+        'OP' => 'Office partitions',
+        'SH' => 'Core and Shell',
+        'CD' => 'Children daycare',
+        'CL' => 'Cleaning services',
+        'NH' => 'Near Hotel',
+        'CR' => 'Conference room',
+        'BL' => 'View of Landmark',
+        'PR' => 'Children Play Area',
+        'BH' => 'Beach Access'
+    ];
+
+    return $amenityMap[$shortCode] ?? $shortCode;
+}
+
+if (!empty($properties)) {
+    foreach ($properties as &$property) {
+        $amenities = array_map('getAmenityName', $property['ufCrm13Amenities']);
+        $property['ufCrm13Amenities'] = $amenities;
+    }
+    unset($property); // break reference
+    echo generateWebsiteJson($properties);
 } else {
     echo json_encode([]);
 }
