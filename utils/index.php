@@ -301,7 +301,7 @@ function formatPhotos($photos)
 
     $xml = '<photo>';
     foreach ($photos as $photo) {
-        $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="Yes">' . htmlspecialchars($photo) . '</url>';
+        $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="Yes">' . htmlspecialchars("https://connecteo.in/livrichy-property-listing/assets.php?watermark=1&imageUrl=" . $photo) . '</url>';
     }
     $xml .= '</photo>';
 
@@ -485,7 +485,7 @@ function generateBayutXml($properties)
 
         $xml .= '<Images>';
         foreach ($property['ufCrm13PhotoLinks'] ?? [] as $image) {
-            $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[' . $image . ']]></Image>';
+            $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[https://connecteo.in/livrichy-property-listing/assets.php?watermark=1&imageUrl=' . $image . ']]></Image>';
         }
         $xml .= '</Images>';
 
