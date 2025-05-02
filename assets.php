@@ -46,9 +46,9 @@ if ($applyWatermark && $watermarkUrl) {
             $wmOriginalHeight = imagesy($watermark);
             $wmAspect = $wmOriginalWidth / $wmOriginalHeight;
 
-            // Target watermark size (80% of original image)
-            $targetWidth = $srcWidth * 0.8;
-            $targetHeight = $srcHeight * 0.8;
+            // Target watermark size (40% of original image)
+            $targetWidth = $srcWidth * 0.4;
+            $targetHeight = $srcHeight * 0.4;
 
             if ($wmAspect > ($targetWidth / $targetHeight)) {
                 $newWmWidth = $targetWidth;
