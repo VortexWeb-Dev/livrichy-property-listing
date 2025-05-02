@@ -684,7 +684,7 @@
     }
 
     // Process base64 images
-    async function processBase64Images(base64Images, watermarkPath) {
+    async function processBase64Images(base64Images, watermarkPath, original = false) {
         const photoPaths = [];
 
         for (const base64Image of base64Images) {
@@ -698,8 +698,18 @@
                 const blob = new Blob([new Uint8Array(imageData.split('').map(c => c.charCodeAt(0)))], {
                     type: `image/${matches[1]}`,
                 });
-                const imageUrl = URL.createObjectURL(blob);
 
+                if (original) {
+                    const uploadedUrl = await uploadFile(blob);
+                    if (uploadedUrl) {
+                        photoPaths.push(uploadedUrl);
+                    } else {
+                        console.error('Error uploading original photo');
+                    }
+                    continue; // Skip further processing
+                }
+
+                const imageUrl = URL.createObjectURL(blob);
                 const imageElement = new Image();
                 imageElement.src = imageUrl;
 
@@ -711,7 +721,7 @@
                             if (watermarkPath) {
                                 finalDataUrl = await addWatermark(imageElement, watermarkPath);
                             } else {
-                                // If no watermark, just use original image as Data URL
+                                // Use canvas to keep consistency (non-original flow)
                                 const canvas = document.createElement('canvas');
                                 const ctx = canvas.getContext('2d');
                                 canvas.width = imageElement.width;
@@ -726,7 +736,7 @@
                             if (uploadedUrl) {
                                 photoPaths.push(uploadedUrl);
                             } else {
-                                console.error('Error uploading photo from base64 data');
+                                console.error('Error uploading processed photo');
                             }
 
                             resolve();
@@ -750,7 +760,6 @@
 
         return photoPaths;
     }
-
 
     // Function to get the name of an amenity
     function getAmenityName(amenityId) {

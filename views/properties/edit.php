@@ -211,7 +211,7 @@
                 const fixedPhotos = photos.replace(/\\'/g, '"');
                 const photoArray = JSON.parse(fixedPhotos);
                 const watermarkPath = 'assets/images/watermark.png';
-                const uploadedImages = await processBase64Images(photoArray, watermarkPath);
+                const uploadedImages = await processBase64Images(photoArray, watermarkPath, true);
 
                 fields["ufCrm13PhotoLinks"] = uploadedImages.length > 0 ? [...existingPhotos, ...uploadedImages] : [...existingPhotos];
             } else {
@@ -256,7 +256,7 @@
                 const fixedMarketings = marketings.replace(/\\'/g, '"');
                 const marketingArray = JSON.parse(fixedMarketings);
                 const watermarkPath = 'assets/images/watermark.png';
-                const uploadedMarketings = await processBase64Images(marketingArray, watermarkPath);
+                const uploadedMarketings = await processBase64Images(marketingArray, watermarkPath, true);
 
 
                 fields["ufCrm13MarketingPicture"] = uploadedMarketings.length > 0 ?
