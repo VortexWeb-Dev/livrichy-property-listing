@@ -3,6 +3,144 @@
 require_once(__DIR__ . "/../crest/crest.php");
 require_once(__DIR__ . "/../crest/crestcurrent.php");
 
+$images_to_skip = [
+    "LIV-S-TheField-AInew2",
+    "LIV-S-MarinaVista04",
+    "LIV-S-RedSqaureFA04",
+    "LIV-S-KempinskiBJ1",
+    "LIV-S-PL01MD",
+    "LIV-S-DCTB06MB",
+    "LIV-S-AYC3TDMB",
+    "livrichy-real-estate-brokerage-11016445",
+    "livrichy-real-estate-brokerage-11388149",
+    "LIV-S-Peninsula29",
+    "LIV-S-TheField-AInew1",
+    "LIV-S-GOLF-S",
+    "LIV-S-Terrace2BR",
+    "LIV-S-TMD04K",
+    "LIV-S-ERIN",
+    "LIV-S-OCEANCove",
+    "LIV-S-MajaraSD",
+    "LIV-R-MiraclzSD2",
+    "livrichy-real-estate-brokerage-11348107",
+    "livrichy-real-estate-brokerage-11354989",
+    "livrichy-real-estate-brokerage-11346061",
+    "LIV-S-SERENA-KSV",
+    "livrichy-real-estate-brokerage-10677740",
+    "livrichy-real-estate-brokerage-11390606",
+    "livrichy-real-estate-brokerage-11136714",
+    "LIV-R-SLS-11109877",
+    "livrichy-real-estate-brokerage-11305886",
+    "LIV-R-SLS2-SAM",
+    "LIV-R-SLS1-SAM",
+    "LIV-R-SLS-SAM4",
+    "livrichy-real-estate-brokerage-10842284",
+    "LIV-S-CENTRALPARK1",
+    "LIV-R-Icon17-SR",
+    "LIV-S-GROVE-MARYNA",
+    "livrichy-real-estate-brokerage-10958640",
+    "LIV-S-SLS17VD",
+    "LIV-R-SLSVD",
+    "livrichy-real-estate-brokerage-11366156",
+    "livrichy-real-estate-brokerage-11017220",
+    "livrichy-real-estate-brokerage-11109915",
+    "LIV-S-Safa2MarynaM1",
+    "livrichy-real-estate-brokerage-10886896",
+    "livrichy-real-estate-brokerage-10655509",
+    "livrichy-real-estate-brokerage-11256806",
+    "LIV-S-MuroojZ",
+    "LIV-S-DQ3-AK",
+    "LIV-S-DQ5-AK",
+    "LIV-S-JGT2EK",
+    "LIV-S-MBL09BJ",
+    "LIV-S-RUKAN-KS",
+    "livrichy-real-estate-brokerage-11274942",
+    "LIV-S-SAFA2BJ",
+    "LIV-S-SapphireBJrenew",
+    "LIV-S-PalmBeachBJ04",
+    "LIV-S-MBL08BJ",
+    "LIV-S-Crescent05BJ1BED",
+    "LIV-S-Crestcent2BEDBJ",
+    "LIV-S-PearlEK",
+    "LIV-S-PeninsulaMB",
+    "LIV-S-MQWSD",
+    "LIV-S-Nautica1M",
+    "LIV-S-TheCrestCM",
+    "LIV-S-TheCrestIM",
+    "LIV-R-ACACIA-RL",
+    "LIV-S-HarringtonRL",
+    "LIV-S-MarinaVistanew",
+    "livrichy-real-estate-brokerage-11256541",
+    "livrichy-real-estate-brokerage-10774462",
+    "livrichy-real-estate-brokerage-11243910",
+    "LIV-S-306 SD",
+    "livrichy-real-estate-brokerage-11261810",
+    "LIV-S-Sobhavista04",
+    "LIV-S-ParkHeights04",
+    "LIV-S-Burjkhalifa",
+    "livrichy-real-estate-brokerage-11006548",
+    "LIV-S-North43LA",
+    "LIV-S-ElevateET",
+    "LIV-S-Aykon3LA",
+    "LIV-S-MarbellaLT",
+    "ALJurf-013",
+    "LIV-S-AddressBay07",
+    "livrichy-real-estate-brokerage-10963824",
+    "LIV-S-Kempinski1BRK",
+    "LIV-S-DQ08NEW",
+    "LIV-S-DQ01NEW",
+    "LIV-S-DQ7NEW",
+    "LIV-S-GroveEKnew",
+    "LIV-S-YasGolfEKnew",
+    "LIV-S-SGardensSBnew",
+    "LIV-S-OceanoEkaterinanew",
+    "LIV-S-Murjansimon",
+    "LIV-S-WestwoodK",
+    "LIV-S-AddressBay08",
+    "LIV-S-TORCHSNEW",
+    "LIV-S-AddressBay06",
+    "LIV-S-AddressBay05",
+    "livrichy-real-estate-brokerage-11046843",
+    "LIV-S-AsayelMJ",
+    "LIV-S-SafaTwoBJ",
+    "LIV-S-GH08K",
+    "LIV-S-Fern05K",
+    "LIV-R-MQWSD",
+    "LIV-S-GH04K",
+    "LIV-S-RixosK",
+    "LIV-S-GH05K",
+    "LIV-R-StudioOneK",
+    "LIV-S-GH06K",
+    "LIV-S-RedSqaureAE",
+    "LIV-S-5103F",
+    "LIV-S-2911F",
+    "LIV-S-2301HA",
+    "LIV-S-Views03LA",
+    "LIV-S-3003GH",
+    "LIV-S-264Ekaterinarenew",
+    "LIV-R-0606Simon",
+    "livrichy-real-estate-brokerage-11005456",
+    "LIV-S-BEACHouse",
+    "LIV-S-AMWAJ-AE",
+    "LIV-S-1002H",
+    "LIV-S-4006ilona",
+    "LIV-S-4404ilona",
+    "LIV-S-144ilona",
+    "LIV-S-1002ilona",
+    "LIV-S-301ilona",
+    "LIV-S-BB01IM",
+    "LIV-S-ThymeIlona",
+    "LIV-S-Lamaa03",
+    "LIV-S-GH07K",
+    "LIV-S-Lamaa09",
+    "LIV-S-AlJaziBJ",
+    "LIV-S-ParkH",
+    "LIV-S-1310F",
+    "LIV-S-RegaliaMN",
+    "LIV-S-MarinavistaRuby",
+    "LIV-S-SkyBayH11",
+];
+
 
 function buildApiUrl($baseUrl, $entityTypeId, $fields, $start = 0)
 {
@@ -293,15 +431,20 @@ function formatAgent($property)
     return $xml;
 }
 
-function formatPhotos($photos)
+function formatPhotos($photos, $referenceNumber)
 {
+    global $images_to_skip;
     if (empty($photos)) {
         return '';
     }
 
     $xml = '<photo>';
     foreach ($photos as $photo) {
-        $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="Yes">' . htmlspecialchars("https://connecteo.in/livrichy-property-listing/assets.php?watermark=1&imageUrl=" . $photo) . '</url>';
+        if (!in_array($referenceNumber, $images_to_skip)) {
+            $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="Yes">' . htmlspecialchars("https://connecteo.in/livrichy-property-listing/assets.php?watermark=1&imageUrl=" . $photo) . '</url>';
+        } else {
+            $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="Yes">' . $photo . '</url>';
+        }
     }
     $xml .= '</photo>';
 
@@ -380,7 +523,7 @@ function generatePfXml($properties)
         $xml .= formatField('parking', $property['ufCrm13Parking']);
         $xml .= formatFurnished($property);
         $xml .= formatField('view360', $property['ufCrm_13_360_VIEW_URL']);
-        $xml .= formatPhotos($property['ufCrm13PhotoLinks']);
+        $xml .= formatPhotos($property['ufCrm13PhotoLinks'], $property['ufCrm13ReferenceNumber']);
         $xml .= formatField('floor_plan', $property['ufCrm13FloorPlan']);
         $xml .= formatGeopoints($property);
         $xml .= formatField('availability_date', $property['ufCrm13AvailableFrom'], 'date');
@@ -398,6 +541,8 @@ function generatePfXml($properties)
 
 function generateBayutXml($properties)
 {
+    global $images_to_skip;
+
     $xml = '<?xml version="1.0" encoding="UTF-8"?>';
     $xml .= '<Properties last_update="' . date('Y-m-d H:i:s') . '" listing_count="' . count($properties) . '">';
 
@@ -485,7 +630,11 @@ function generateBayutXml($properties)
 
         $xml .= '<Images>';
         foreach ($property['ufCrm13PhotoLinks'] ?? [] as $image) {
-            $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[https://connecteo.in/livrichy-property-listing/assets.php?watermark=1&imageUrl=' . $image . ']]></Image>';
+            if (!in_array($property['ufCrm13ReferenceNumber'], $images_to_skip)) {
+                $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[https://connecteo.in/livrichy-property-listing/assets.php?watermark=1&imageUrl=' . $image . ']]></Image>';
+            } else {
+                $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[' . $image . ']]></Image>';
+            }
         }
         $xml .= '</Images>';
 
