@@ -1,5 +1,5 @@
 <div class="text-center mb-3">
-    <input type="file" class="d-none" id="marketing" name="marketing" accept="image/*">
+    <input type="file" class="d-none" id="marketing" name="marketing" accept="image/*" required>
     <label for="marketing" class="dropzone d-block">
         <div class="cursor-pointer p-12 flex justify-center bg-white border border-gray-300 rounded-xl" data-hs-file-upload-trigger="">
             <div class="text-center">

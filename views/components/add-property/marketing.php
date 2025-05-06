@@ -1,5 +1,5 @@
 <div class="bg-white shadow-md rounded-lg p-6 ">
-    <h2 class="text-2xl font-semibold">Marketing Image</h2>
+    <h2 class="text-2xl font-semibold">Marketing Image <span class="text-danger">*</span></h2>
     <p class="text-sm text-gray-500 mb-4">Please fill in all the required fields</p>
 
     <?php

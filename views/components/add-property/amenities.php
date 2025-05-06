@@ -10,14 +10,14 @@
         </div>
 
         <div class="w-full md:w-1/2 border rounded-lg p-4" style="max-height: 20rem; overflow-y: auto;">
-            <label class="block text-sm font-medium mb-2">Selected Amenities</label>
+            <label class="block text-sm font-medium mb-2">Selected Amenities <span class="text-danger">*</span></label>
             <ul id="selectedAmenities" class="list-none p-0 space-y-2">
                 <!-- Selected amenities will be displayed here -->
             </ul>
         </div>
     </div>
 
-    <input type="hidden" name="amenities" id="amenitiesInput">
+    <input type="hidden" name="amenities" id="amenitiesInput" required>
 </div>
 
 <script>
