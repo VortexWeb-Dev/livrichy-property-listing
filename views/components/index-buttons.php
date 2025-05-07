@@ -7,11 +7,13 @@
         $filterLabels = [
           'ALL' => 'All Listings',
           'DRAFT' => 'Draft',
-          'PUBLISHED' => 'Published',
-          'LIVE' => 'Live',
-          'PENDING' => 'Pending',
-          'ARCHIVED' => 'Archived',
-          'DUPLICATE' => 'Duplicate',
+          'POCKET' => 'Pocket Listing',
+          'LIVE' => 'Send for Approval',
+          'PUBLISHED' => 'Live',
+          'UNPUBLISHED' => 'Archived',
+          // 'PENDING' => 'Pending',
+          // 'ARCHIVED' => 'Archived',
+          // 'DUPLICATE' => 'Duplicate',
         ];
         $currentFilter = $filter ?? 'ALL'; // Default to 'ALL' if no filter is set
         $currentFilterLabel = $filterLabels[$currentFilter] ?? 'Select Filter';
@@ -151,11 +153,10 @@
     const filterLabels = {
       'ALL': 'All Listings',
       'DRAFT': 'Draft',
-      'PUBLISHED': 'Published',
-      'LIVE': 'Live',
-      'PENDING': 'Pending',
-      'ARCHIVED': 'Archived',
-      'DUPLICATE': 'Duplicate',
+      'POCKET': 'Pocket Listing',
+      'LIVE': 'Send for Approval',
+      'PUBLISHED': 'Live',
+      'UNPUBLISHED': 'Archived',
     };
 
     document.querySelector('.btn.btn-filter').innerText = filterLabels[filterKey] || 'Select Filter';
@@ -168,23 +169,18 @@
       }
     });
 
-    if (filterKey === 'ALL') {
-      fetchProperties(currentPage);
-      return;
+    const filterParams = {};
+
+    if (filterKey !== 'ALL') {
+      filterParams['ufCrm13Status'] = filterKey;
     }
 
-    const filterParams = {
-      'ufCrm13Status': filterKey
-    };
     const existingFilters = JSON.parse(sessionStorage.getItem('filters')) || {};
 
-    if (Object.keys(existingFilters).length > 0) {
-      for (const [key, value] of Object.entries(existingFilters)) {
-        if (key in filterParams) {
-          filterParams[key] = filterParams[key] + ',' + value;
-        } else {
-          filterParams[key] = value;
-        }
+    // Preserve other filters, but always replace 'ufCrm13Status'
+    for (const [key, value] of Object.entries(existingFilters)) {
+      if (key !== 'ufCrm13Status') {
+        filterParams[key] = value;
       }
     }
 
