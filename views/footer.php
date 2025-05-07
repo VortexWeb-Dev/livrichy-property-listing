@@ -49,6 +49,7 @@
     // Toggle all portals
     document.getElementById('toggle_all_portals') && document.getElementById('toggle_all_portals').addEventListener('change', function() {
         const isChecked = this.checked;
+        document.getElementById('toggle_bayut_dubizzle').checked = isChecked;
         document.getElementById('pf_enable').checked = isChecked;
         document.getElementById('bayut_enable').checked = isChecked;
         document.getElementById('dubizzle_enable').checked = isChecked;
