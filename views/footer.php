@@ -46,6 +46,15 @@
         document.getElementById('dubizzle_enable').checked = isChecked;
     });
 
+    // Toggle all portals
+    document.getElementById('toggle_all_portals') && document.getElementById('toggle_all_portals').addEventListener('change', function() {
+        const isChecked = this.checked;
+        document.getElementById('pf_enable').checked = isChecked;
+        document.getElementById('bayut_enable').checked = isChecked;
+        document.getElementById('dubizzle_enable').checked = isChecked;
+        document.getElementById('website_enable').checked = isChecked;
+    });
+
     // Format date
     function formatDate(dateString) {
         const date = new Date(dateString);

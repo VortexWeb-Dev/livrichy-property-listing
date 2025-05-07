@@ -1,6 +1,12 @@
 <div class="bg-white shadow-md rounded-lg p-6">
     <h2 class="text-2xl font-semibold mb-6 text-gray-800">Portals</h2>
 
+    <!-- Select All Toggle -->
+    <div class="mb-4 flex items-center gap-2">
+        <input type="checkbox" id="toggle_all_portals" class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500">
+        <label for="toggle_all_portals" class="text-sm font-medium text-gray-700">Select All Portals</label>
+    </div>
+
     <div class="my-4 flex gap-8">
         <!-- Property Finder -->
         <div class="w-1/3 flex justify-center items-center">
