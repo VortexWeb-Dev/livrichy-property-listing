@@ -57,6 +57,26 @@
         }
     })
 
+    document.querySelectorAll("input[name='status']").forEach(function(input) {
+        input.addEventListener("change", function() {
+            const status = this.value;
+
+            if (status == 'PUBLISHED') {
+                document.getElementById("title_web").setAttribute("required", true);
+                document.querySelector('label[for="title_web"]').innerHTML = 'Title (Website) <span class="text-danger">*</span>';
+
+                document.getElementById("description_web").setAttribute("required", true);
+                document.querySelector('label[for="description_web"]').innerHTML = 'Description (Website) <span class="text-danger">*</span>';
+            } else {
+                document.getElementById("title_web").removeAttribute("required");
+                document.querySelector('label[for="title_web"]').innerHTML = 'Title (Website)';
+
+                document.getElementById("description_web").removeAttribute("required");
+                document.querySelector('label[for="description_web"]').innerHTML = 'Description (Website)';
+            }
+        });
+    });
+
     async function addItem(entityTypeId, fields) {
         try {
             const response = await fetch(`https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4/crm.item.add?entityTypeId=${entityTypeId}`, {
