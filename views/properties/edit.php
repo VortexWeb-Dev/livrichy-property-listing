@@ -245,8 +245,8 @@
             fields["ufCrm13FloorPlan"] = null;
         }
 
-        const marketings = document.getElementById('selectedFloorplan').value;
-        const existingMarketingsString = document.getElementById('existingFloorplan').value;
+        const marketings = document.getElementById('selectedMarketing').value;
+        const existingMarketingsString = document.getElementById('existingMarketing').value;
 
         if (existingMarketingsString || marketings.length > 0) {
             const existingMarketings = JSON.parse(existingMarketingsString || "[]");
@@ -290,6 +290,7 @@
 
     document.addEventListener('DOMContentLoaded', async () => {
         const property = await fetchProperty(<?php echo $_GET['id']; ?>);
+        console.log(property);
 
         const containers = [{
                 type: "photos",
@@ -315,7 +316,7 @@
                 type: "marketing",
                 newLinks: [],
                 selectedFiles: [],
-                existingLinks: property['ufCrm13MarketingPictures'] ? [property['ufCrm13MarketingPictures']] : [],
+                existingLinks: property['ufCrm13MarketingPicture'] ? [property['ufCrm13MarketingPicture']] : [],
                 newPreviewContainer: document.getElementById('newMarketingPreviewContainer'),
                 existingPreviewContainer: document.getElementById('existingMarketingPreviewContainer'),
                 selectedInput: document.getElementById('selectedMarketing'),

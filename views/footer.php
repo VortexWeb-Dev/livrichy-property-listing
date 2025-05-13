@@ -1104,7 +1104,7 @@
             }
         ];
 
-        console.log(amenities.find(amenity => amenity.label === amenityName)?.id || amenityName)
+        // console.log(amenities.find(amenity => amenity.label === amenityName)?.id || amenityName)
 
         return amenities.find(amenity => amenity.label === amenityName)?.id || amenityName;
     }
