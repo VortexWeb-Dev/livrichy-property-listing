@@ -119,6 +119,13 @@
 
         const agent = await getAgent(data.listing_agent);
 
+        if (!data.selectedMarketing) {
+            alert('Please select a marketing image');
+            document.getElementById('submitButton').disabled = false;
+            document.getElementById('submitButton').innerHTML = 'Submit';
+            return;
+        }
+
         const fields = {
             "title": data.title_deed,
             "ufCrm13ReferenceNumber": data.reference,
