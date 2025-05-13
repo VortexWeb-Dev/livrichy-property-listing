@@ -63,7 +63,7 @@
         const baseUrl = 'https://crm.livrichy.com/rest/1509/o8fnjtg7tyf787h4';
         const entityTypeId = 1046;
         const fields = [
-            'id', 'ufCrm13ReferenceNumber', 'ufCrm13OfferingType', 'ufCrm13PropertyType', 'ufCrm13Price', 'ufCrm13TitleEn', 'ufCrm13DescriptionEn', 'ufCrm13Size', 'ufCrm13Bedroom', 'ufCrm13Bathroom', 'ufCrm13PhotoLinks', 'ufCrm13AgentName', 'ufCrm13City', 'ufCrm13Community', 'ufCrm13SubCommunity', 'ufCrm13Tower', 'ufCrm13PfEnable', 'ufCrm13BayutEnable', 'ufCrm13DubizzleEnable', 'ufCrm13WebsiteEnable', 'ufCrm13ListingOwner', 'ufCrm13Status', 'ufCrm13RentalPeriod', 'createdTime'
+            'id', 'ufCrm13ReferenceNumber', 'ufCrm13OfferingType', 'ufCrm13PropertyType', 'ufCrm13Price', 'ufCrm13TitleEn', 'ufCrm13DescriptionEn', 'ufCrm13Size', 'ufCrm13Bedroom', 'ufCrm13Bathroom', 'ufCrm13PhotoLinks', 'ufCrm13AgentName', 'ufCrm13City', 'ufCrm13Community', 'ufCrm13SubCommunity', 'ufCrm13Tower', 'ufCrm13PfEnable', 'ufCrm13BayutEnable', 'ufCrm13DubizzleEnable', 'ufCrm13WebsiteEnable', 'ufCrm13ListingOwner', 'ufCrm13Status', 'ufCrm13RentalPeriod', 'ufCrm13MarketingPicture', 'createdTime'
         ];
         const orderBy = {
             id: 'desc'
@@ -177,7 +177,11 @@
                     <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800 text-wrap">${property.ufCrm13ReferenceNumber || 'N/A'}</td>
                     <td class="px-3 py-4 whitespace-nowrap text-xs font-medium text-gray-800">
                         <div class="flex">
-                            <img class="w-20 h-20 rounded object-cover mr-4" src="${property.ufCrm13PhotoLinks[0] || 'https://placehold.jp/150x150.png'}" alt="${property.ufCrm13TitleEn || 'N/A'}">
+                            <img
+                                class="w-20 h-20 rounded object-cover mr-4"
+                                src="${property.ufCrm13MarketingPicture || property.ufCrm13PhotoLinks?.[0] || 'https://placehold.jp/150x150.png'}"
+                                alt="${property.ufCrm13TitleEn || 'N/A'}"
+                                />
                             <div class="text-sm">
                                 <p class="text-gray-800 font-semibold">${property.ufCrm13TitleEn || 'N/A'}</p>
                                 <p class="text-gray-400 text-wrap max-w-full truncate">${property.ufCrm13DescriptionEn.slice(0, 60) + '...' || 'N/A'}</p>
